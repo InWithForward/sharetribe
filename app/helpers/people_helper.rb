@@ -85,4 +85,8 @@ module PeopleHelper
     end
   end
 
+  def youtube_embed(video)
+    YouTubeAddy.youtube_embed_url(video, "100%").html_safe
+  end
+
 end
