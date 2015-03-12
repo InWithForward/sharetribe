@@ -225,6 +225,7 @@ default: &default_settings
 
 production: &production_settings
   <<: *default_settings
+  logger_type: "stdout"
 
   # Set this to true if you want the rails server to serve static assets in production mode (images, JS etc.)
   # normally it is better to leave this for the web server (apache) to do.
