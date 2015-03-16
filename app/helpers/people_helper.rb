@@ -85,8 +85,9 @@ module PeopleHelper
     end
   end
 
-  def youtube_embed(video)
-    YouTubeAddy.youtube_embed_url(video, "100%").html_safe
+  def youtube_embed(video_url, width = "100%", height = 315)
+    vid_id = YouTubeAddy.extract_video_id(video_url)
+    %(<iframe width="#{width}" height="#{height}" src="//www.youtube.com/embed/#{vid_id}" frameborder="0" allowfullscreen></iframe>).html_safe
   end
 
 end
