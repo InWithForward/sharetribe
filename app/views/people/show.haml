@@ -15,6 +15,9 @@
         = render :partial => "profile_action_buttons"
 
     .row
+      = youtube_embed(@person.video) if @person.video
+
+    .row
       - if @person.description && !@person.description.blank?
         - text_with_line_breaks do
           = @person.description

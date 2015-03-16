@@ -1,4 +1,4 @@
-en:
+default_community_descriptionen:
   admin:
     categories:
       edit:
@@ -352,7 +352,7 @@ en:
   common:
     edit_page: "Edit page"
     default_community_slogan: "Community marketplace"
-    default_community_description: "This is a place to sell, rent, swap and share goods and services with the other members of the marketplace."
+    default_community_description: "This is a place to share experiences with the other members of the marketplace."
     cancel: Cancel
     fields_that_are_mandatory: "Fields marked with star (*) are mandatory."
     or: or
@@ -1767,6 +1767,7 @@ en:
       location_description: "You can give either your exact location or, for example, only your zip code. Please add at least your zip code. You can also select a location from the map below."
       phone_number: "Phone number"
       profile_picture: "Profile picture"
+      profile_video: "Youtube video"
       postal_code: "Postal code"
       profile_page: "in your profile page"
       profilemap: Mapview
@@ -1776,6 +1777,7 @@ en:
       visible_to_registered_users: "(visible to users that have signed in)"
       default_in_listing: "(used only as a default when creating a new listing)"
       invisible: "(not shown to other users)"
+      url: "URL"
     save_information: "Save information"
   shipping_address:
     shipping_address: "Shipping address"

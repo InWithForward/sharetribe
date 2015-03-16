@@ -39,6 +39,7 @@
 #  is_organization                    :boolean
 #  organization_name                  :string(255)
 #  deleted                            :boolean          default(FALSE)
+#  video                              :string(255)
 #
 # Indexes
 #
