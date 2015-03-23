@@ -965,7 +965,7 @@ en:
     custom_filters:
       update_view: "Update view"
       min: "easy peasy:"   #"Min:"
-      max: "a chellenge:"  #"Max:"
+      max: "a challenge:"  #"Max:"
     event_feed:
       latest_events: "What's going on"
     grid_item:
