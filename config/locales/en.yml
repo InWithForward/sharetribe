@@ -964,8 +964,8 @@ en:
       some_private_requests_exist: "There are already <b>%{number_of_listings} requests</b>,"
     custom_filters:
       update_view: "Update view"
-      min: "Min:"
-      max: "Max:"
+      min: "easy peasy:"   #"Min:"
+      max: "a chellenge:"  #"Max:"
     event_feed:
       latest_events: "What's going on"
     grid_item:
