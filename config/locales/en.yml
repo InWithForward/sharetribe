@@ -351,8 +351,8 @@ en:
         inquiry: Contact
   common:
     edit_page: "Edit page"
-    default_community_slogan: "Community marketplace"
-    default_community_description: "This is a place to share experiences with the other members of the marketplace."
+    default_community_slogan: " " # was: "Community marketplace"
+    default_community_description: " " # was "This is a place to share experiences with the other members of the marketplace."
     cancel: Cancel
     fields_that_are_mandatory: "Fields marked with star (*) are mandatory."
     or: or
