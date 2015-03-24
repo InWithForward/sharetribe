@@ -336,7 +336,7 @@ en:
     transaction_types:
       sell: Selling
       rent: "Renting out"
-      give: experience   #was Giving away
+      give: "Giving away"
       lend: Lending
       swap: Swapping
       service: Offering
@@ -363,7 +363,7 @@ en:
       offer: offer
       borrow: borrowing
       buy: buying
-      give_away: experience   #was giving away
+      give_away: "giving away"
       lend: lending
       receive: "taking for free"
       rent: renting
@@ -1032,7 +1032,7 @@ en:
       grid_button: Grid
       list_button: List
       all_listing_types: "All listing types"
-      all_categories: "All interests" # "All categories"
+      all_categories: "All categories"
   infos:
     about:
       default_about_text_title: "What is Sharetribe?"
@@ -1321,7 +1321,7 @@ en:
         select: Select
         borrow: Borrowing
         buy: Buying
-        give_away: experience   # was Giving away
+        give_away: "Giving away"
         lend: Lending
         offer_type: "Offer type"
         receive: "Accepting for free"
@@ -1354,7 +1354,7 @@ en:
       help_tags_title: Tags
       help_valid_until_title: "Expiration date"
     index:
-      all_categories: "All interests" #categories
+      all_categories: "All categories"
       all_offer_types: "All offer types"
       all_request_types: "All request types"
       category: Category
@@ -1379,7 +1379,7 @@ en:
       borrows: Borrowing
       buys: Buying
       favors: Services
-      give_aways: experience   # was Giving away
+      give_aways: "Giving away"
       housings: Spaces
       items: Items
       lends: Lending
@@ -1467,7 +1467,7 @@ en:
       read_more: View.
   mapview:
     index:
-      all_categories: "All interests" #"categories"
+      all_categories: "All categories"
       all_offer_types: "All offer types"
       all_request_types: "All request types"
       category: Category
