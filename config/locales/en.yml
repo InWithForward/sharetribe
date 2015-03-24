@@ -1321,7 +1321,7 @@ en:
         select: Select
         borrow: Borrowing
         buy: Buying
-        give_away: #"Giving away"
+        give_away: "Giving away"
         lend: Lending
         offer_type: "Offer type"
         receive: "Accepting for free"
