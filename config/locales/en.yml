@@ -336,7 +336,7 @@ en:
     transaction_types:
       sell: Selling
       rent: "Renting out"
-      give: "Giving away"
+      give: "Give away"
       lend: Lending
       swap: Swapping
       service: Offering
@@ -363,7 +363,7 @@ en:
       offer: offer
       borrow: borrowing
       buy: buying
-      give_away: "giving away"
+      give_away: experience #"giving away"
       lend: lending
       receive: "taking for free"
       rent: renting
