@@ -1032,7 +1032,7 @@ en:
       grid_button: Grid
       list_button: List
       all_listing_types: "All listing types"
-      all_categories: "All categories"
+      all_categories: "All interests" # "All categories"
   infos:
     about:
       default_about_text_title: "What is Sharetribe?"
@@ -1354,7 +1354,7 @@ en:
       help_tags_title: Tags
       help_valid_until_title: "Expiration date"
     index:
-      all_categories: "All categories"
+      all_categories: "All interests" #categories
       all_offer_types: "All offer types"
       all_request_types: "All request types"
       category: Category
@@ -1467,7 +1467,7 @@ en:
       read_more: View.
   mapview:
     index:
-      all_categories: "All categories"
+      all_categories: "All interests" #"categories"
       all_offer_types: "All offer types"
       all_request_types: "All request types"
       category: Category
