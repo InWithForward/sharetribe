@@ -363,7 +363,7 @@ en:
       offer: offer
       borrow: borrowing
       buy: buying
-      give_away: "giving away"
+      give_away: experience   # was "giving away"
       lend: lending
       receive: "taking for free"
       rent: renting
@@ -1321,7 +1321,7 @@ en:
         select: Select
         borrow: Borrowing
         buy: Buying
-        give_away: "Giving away"
+        give_away: experience   # was "Giving away"
         lend: Lending
         offer_type: "Offer type"
         receive: "Accepting for free"
@@ -1379,7 +1379,7 @@ en:
       borrows: Borrowing
       buys: Buying
       favors: Services
-      give_aways: "Giving away"
+      give_aways: experience   # was "Giving away"
       housings: Spaces
       items: Items
       lends: Lending
