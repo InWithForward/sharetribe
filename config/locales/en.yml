@@ -1396,8 +1396,8 @@ en:
       booking_to: To
       how_paypal_works: "How PayPal Works"
     new:
-      post_a_new_listing: "Post a new experience listing" #added experience
-      listing: experience #listing
+      post_a_new_listing: "Post a new listing" 
+      listing: listing
       selected_category: "Category: %{category}"
       selected_subcategory: "Subcategory: %{subcategory}"
       selected_transaction_type: "Listing type: %{transaction_type}"
