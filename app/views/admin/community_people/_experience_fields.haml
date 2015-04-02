@@ -1,0 +1,17 @@
+.nested-fields
+  = f.label :title, t("admin.communities.people.experience_fields.title")
+  = f.text_field :title, :class => "text_field", :maxlength => "30"
+
+  = f.label :image, t("admin.communities.people.experience_fields.image")
+  = f.file_field :image, :size => 30
+
+  .inline-label-container
+    = f.label :video, t("admin.communities.people.experience_fields.video"), class: 'inline'
+    %small
+      = t("admin.communities.people.experience_fields.url")
+  = f.text_field :video, class: "text_field"
+
+  = f.label :body, t("admin.communities.people.experience_fields.body"), :class => "input"
+  = f.text_area :body
+
+  = link_to_remove_association "remove", f

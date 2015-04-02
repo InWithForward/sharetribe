@@ -62,6 +62,15 @@
     -# About text
     = form.label :description, t(".about_you"), :class => "input"
     = form.text_area :description, :class => "update_profile_description_text_area"
+
+    -# Ask Me
+    = form.label :ask_me, t(".ask_me"), :class => "input"
+    = form.text_area :ask_me, :class => "update_profile_description_text_area"
+
+    -# Signup Reason
+    = form.label :signup_reason, t(".signup_reason"), :class => "input"
+    = form.text_area :signup_reason, :class => "update_profile_description_text_area"
+
     = form.fields_for :location do |loc|
       = loc.hidden_field :address, :value => @person.location.address
       = loc.hidden_field :google_address, :value => @person.location.google_address

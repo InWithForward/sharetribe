@@ -178,6 +178,7 @@ en:
         newsletter_weekly: Weekly
       manage_members:
         manage_members: "Manage users"
+        edit: 'Edit'
         email: Email
         name: Name
         join_date: Joined
@@ -223,6 +224,36 @@ en:
         language: Language
         url: URL
         empty: "You don't have any additional menu links"
+      people:
+        edit:
+          about_you: "About me"
+          ask_me: "Things you can ask me about"
+          signup_reason: "I've signed up for Kudoz, because"
+          city: City
+          family_name: "Last name"
+          given_name: "First name"
+          first_name_with_initial: "(only first letter shown to other users)"
+          first_name_only: "(not shown to other users)"
+          phone_number: "Phone number"
+          profile_picture: "Profile picture"
+          profile_video: "Youtube video"
+          invisible: "(not shown to other users)"
+          shape: 'Learning Shape'
+          url: "URL"
+          experiences: 'Experiences'
+          add_experience: 'Add Experience'
+        experience_fields:
+          url: "URL"
+          title: "Title"
+          image: "Image"
+          video: "Video"
+          body: "Body"
+      listings:
+        listings: 'View listings'
+        title: 'Title'
+        author: 'Author'
+        invisible: 'Invisible & Searchable'
+        edit: 'Edit'
       transactions:
         transactions: "View transactions"
         headers:
@@ -299,6 +330,7 @@ en:
         dropdown: Dropdown
         checkbox_group: "Checkbox group"
         date: Date
+        text_area: "Multiline Text"
     emails:
       new:
         send_email_to_members: "Send email to users"
@@ -1623,8 +1655,10 @@ en:
       add_phone_number: "Add phone number"
       address: "Location:"
       as_expected: "As expected"
+      ask_me: "Things you can ask me about"
       edit_profile_info: "Edit profile"
       exceeded_expectations: "Exceeded expectations"
+      experiences: 'Experiences'
       positive: positive
       hide_description: "Show less"
       less_than_expected: "Worse than expected"
@@ -1644,9 +1678,11 @@ en:
       no_listings: "No listings"
       no_open_listings: "No open listings"
       no_reviews: "No reviews"
+      shape: "Learning Shape"
       show_all_listings: "Show all listings"
       show_all_open_listings: "Show all open listings"
       show_all_reviews: "Show all reviews"
+      signup_reason: "I signed up for Kudoz because"
     followed_people:
       you_follow_plural: "You follow %{count} people"
       you_follow_singular: "You follow %{count} person"
@@ -1758,7 +1794,9 @@ en:
       unsubscribe_unsuccesful: "Error in unsubscribing"
       unsuccessful_unsubscribe_info_text: "The reason might that the unsubscribe link you clicked was old or otherwise broken. Contact us via feedback button on the left and we can unsubscribe you, or sign in to change your email settings."
     profile:
-      about_you: "About you"
+      about_you: "About me"
+      ask_me: "Things you can ask me about"
+      signup_reason: "I've signed up for Kudoz, because"
       city: City
       family_name: "Last name"
       given_name: "First name"

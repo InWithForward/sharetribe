@@ -1,0 +1,5 @@
+- question_name = custom_field_value.question.name(I18n.locale)
+%b= "#{question_name}"
+%br
+- text_with_line_breaks_html_safe do
+  = custom_field_value.text_value

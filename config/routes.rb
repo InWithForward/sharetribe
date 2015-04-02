@@ -130,7 +130,9 @@ Kassi::Application.routes.draw do
           put :update_settings
         end
         resources :transactions, controller: :community_transactions, only: :index
+        resources :listings, controller: :community_listings, only: [:index, :edit, :update]
         resources :emails
+        resources :people, controller: :community_people, only: [:edit, :update]
         resources :community_memberships do
           member do
             put :ban

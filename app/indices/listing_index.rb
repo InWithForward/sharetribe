@@ -15,6 +15,7 @@ ThinkingSphinx::Index.define :listing, :with => :active_record, :delta => Thinki
   indexes category.translations.name, :as => :category
   indexes custom_field_values(:text_value), :as => :custom_text_fields
   indexes origin_loc.google_address
+  indexes invisible
 
   # attributes
   has id, :as => :listing_id # id didn't work without :as aliasing

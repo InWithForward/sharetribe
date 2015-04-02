@@ -1,0 +1,12 @@
+- content_for :title_header do
+  %h1= t("layouts.admin.admin")
+
+= render :partial => "admin/left_hand_navigation", :locals => { :links => admin_links_for(@current_community) }
+
+
+#listings_settings_form.left-navi-section.settings-section
+  = form_for [:admin, @current_community, @listing] do |form|
+    = form.label :invisible, t("admin.communities.listings.invisible")
+    = form.text_field :invisible, :class => "text_field"
+
+    = form.button t("settings.save_information"), :class => "send_button"

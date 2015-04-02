@@ -15,7 +15,7 @@
         = render :partial => "profile_action_buttons"
 
     .row
-      = youtube_embed(@person.video) if @person.video
+      = youtube_embed(@person.video) if @person.video && !@person.video.blank?
 
     .row
       - if @person.description && !@person.description.blank?
@@ -26,6 +26,32 @@
           .icon-with-text-container
             .ss-chat.icon-part
             .ss.text-part= t(".add_description")
+
+    - if @person.ask_me && !@person.ask_me.blank?
+      .row
+        %h3
+          = t(".ask_me")
+        - text_with_line_breaks do
+          = @person.ask_me
+
+    - if @person.signup_reason && !@person.signup_reason.blank?
+      .row
+        %h3
+          = t(".signup_reason")
+        - text_with_line_breaks do
+          = @person.signup_reason
+
+    - if @person.shape
+      .row
+        %h2.people-header
+          = t(".shape")
+        = image_tag @person.shape.url(:original)
+
+    - if @person.experiences.any?
+      .row
+        %h2.people-header
+          = t(".experiences")
+        = render(partial: "listed_experience", collection: @person.experiences, as: :experience)
 
     .row
       %h2.people-header

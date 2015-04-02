@@ -82,6 +82,7 @@ gem 'paypal-sdk-permissions',
 gem 'paypal-sdk-merchant', '~> 1.116.0'
 gem 'airbrake', '~>4.1.0'
 gem 'youtube_addy', '~> 1.0.4'
+gem 'cocoon', '~> 1.2.6'
 
 group :staging, :production do
   gem 'newrelic_rpm', '~> 3.9.1.236'

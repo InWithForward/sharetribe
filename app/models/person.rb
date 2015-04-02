@@ -40,6 +40,12 @@
 #  organization_name                  :string(255)
 #  deleted                            :boolean          default(FALSE)
 #  video                              :string(255)
+#  ask_me                             :text
+#  signup_reason                      :text
+#  shape_file_name                    :string(255)
+#  shape_content_type                 :string(255)
+#  shape_file_size                    :integer
+#  shape_updated_at                   :datetime
 #
 # Indexes
 #
@@ -113,8 +119,11 @@ class Person < ActiveRecord::Base
   has_many :followers, :through => :follower_relationships, :foreign_key => "person_id"
   has_many :inverse_follower_relationships, :class_name => "FollowerRelationship", :foreign_key => "follower_id"
   has_many :followed_people, :through => :inverse_follower_relationships, :source => "person"
+  has_many :experiences, dependent: :destroy
 
   has_and_belongs_to_many :followed_listings, :class_name => "Listing", :join_table => "listing_followers"
+
+  accepts_nested_attributes_for :experiences, :reject_if => :all_blank, :allow_destroy => true
 
   def to_param
     username
@@ -174,6 +183,8 @@ class Person < ActiveRecord::Base
                       :thumb => "48x48#",
                       :original => "600x800>"},
                     :default_url => ActionController::Base.helpers.asset_path("/assets/profile_image/:style/missing.png", :digest => true)
+
+  has_attached_file :shape, styles: { original: "600x800>"}
 
   #validates_attachment_presence :image
   validates_attachment_size :image, :less_than => 9.megabytes

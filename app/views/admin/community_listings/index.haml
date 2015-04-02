@@ -1,0 +1,33 @@
+- content_for :title_header do
+  %h1= t("layouts.admin.admin")
+
+= render :partial => "admin/left_hand_navigation", :locals => { :links => admin_links_for(@current_community) }
+
+.left-navi-section
+  %h2= t("admin.communities.manage_members.manage_members", :community_name => @community.name(I18n.locale))
+
+  %span#admin_members_count= page_entries_info(@listings, :model => "Listing")
+
+  %form
+    %table#admin_listings_list
+      %thead
+        %tr
+          %th= t("admin.communities.listings.title")
+          %th= t("admin.communities.listings.author")
+          %th= t("admin.communities.listings.invisible")
+          %th= t("admin.communities.listings.edit")
+      %tbody
+        - @listings.each do |listing|
+          %tr
+            %td
+              = link_to listing.title, listing
+            %td.admin-members-full-name
+              = link_to listing.author.full_name, listing.author
+            %td
+              = listing.invisible
+            %td
+              = link_to t("admin.communities.listings.edit"), edit_admin_community_listing_path(@current_community.id, listing.id)
+
+  .row
+    .col-12
+      = will_paginate @listings

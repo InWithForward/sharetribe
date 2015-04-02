@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150312060537) do
+ActiveRecord::Schema.define(:version => 20150402233458) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -396,6 +396,17 @@ ActiveRecord::Schema.define(:version => 20150312060537) do
   add_index "emails", ["address"], :name => "index_emails_on_address", :unique => true
   add_index "emails", ["person_id"], :name => "index_emails_on_person_id"
 
+  create_table "experiences", :force => true do |t|
+    t.string   "person_id",          :null => false
+    t.string   "title"
+    t.text     "body"
+    t.string   "video"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
   create_table "feedbacks", :force => true do |t|
     t.text     "content"
     t.string   "author_id"
@@ -494,6 +505,7 @@ ActiveRecord::Schema.define(:version => 20150312060537) do
     t.boolean  "require_shipping_address", :default => false
     t.boolean  "pickup_enabled",           :default => false
     t.integer  "shipping_price_cents"
+    t.string   "invisible"
   end
 
   add_index "listings", ["listing_type_old"], :name => "index_listings_on_listing_type"
@@ -788,6 +800,12 @@ ActiveRecord::Schema.define(:version => 20150312060537) do
     t.string   "organization_name"
     t.boolean  "deleted",                                          :default => false
     t.string   "video"
+    t.text     "ask_me"
+    t.text     "signup_reason"
+    t.string   "shape_file_name"
+    t.string   "shape_content_type"
+    t.integer  "shape_file_size"
+    t.datetime "shape_updated_at"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true

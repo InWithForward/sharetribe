@@ -587,6 +587,12 @@ module ApplicationHelper
         :name => "invite_people"
       },
       {
+        :text => t("admin.communities.listings.listings"),
+        :icon_class => icon_class("coins"),
+        :path => admin_community_listings_path(@current_community, sort: "last_activity", direction: "desc"),
+        :name => "listings"
+      },
+      {
         :text => t("admin.communities.transactions.transactions"),
         :icon_class => icon_class("coins"),
         :path => admin_community_transactions_path(@current_community, sort: "last_activity", direction: "desc"),

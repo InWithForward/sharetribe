@@ -6,7 +6,8 @@ module CustomFieldsHelper
       "TextField" => "admin.custom_fields.field_types.text",
       "NumericField" => "admin.custom_fields.field_types.number",
       "CheckboxField" => "admin.custom_fields.field_types.checkbox_group",
-      "DateField" => "admin.custom_fields.field_types.date"
+      "DateField" => "admin.custom_fields.field_types.date",
+      "TextAreaField" => "admin.custom_fields.field_types.text_area"
     }
 
     t(tranlation_map[type])

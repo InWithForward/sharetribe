@@ -40,6 +40,12 @@
 #  organization_name                  :string(255)
 #  deleted                            :boolean          default(FALSE)
 #  video                              :string(255)
+#  ask_me                             :text
+#  signup_reason                      :text
+#  shape_file_name                    :string(255)
+#  shape_content_type                 :string(255)
+#  shape_file_size                    :integer
+#  shape_updated_at                   :datetime
 #
 # Indexes
 #

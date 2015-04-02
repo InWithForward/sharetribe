@@ -1,0 +1,15 @@
+.row
+  - if experience.has_media?
+    .col-6
+      - if experience.video && experience.video.present?
+        = youtube_embed(experience.video, '100%', 220)
+      - elsif experience.image.present?
+        = image_tag experience.image.url(:small)
+    .col-6
+      %h3= experience.title
+      - text_with_line_breaks do
+        %p= experience.body
+  - else
+    %h3= experience.title
+    - text_with_line_breaks do
+      %p= experience.body
