@@ -1075,9 +1075,9 @@ en:
     global-header:
       select_language: "Select language"
     infos:
-      about: "About Kudoz"
+      about: "How it works"
       how_to_use: "Hosts Page"   # was "How it works"
-      info_about_kassi: "Information about %{service_name}"
+      info_about_kassi: "About %{service_name}"
       news: News
       register_details: "Families & Caretakers" # was Privacy
       terms: "Learning with Kudoz" # was "Terms of use"
