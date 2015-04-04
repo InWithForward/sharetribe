@@ -1075,12 +1075,12 @@ en:
     global-header:
       select_language: "Select language"
     infos:
-      about: About
-      how_to_use: "How it works"
+      about: "About Kudoz"
+      how_to_use: "Hosts Page"   # was "How it works"
       info_about_kassi: "Information about %{service_name}"
       news: News
-      register_details: Privacy
-      terms: "Terms of use"
+      register_details: "Families & Caretakers" # was Privacy
+      terms: "Learning with Kudoz" # was "Terms of use"
     logged_in:
       admin: Admin
       go_to_your_profile_page: Profile
