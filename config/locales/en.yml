@@ -1051,8 +1051,8 @@ en:
     application:
       join_this_community: "Join marketplace"
       read_more: "Read more"
-      feedback: "What would you like to tell us?"
-      default_feedback: "Did you encounter a problem with %{service_name}? Have a suggestion for improving the service? Noticed some suspicious content? Or just have something you want to discuss with us? Let us know!"
+      feedback: "Get in touch with us!"
+      default_feedback: "Do you have any more questions about %{service_name}? Did you wncounter any problems, small or large? Have a suggestion for improving %{service_name}? Noticed some suspicious content? Or just have something you want to discuss with us? Let us know!"
       feedback_forum: "feedback forum"
       feedback_handle: Feedback
       give_feedback: "Contact us"
@@ -1075,12 +1075,12 @@ en:
     global-header:
       select_language: "Select language"
     infos:
-      about: "How it works"
-      how_to_use: "Hosts Page"   # was "How it works"
+      about: "Welcome!" #"How it works"
+      how_to_use: "Host Page"   # was "How it works"
       info_about_kassi: "About %{service_name}"
       news: News
       register_details: "Families & Caretakers" # was Privacy
-      terms: "Learning with Kudoz" # was "Terms of use"
+      terms: "The Science" # was "Terms of use"
     logged_in:
       admin: Admin
       go_to_your_profile_page: Profile
