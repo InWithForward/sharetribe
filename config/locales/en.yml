@@ -351,8 +351,8 @@ en:
         inquiry: Contact
   common:
     edit_page: "Edit page"
-    default_community_slogan: " " # was: "Community marketplace"
-    default_community_description: " " # was "This is a place to share experiences with the other members of the marketplace."
+    default_community_slogan:  # was: "Community marketplace"
+    default_community_description:   # was "This is a place to share experiences with the other members of the marketplace."
     cancel: Cancel
     fields_that_are_mandatory: "Fields marked with star (*) are mandatory."
     or: or
@@ -1052,7 +1052,7 @@ en:
       join_this_community: "Join marketplace"
       read_more: "Read more"
       feedback: "Get in touch with us!"
-      default_feedback: "Do you have any more questions about %{service_name}? Did you wncounter any problems, small or large? Have a suggestion for improving %{service_name}? Noticed some suspicious content? Or just have something you want to discuss with us? Let us know!"
+      default_feedback: "Do you have any more questions about %{service_name}? Did you encounter any problems, small or large? Have a suggestion for improving %{service_name}? Noticed some suspicious content? Or just have something you want to discuss with us? Let us know!"
       feedback_forum: "feedback forum"
       feedback_handle: Feedback
       give_feedback: "Contact us"
