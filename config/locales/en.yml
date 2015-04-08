@@ -1079,7 +1079,7 @@ en:
       how_to_use: "Host Page"   # was "How it works"
       info_about_kassi: "About %{service_name}"
       news: News
-      register_details: "Families & Caretakers" # was Privacy
+      register_details: "Families & Caregivers" # was Privacy
       terms: "The Science" # was "Terms of use"
     logged_in:
       admin: Admin
