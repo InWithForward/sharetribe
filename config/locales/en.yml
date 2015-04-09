@@ -1656,6 +1656,7 @@ en:
       address: "Location:"
       as_expected: "As expected"
       ask_me: "Things you can ask me about"
+      description_header: 'About Me'
       edit_profile_info: "Edit profile"
       exceeded_expectations: "Exceeded expectations"
       experiences: 'Experiences'

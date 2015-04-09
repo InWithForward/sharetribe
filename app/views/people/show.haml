@@ -19,6 +19,8 @@
 
     .row
       - if @person.description && !@person.description.blank?
+        %h3
+          = t(".description_header")
         - text_with_line_breaks do
           = @person.description
       - elsif current_user?(@person)
