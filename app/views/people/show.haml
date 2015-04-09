@@ -41,7 +41,7 @@
         - text_with_line_breaks do
           = @person.signup_reason
 
-    - if @person.shape
+    - if @person.shape && !@person.shape.blank?
       .row
         %h2.people-header
           = t(".shape")
