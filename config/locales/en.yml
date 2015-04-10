@@ -240,7 +240,7 @@ en:
           invisible: "(not shown to other users)"
           shape: 'Learning Shape:'
           url: "URL"
-          experiences: "Experiences I have been to:"
+          experiences: 'Experiences I have been to'
           add_experience: 'Add Experience'
         experience_fields:
           url: "URL"
