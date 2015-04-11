@@ -1,5 +1,5 @@
 .nested-fields
+  %h3
+    = f.object.title
   = f.label :body, t(".body"), :class => "input"
   = f.text_area :body
-
-  = link_to_remove_association "remove", f
