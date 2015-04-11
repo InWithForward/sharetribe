@@ -2,7 +2,7 @@ en:
   admin:
     categories:
       edit:
-        edit_listing_category: "Edit category '%{category}'"e
+        edit_listing_category: "Edit category '%{category}'"
       index:
         listing_categories: "Listing categories"
         create_a_new_category: "+ Create a new category"
