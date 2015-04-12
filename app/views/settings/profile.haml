@@ -78,9 +78,10 @@
       = loc.hidden_field :longitude, :value => @person.location.longitude
       = loc.hidden_field :location_type, :value => "person"
 
-    %h2.experiences-header= t('.experiences')
-    #experiences
-      = form.fields_for :experiences do |f|
-        = render('experience_fields', :f => f)
+    - if @person.experiences.any?
+      %h2.experiences-header= t('.experiences')
+      #experiences
+        = form.fields_for :experiences do |f|
+          = render('experience_fields', :f => f)
 
     = form.button t("settings.save_information"), :class => "send_button"
