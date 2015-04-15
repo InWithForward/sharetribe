@@ -1659,7 +1659,7 @@ en:
       description_header: 'About Me'
       edit_profile_info: "Edit profile"
       exceeded_expectations: "Exceeded expectations"
-      experiences: 'Experiences'
+      experiences: "Experiences I have gone on" ##
       positive: positive
       hide_description: "Show less"
       less_than_expected: "Worse than expected"
@@ -1799,7 +1799,7 @@ en:
       ask_me: "Things you can ask me about"
       signup_reason: "I've signed up for Kudoz, because"
       city: City
-      experiences: 'Experiences'
+      experiences: 'Experiences' ##
       family_name: "Last name"
       given_name: "First name"
       first_name_with_initial: "(only first letter shown to other users)"
