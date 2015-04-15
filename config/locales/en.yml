@@ -1659,7 +1659,7 @@ en:
       description_header: 'About Me'
       edit_profile_info: "Edit profile"
       exceeded_expectations: "Exceeded expectations"
-      experiences: "Experiences I have gone on" ##
+      experiences: "Experiences I've been to" ##
       positive: positive
       hide_description: "Show less"
       less_than_expected: "Worse than expected"
