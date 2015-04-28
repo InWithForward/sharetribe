@@ -238,7 +238,7 @@ en:
           profile_picture: "Profile picture"
           profile_video: "Youtube video"
           invisible: "(not shown to other users)"
-          shape: 'Learning Shape:'
+          shape: 'Badges:'
           url: "URL"
           experiences: 'Experiences I have been to'
           add_experience: 'Add Experience'
@@ -1679,7 +1679,7 @@ en:
       no_listings: "No listings"
       no_open_listings: "No open listings"
       no_reviews: "No reviews"
-      shape: "Learning Shape"
+      shape: "My Badges"
       show_all_listings: "Show all listings"
       show_all_open_listings: "Show all open listings"
       show_all_reviews: "Show all reviews"
