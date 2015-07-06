@@ -538,6 +538,14 @@ module ApplicationHelper
         :name => "how_to_use"
       }
     end
+    if @community_customization && !@community_customization.custom_page_content.blank?
+      links << {
+        :text => t('layouts.infos.custom'),
+        :icon_class => icon_class("custom"),
+        :path => custom_infos_path,
+        :name => "custom"
+      }
+    end
     links << {
       :text => t('layouts.infos.register_details'),
       :icon_class => icon_class("privacy"),
@@ -550,14 +558,6 @@ module ApplicationHelper
       :path => terms_infos_path,
       :name => "terms"
     }
-    if @community_customization && !@community_customization.custom_page_content.blank?
-      links << {
-        :text => t('layouts.infos.custom'),
-        :icon_class => icon_class("custom"),
-        :path => custom_infos_path,
-        :name => "custom"
-      }
-    end
   end
 
   # Admin view left hand navigation content
