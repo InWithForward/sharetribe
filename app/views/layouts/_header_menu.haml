@@ -12,10 +12,6 @@
     = icon_tag("information", ["icon-with-text"])
     = t("header.about")
 
-  = link_to new_user_feedback_path do
-    = icon_tag("feedback", ["icon-with-text"])
-    = t("header.contact_us")
-
   - with_invite_link do
     = link_to new_invitation_path do
       = icon_tag("invite", ["icon-with-text"])
