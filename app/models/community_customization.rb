@@ -23,6 +23,7 @@
 #  search_placeholder                         :string(255)
 #  transaction_agreement_label                :string(255)
 #  transaction_agreement_content              :text(16777215)
+#  custom_page_content                        :text
 #
 # Indexes
 #
@@ -42,6 +43,7 @@ class CommunityCustomization < ActiveRecord::Base
     :how_to_use_page_content,
     :terms_page_content,
     :privacy_page_content,
+    :custom_page_content,
     :storefront_label,
     :signup_info_content,
     :private_community_homepage_content,

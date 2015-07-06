@@ -550,6 +550,14 @@ module ApplicationHelper
       :path => terms_infos_path,
       :name => "terms"
     }
+    if @community_customization && !@community_customization.custom_page_content.blank?
+      links << {
+        :text => t('layouts.infos.custom'),
+        :icon_class => icon_class("custom"),
+        :path => custom_infos_path,
+        :name => "custom"
+      }
+    end
   end
 
   # Admin view left hand navigation content

@@ -1113,6 +1113,7 @@ en:
       news: News
       register_details: "Families & Caregivers" # was Privacy
       terms: "The Science" # was "Terms of use"
+      custom: "Custom"
     logged_in:
       admin: Admin
       go_to_your_profile_page: Profile
