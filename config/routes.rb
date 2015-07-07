@@ -221,6 +221,7 @@ Kassi::Application.routes.draw do
       collection do
         get :about
         get :custom
+        get :custom_two
         get :how_to_use
         get :terms
         get :privacy

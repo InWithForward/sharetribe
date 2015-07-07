@@ -12,6 +12,11 @@ class InfosController < ApplicationController
     @selected_left_navi_link = "custom"
   end
 
+  def custom_two
+    @selected_tribe_navi_tab = "about"
+    @selected_left_navi_link = "custom_two"
+  end
+
   def how_to_use
     @selected_tribe_navi_tab = "about"
     @selected_left_navi_link = "how_to_use"

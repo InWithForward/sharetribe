@@ -546,6 +546,14 @@ module ApplicationHelper
         :name => "custom"
       }
     end
+    if @community_customization && !@community_customization.custom_two_page_content.blank?
+      links << {
+        :text => t('layouts.infos.custom_two'),
+        :icon_class => icon_class("custom_two"),
+        :path => custom_two_infos_path,
+        :name => "custom_two"
+      }
+    end
     links << {
       :text => t('layouts.infos.register_details'),
       :icon_class => icon_class("privacy"),

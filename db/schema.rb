@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150706152444) do
+ActiveRecord::Schema.define(:version => 20150707163756) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(:version => 20150706152444) do
     t.string   "transaction_agreement_label"
     t.text     "transaction_agreement_content",              :limit => 16777215
     t.text     "custom_page_content"
+    t.text     "custom_two_page_content"
   end
 
   add_index "community_customizations", ["community_id"], :name => "index_community_customizations_on_community_id"
