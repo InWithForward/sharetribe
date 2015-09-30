@@ -1,0 +1,29 @@
+- content_for :title_header do
+  %h1
+    = action_button_label
+    = link_to(listing[:title], listing_path(listing[:id]))
+
+.centered-section
+
+  - author_link = link_to(author[:display_name], person_path(id: author[:username]))
+
+  .preauthorize-section
+    %h2
+      = "Please select two availabilities"
+
+  = form_for free_booking_form,
+    :url => form_action,
+      :method => "post",
+      :html => { :id => "" } do |form|
+
+    %ul.no-bullets
+      - @availabilities.each do |availability|
+        - start_at, end_at = availability[:start_at], availability[:end_at]
+        - identifier = "#{start_at.to_i}_#{end_at.to_i}".to_sym
+        %li
+          = form.label identifier, class: 'button checkbox' do
+            = check_box(:free_booking, identifier)
+            = "#{start_at.to_formatted_s(:time)} - #{end_at.to_formatted_s(:time)},  #{start_at.to_date.to_formatted_s(:short)}"
+    .row
+      .col-12
+        = form.button 'Confirm', :class => "send_button"

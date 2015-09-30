@@ -123,7 +123,7 @@ class ListingsController < ApplicationController
       listing_id: @listing.id.to_s,
       payment_gateway: payment_gateway,
       payment_process: process,
-      booking: @listing.transaction_type.price_per.present?
+      booking: (@listing.transaction_type.price_per.present? || @listing.availabilities.any?)
     )
 
     delivery_opts = delivery_config(@listing.require_shipping_address, @listing.pickup_enabled, @listing.shipping_price, @listing.currency)
@@ -173,6 +173,7 @@ class ListingsController < ApplicationController
       params[:listing].delete("origin_loc_attributes")
     end
 
+    params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
     params[:listing] = normalize_price_param(params[:listing]);
 
     @listing = Listing.new(create_listing_params(params[:listing]))
@@ -226,8 +227,10 @@ class ListingsController < ApplicationController
 
     @listing.custom_field_values = FieldValueCreator.call(params[:custom_fields])
 
+    params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
     params[:listing] = normalize_price_param(params[:listing])
 
+    @listing.availabilities.delete_all
     if @listing.update_fields(create_listing_params(params[:listing]))
       @listing.location.update_attributes(params[:location]) if @listing.location
       flash[:notice] = t("layouts.notifications.listing_updated_successfully")
@@ -465,6 +468,8 @@ class ListingsController < ApplicationController
 
   def select_new_transaction_path(listing_id:, payment_gateway:, payment_process:, booking:)
     case [payment_process, payment_gateway, booking]
+    when matches([:none, __, true])
+      free_booking_path(listing_id: listing_id)
     when matches([:none])
       reply_to_listing_path(listing_id: listing_id)
     when matches([:preauthorize, __, true])

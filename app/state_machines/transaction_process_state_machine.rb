@@ -4,6 +4,8 @@ class TransactionProcessStateMachine
   state :not_started, initial: true
   state :free
   state :initiated
+  state :requested
+  state :booked
   state :pending
   state :preauthorized
   state :pending_ext
@@ -14,13 +16,15 @@ class TransactionProcessStateMachine
   state :confirmed
   state :canceled
 
-  transition from: :not_started,               to: [:free, :pending, :preauthorized, :initiated]
+  transition from: :not_started,               to: [:free, :pending, :preauthorized, :initiated, :paid, :requested]
   transition from: :initiated,                 to: [:preauthorized]
   transition from: :pending,                   to: [:accepted, :rejected]
   transition from: :preauthorized,             to: [:paid, :rejected, :pending_ext, :errored]
   transition from: :pending_ext,               to: [:paid, :rejected]
   transition from: :accepted,                  to: [:paid, :canceled]
   transition from: :paid,                      to: [:confirmed, :canceled]
+  transition from: :requested,                 to: [:booked, :canceled]
+  transition from: :booked,                    to: [:confirmed, :canceled]
 
   guard_transition(to: :pending) do |conversation|
     conversation.requires_payment?(conversation.community)
@@ -35,6 +39,11 @@ class TransactionProcessStateMachine
     [3, 10].each do |send_interval|
       Delayed::Job.enqueue(PaymentReminderJob.new(transaction.id, transaction.payment.payer.id, current_community.id), :priority => 10, :run_at => send_interval.days.from_now)
     end
+  end
+
+  after_transition(to: :booked) do |transaction|
+    payer = transaction.starter
+    current_community = transaction.community
   end
 
   after_transition(to: :paid) do |transaction|

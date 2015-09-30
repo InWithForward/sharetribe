@@ -59,6 +59,8 @@
   = render :partial => "layouts/facebook_sdk"
 
   = javascript_include_tag 'application'
+  = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js'
+  = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css"
 
   - if @analytics_event
     :javascript

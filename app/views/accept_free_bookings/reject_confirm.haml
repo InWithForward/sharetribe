@@ -1,0 +1,11 @@
+- content_for :title_header do
+  %h1= t("layouts.no_tribe.inbox")
+
+.conversation-status-form
+  %h2= "Why won't this work for you?"
+  %p= "This will cancel the reservation and notify the admin of the reason"
+  = form_for :conversation, :url => reject_free_booking_person_message_path(:person_id => @current_user.id, :id => @listing_conversation.id), :html => { :method => "put" } do |form|
+    = form.label :reason, "Reason for cancelation"
+    = form.text_area :reason
+
+    = form.button "Cancel", :class => "send_button"

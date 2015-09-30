@@ -304,6 +304,15 @@ class PersonMailer < ActionMailer::Base
          :subject => "New member in #{@community.full_name(@person.locale)}")
   end
 
+  def canceled_booking_notification(person, community, reason)
+    @community = community
+    @person = person
+    @reason = reason
+    premailer_mail(:to => @community.admin_emails,
+         :from => community_specific_sender(@community),
+         :subject => "Canceled Booking")
+  end
+
   def email_confirmation(email, community)
     @current_community = community
     @no_settings = true

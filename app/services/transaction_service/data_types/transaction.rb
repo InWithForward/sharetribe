@@ -4,7 +4,7 @@ module TransactionService::DataTypes::Transaction
 
   Transaction = EntityUtils.define_builder(
     [:id, :fixnum, :mandatory],
-    [:payment_process, one_of: [:none, :postpay, :preauthorize]],
+    [:payment_process, one_of: [:none, :postpay, :preauthorize, :free_booking]],
     [:payment_gateway, one_of: [:paypal, :checkout, :braintree, :none]],
     [:community_id, :fixnum, :mandatory],
     [:starter_id, :string, :mandatory],

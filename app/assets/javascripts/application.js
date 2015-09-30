@@ -22,6 +22,7 @@
 //= require jquery.fileupload-validate
 //= require jquery.fileupload-image
 //= require cocoon
+//= require moment
 
 //= require datepicker/bootstrap-datepicker.js
 
@@ -67,4 +68,5 @@
 //= require follow
 //= require paypal_account_settings
 //= require transaction
+//= require calendar
 //= require_self

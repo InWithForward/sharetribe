@@ -13,13 +13,13 @@ module TransactionService::Store::Transaction
     [:unit_price, :money, default: Money.new(0)],
     [:shipping_price, :money],
     [:delivery_method, :to_symbol, one_of: [:none, :shipping, :pickup], default: :none],
-    [:payment_process, one_of: [:none, :postpay, :preauthorize]],
+    [:payment_process, one_of: [:none, :postpay, :preauthorize, :free_booking]],
     [:payment_gateway, one_of: [:paypal, :checkout, :braintree, :none]],
     [:commission_from_seller, :fixnum, :mandatory],
     [:automatic_confirmation_after_days, :fixnum, :mandatory],
     [:minimum_commission, :money, :mandatory],
     [:content, :string],
-    [:booking_fields, :hash])
+    [:booking_fields, :enumerable])
 
   Transaction = EntityUtils.define_builder(
     [:id, :fixnum, :mandatory],
@@ -32,15 +32,14 @@ module TransactionService::Store::Transaction
     [:unit_price, :money, :mandatory],
     [:shipping_price, :money],
     [:delivery_method, :to_symbol, :mandatory, one_of: [:none, :shipping, :pickup]],
-    [:payment_process, :to_symbol, one_of: [:none, :postpay, :preauthorize]],
+    [:payment_process, :to_symbol, one_of: [:none, :postpay, :preauthorize, :free_booking]],
     [:payment_gateway, :to_symbol, one_of: [:paypal, :checkout, :braintree, :none]],
     [:commission_from_seller, :fixnum],
     [:automatic_confirmation_after_days, :fixnum, :mandatory],
     [:minimum_commission, :money],
     [:last_transition_at, :time],
     [:current_state, :to_symbol],
-    [:shipping_address, :hash],
-    [:booking, :hash])
+    [:shipping_address, :hash])
 
   ShippingAddress = EntityUtils.define_builder(
     [:status, :string],
@@ -54,9 +53,9 @@ module TransactionService::Store::Transaction
     [:country, :string])
 
   Booking = EntityUtils.define_builder(
-    [:start_on, :date, :mandatory],
-    [:end_on, :date, :mandatory],
-    [:duration, :fixnum, :mandatory])
+    [:start_on, :date],
+    [:end_on, :date],
+    [:duration, :fixnum])
 
 
   FINISHED_TX_STATES = "'free', 'rejected', 'confirmed', 'canceled', 'errored'"
@@ -67,7 +66,7 @@ module TransactionService::Store::Transaction
     tx_data = HashUtils.compact(NewTransaction.call(opts))
     tx_model = TransactionModel.new(tx_data.except(:content, :booking_fields))
     build_conversation(tx_model, tx_data)
-    build_booking(tx_model, tx_data)
+    build_bookings(tx_model, tx_data)
 
     tx_model.save!
     from_model(tx_model)
@@ -144,13 +143,12 @@ module TransactionService::Store::Transaction
   end
 
   def add_opt_booking(hash, m)
-    if m.booking
+    bookings = m.bookings.map do |booking|
       booking_data = EntityUtils.model_to_hash(m.booking)
-      hash.merge(booking: Booking.call(
-                  booking_data.merge(duration: booking_duration(booking_data))))
-    else
-      hash
+      hash.merge(booking: Booking.call(booking_data))
     end
+
+    bookings.any? ? hash.merge(bookings: bookings) : hash
   end
 
   def addr_fields(addr)
@@ -178,23 +176,21 @@ module TransactionService::Store::Transaction
     end
   end
 
-  def build_booking(tx_model, tx_data)
+  def build_bookings(tx_model, tx_data)
     if is_booking?(tx_data)
-
-      # TODO What's the correct place for the booking calculation logic?
-      # Make sure listing_quantity equals duration
-      if booking_duration(tx_data[:booking_fields]) != tx_model.listing_quantity
-        raise ArgumentException.new("Listing quantity (#{tx_listing_quantity}) must be equal to booking duration in days (#{booking_duration(tx_data)})")
+      tx_data[:booking_fields].each do |fields|
+        tx_model.bookings.build({
+          start_on: fields[:start_on],
+          end_on: fields[:end_on],
+          start_at: fields[:start_at],
+          end_at: fields[:end_at]
+        })
       end
-
-      start_on = tx_data[:booking_fields][:start_on]
-      end_on = tx_data[:booking_fields][:end_on]
-      tx_model.build_booking({start_on: start_on, end_on: end_on})
     end
   end
 
   def is_booking?(tx_data)
-    tx_data[:booking_fields] && tx_data[:booking_fields][:start_on] && tx_data[:booking_fields][:end_on]
+    tx_data[:booking_fields]
   end
 
   def booking_duration(booking_data)

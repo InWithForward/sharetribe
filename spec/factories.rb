@@ -319,6 +319,7 @@ FactoryGirl.define do
 
   factory :custom_field_value do
     build_association(:question)
+    build_association(:listing)
 
     factory :dropdown_field_value, class: 'DropdownFieldValue' do
       build_association(:custom_dropdown_field, as: :question)
@@ -425,5 +426,11 @@ FactoryGirl.define do
   factory :follower_relationship do
     build_association(:person)
     build_association(:follower)
+  end
+
+  factory :availability do
+    build_association(:listing)
+    start_at DateTime.now
+    end_at (DateTime.now + 1.hour)
   end
 end

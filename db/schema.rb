@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151001160517) do
+ActiveRecord::Schema.define(:version => 20151003143919) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(:version => 20151001160517) do
 
   add_index "auth_tokens", ["token"], :name => "index_auth_tokens_on_token", :unique => true
 
+  create_table "availabilities", :force => true do |t|
+    t.integer  "listing_id"
+    t.integer  "start_at_hour"
+    t.integer  "start_at_minute"
+    t.integer  "end_at_hour"
+    t.integer  "end_at_minute"
+    t.integer  "dow"
+    t.date     "date"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "billing_agreements", :force => true do |t|
     t.integer  "paypal_account_id",    :null => false
     t.string   "billing_agreement_id"
@@ -39,8 +51,11 @@ ActiveRecord::Schema.define(:version => 20151001160517) do
     t.integer  "transaction_id"
     t.date     "start_on"
     t.date     "end_on"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.boolean  "confirmed",      :default => false
   end
 
   create_table "braintree_accounts", :force => true do |t|

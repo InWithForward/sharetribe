@@ -21,7 +21,8 @@ module TransactionService::Transaction
   TX_PROCESSES = {
     preauthorize: TransactionService::Process::Preauthorize.new,
     postpay: TransactionService::Process::Postpay.new,
-    none: TransactionService::Process::Free.new
+    none: TransactionService::Process::Free.new,
+    free_booking: TransactionService::Process::FreeBooking.new
   }
 
   module_function

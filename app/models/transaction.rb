@@ -53,7 +53,7 @@ class Transaction < ActiveRecord::Base
     :listing_author_id,
     :unit_price,
     :shipping_price,
-    :delivery_method,
+    :delivery_method
   )
 
   attr_accessor :contract_agreed
@@ -62,7 +62,8 @@ class Transaction < ActiveRecord::Base
   belongs_to :listing
   has_many :transaction_transitions, dependent: :destroy, foreign_key: :transaction_id
   has_one :payment, foreign_key: :transaction_id
-  has_one :booking, :dependent => :destroy
+  has_many :bookings, :dependent => :destroy
+  has_one :booking, conditions: { confirmed: true }, class_name: "Booking"
   has_one :shipping_address, dependent: :destroy
   belongs_to :starter, :class_name => "Person", :foreign_key => "starter_id"
   belongs_to :conversation
@@ -71,7 +72,7 @@ class Transaction < ActiveRecord::Base
   delegate :author, to: :listing
   delegate :title, to: :listing, prefix: true
 
-  accepts_nested_attributes_for :booking
+  accepts_nested_attributes_for :bookings
 
   validates_presence_of :payment_gateway
 

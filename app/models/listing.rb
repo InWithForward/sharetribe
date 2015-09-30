@@ -63,6 +63,7 @@ class Listing < ActiveRecord::Base
 
   has_many :listing_images, :dependent => :destroy
 
+  has_many :availabilities, :dependent => :destroy
   has_many :conversations
   has_many :comments, :dependent => :destroy
   has_many :custom_field_values, as: :customizable, dependent: :destroy
@@ -72,7 +73,7 @@ class Listing < ActiveRecord::Base
   has_one :location, :dependent => :destroy
   has_one :origin_loc, :class_name => "Location", :conditions => ['location_type = ?', 'origin_loc'], :dependent => :destroy
   has_one :destination_loc, :class_name => "Location", :conditions => ['location_type = ?', 'destination_loc'], :dependent => :destroy
-  accepts_nested_attributes_for :origin_loc, :destination_loc
+  accepts_nested_attributes_for :origin_loc, :destination_loc, :availabilities
 
   has_and_belongs_to_many :communities
   has_and_belongs_to_many :followers, :class_name => "Person", :join_table => "listing_followers"
@@ -410,5 +411,9 @@ class Listing < ActiveRecord::Base
 
   def payment_required_at?(community)
     transaction_type.price_field? && community.payments_in_use?
+  end
+
+  def availabilities_json
+    availabilities.to_json
   end
 end

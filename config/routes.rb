@@ -80,6 +80,10 @@ Kassi::Application.routes.draw do
     match "/listings/:listing_id/create_contact" => "free_transactions#create_contact", :as => :create_contact
     match "/listings/:listing_id/contact" => "free_transactions#contact", :as => :contact_to_listing
 
+    # free book flow
+    get "/listings/:listing_id/free_booking" => "free_booking_transactions#new", :as => :free_booking
+    post "/listings/:listing_id/free_booking" => "free_booking_transactions#create", :as => :free_booking
+
     match "/listings/new/:type/:category" => "listings#new", :as => :new_request_category
     match "/listings/new/:type" => "listings#new", :as => :new_request
     match "/logout" => "sessions#destroy", :as => :logout, :method => :delete
@@ -213,6 +217,12 @@ Kassi::Application.routes.draw do
       end
     end
 
+    resources :bookings do
+      member do
+        get :confirm
+      end
+    end
+
     resources :listing_images do
       member do
         get :image_status
@@ -310,6 +320,12 @@ Kassi::Application.routes.draw do
             get :accept_preauthorized, to: 'accept_preauthorized_conversations#accept'
             get :reject_preauthorized, to: 'accept_preauthorized_conversations#reject'
             put :acceptance_preauthorized, to: 'accept_preauthorized_conversations#accepted_or_rejected'
+
+            get :rebook_free_booking, to: 'accept_free_bookings#rebook_confirm'
+            put :rebook_free_booking, to: 'accept_free_bookings#rebook'
+
+            get :reject_free_booking, to: 'accept_free_bookings#reject_confirm'
+            put :reject_free_booking, to: 'accept_free_bookings#reject'
           end
           resources :messages
           resources :feedbacks, :controller => :testimonials do

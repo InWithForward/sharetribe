@@ -1,0 +1,12 @@
+@import "mixins/all";
+
+.button.checkbox {
+  background: $background;
+  border: $border solid 1px;
+  color: black;
+  padding: 10px;
+
+  label {
+    cursor: pointer;
+  }
+}

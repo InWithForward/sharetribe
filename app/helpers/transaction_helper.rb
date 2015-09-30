@@ -230,6 +230,18 @@ module TransactionHelper
             paid_status(conversation, @current_community.testimonials_in_use)
           ]
         } },
+        requested: ->() { {
+          both: [
+            status_info(t("conversations.status.#{conversation.discussion_type}_requested"), icon_classes: icon_for("accepted")),
+            requested_status(conversation)
+          ]
+        } },
+        booked: ->() { {
+          both: [
+            status_info(t("conversations.status.#{conversation.discussion_type}_booked"), icon_classes: icon_for("accepted")),
+            paid_status(conversation, @current_community.testimonials_in_use)
+          ]
+        } },
         preauthorized: ->() { {
           both: [
             status_info(t("conversations.status.#{conversation.discussion_type}_preauthorized"), icon_classes: icon_for("preauthorized")),
@@ -342,6 +354,14 @@ module TransactionHelper
     end
   end
 
+  def requested_status(conversation)
+    if conversation.listing.offerer?(@current_user)
+      waiting_for_current_user_to_confirm_request(conversation)
+    else
+      waiting_for_author_acceptance(conversation)
+    end
+  end
+
   def delivery_status(conversation)
     if current_user?(conversation.author)
       status_info(
@@ -428,6 +448,34 @@ module TransactionHelper
         link_classes: "cancel",
         link_icon_with_text_classes: icon_for("canceled"),
         link_text_with_icon: link_text_with_icon(conversation, "cancel")
+      }
+    ])
+  end
+
+  def waiting_for_current_user_to_confirm_request(conversation)
+    bookings = if conversation.bookings && conversation.booking.nil?
+      conversation.bookings.map do |booking|
+        {
+          link_href: confirm_booking_path(id: booking.id),
+          link_classes: "confirm",
+          link_icon_with_text_classes: icon_for("confirmed"),
+          link_text_with_icon: booking.start_at.to_formatted_s(:short)
+        }
+      end
+    end
+
+    status_links(bookings + [
+      {
+        link_href: reject_free_booking_person_message_path(@current_user, :id => conversation.id),
+        link_classes: "cancel",
+        link_icon_with_text_classes: icon_for("canceled"),
+        link_text_with_icon: link_text_with_icon(conversation, "different_reason")
+      },
+      {
+        link_href: rebook_free_booking_person_message_path(@current_user, :id => conversation.id),
+        link_classes: "cancel",
+        link_icon_with_text_classes: icon_for("canceled"),
+        link_text_with_icon: link_text_with_icon(conversation, "busy")
       }
     ])
   end

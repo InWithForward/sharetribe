@@ -75,6 +75,16 @@ module TransactionViewUtils
         sender: starter,
         mood: :positive
       }
+    when "booked"
+      {
+        sender: starter,
+        mood: :positive
+      }
+    when "requested"
+      {
+        sender: starter,
+        mood: :positive
+      }
     when "accepted"
       {
         sender: author,
@@ -128,6 +138,10 @@ module TransactionViewUtils
       t("conversations.message.paid", sum: humanized_money_with_symbol(payment_sum))
     when "accepted"
       t("conversations.message.accepted_#{discussion_type}")
+    when "requested"
+      t("conversations.message.requested_#{discussion_type}")
+    when "booked"
+      t("conversations.message.booked_#{discussion_type}")
     when "rejected"
       t("conversations.message.rejected_#{discussion_type}")
     when preauthorize_accepted
