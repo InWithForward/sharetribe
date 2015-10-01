@@ -357,7 +357,6 @@ ActiveRecord::Schema.define(:version => 20151003143919) do
 
   create_table "custom_field_values", :force => true do |t|
     t.integer  "custom_field_id"
-    t.integer  "listing_id"
     t.text     "text_value"
     t.float    "numeric_value"
     t.datetime "date_value"
@@ -368,8 +367,6 @@ ActiveRecord::Schema.define(:version => 20151003143919) do
     t.string   "customizable_id"
     t.string   "customizable_type"
   end
-
-  add_index "custom_field_values", ["listing_id"], :name => "index_custom_field_values_on_listing_id"
 
   create_table "custom_fields", :force => true do |t|
     t.string   "type"

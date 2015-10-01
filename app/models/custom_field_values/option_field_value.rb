@@ -4,7 +4,6 @@
 #
 #  id                :integer          not null, primary key
 #  custom_field_id   :integer
-#  listing_id        :integer
 #  text_value        :text
 #  numeric_value     :float
 #  date_value        :datetime
@@ -14,10 +13,6 @@
 #  delta             :boolean          default(TRUE), not null
 #  customizable_id   :string(255)
 #  customizable_type :string(255)
-#
-# Indexes
-#
-#  index_custom_field_values_on_listing_id  (listing_id)
 #
 
 class OptionFieldValue < CustomFieldValue
