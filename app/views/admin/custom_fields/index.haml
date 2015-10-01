@@ -84,7 +84,7 @@
         = icon_tag("directdown", ["icon-fix disabled"])
 
     - if show_custom_fields
-      = render :partial => "listed_custom_field", :collection => @custom_fields.sort, :as => :custom_field
+      = render :partial => "admin/custom_fields/listed_custom_field", :collection => @custom_fields.sort, :as => :custom_field
 
     - unless @current_community.hide_expiration_date
       .row
@@ -152,7 +152,7 @@
         = t(".save_order_error")
 
   .row.new-custom-field-type-form
-    = form_tag new_admin_custom_field_path, :method => :get do |form|
+    = form_tag (@new_path || new_admin_custom_field_path), :method => :get do |form|
       .new-custom-field-type-form-column
         = t(".add_new_field")
       .new-custom-field-type-form-column

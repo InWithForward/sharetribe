@@ -12,6 +12,7 @@
 #  min            :float
 #  max            :float
 #  allow_decimals :boolean          default(FALSE)
+#  for            :string(255)      default("Listing")
 #
 # Indexes
 #
@@ -29,7 +30,8 @@ class CustomField < ActiveRecord::Base
     :sort_priority,
     :required,
     :min,
-    :max
+    :max,
+    :for
   )
 
   has_many :names, :class_name => "CustomFieldName", :dependent => :destroy

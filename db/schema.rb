@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150707163756) do
+ActiveRecord::Schema.define(:version => 20151001160517) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -357,13 +357,14 @@ ActiveRecord::Schema.define(:version => 20150707163756) do
   create_table "custom_fields", :force => true do |t|
     t.string   "type"
     t.integer  "sort_priority"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "community_id"
     t.boolean  "required",       :default => true
     t.float    "min"
     t.float    "max"
     t.boolean  "allow_decimals", :default => false
+    t.string   "for",            :default => "Listing"
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"
