@@ -50,6 +50,15 @@
     = form.label :shape, t("admin.communities.people.edit.shape")
     = form.file_field :shape, :size => 30, :id => "shape_file"
 
+    - custom_fields = @custom_field_questions
+    - if custom_fields && custom_fields.count > 0
+      .new_listing_form_field_container
+        - custom_fields.each do |custom_field|
+          - custom_field.with_type do |field_type|
+            = label "custom_fields", "#{custom_field.id}".to_sym, "#{custom_field.name(I18n.locale)}#{custom_field.required ? '*' : ''}"
+            = render :partial => "listings/form/custom_field_partials/#{field_type}", :locals => { :custom_field => custom_field, :custom_field_value => @person.answer_for(custom_field) }
+
+
     %h2.experiences-header= t('admin.communities.people.edit.experiences')
     #experiences
       = form.fields_for :experiences do |f|

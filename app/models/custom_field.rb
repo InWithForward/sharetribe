@@ -12,7 +12,8 @@
 #  min            :float
 #  max            :float
 #  allow_decimals :boolean          default(FALSE)
-#  for            :string(255)      default("Listing")
+#  for            :string(255)      default("Listing"), not null
+#  visible        :boolean          default(TRUE), not null
 #
 # Indexes
 #
@@ -31,7 +32,8 @@ class CustomField < ActiveRecord::Base
     :required,
     :min,
     :max,
-    :for
+    :for,
+    :visible
   )
 
   has_many :names, :class_name => "CustomFieldName", :dependent => :destroy
@@ -48,7 +50,7 @@ class CustomField < ActiveRecord::Base
   VALID_TYPES = ["TextField", "NumericField", "DropdownField", "CheckboxField","DateField", "TextAreaField"]
 
   validates_length_of :names, :minimum => 1
-  validates_length_of :category_custom_fields, :minimum => 1
+  validates_length_of :category_custom_fields, :minimum => 1, if: :for_listing?
   validates_presence_of :community
 
   def name_attributes=(attributes)
@@ -86,6 +88,14 @@ class CustomField < ActiveRecord::Base
 
   def with_type(&block)
     throw "Implement this in the subclass"
+  end
+
+  def for_listing?
+    self.for == Listing.to_s
+  end
+
+  def for_person?
+    self.for == Person.to_s
   end
 
 end

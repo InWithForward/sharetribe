@@ -12,7 +12,8 @@
 #  min            :float
 #  max            :float
 #  allow_decimals :boolean          default(FALSE)
-#  for            :string(255)      default("Listing")
+#  for            :string(255)      default("Listing"), not null
+#  visible        :boolean          default(TRUE), not null
 #
 # Indexes
 #

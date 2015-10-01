@@ -35,11 +35,7 @@ class Admin::PersonCustomFieldsController < ApplicationController
     @custom_field = params[:field_type].constantize.new(params[:custom_field].merge(for: 'Person')) #before filter checks valid field types and prevents code injection
     @custom_field.community = @current_community
 
-    success = if valid_categories?(@current_community, params[:custom_field][:category_attributes])
-      @custom_field.save
-    end
-
-    if success
+    if @custom_field.save
       redirect_to admin_person_custom_fields_path
     else
       flash[:error] = "Listing field saving failed"
@@ -100,15 +96,6 @@ class Admin::PersonCustomFieldsController < ApplicationController
   end
 
   private
-
-  # Return `true` if all the category id's belong to `community`
-  def valid_categories?(community, category_attributes)
-    is_community_category = category_attributes.map do |category|
-      community.categories.any? { |community_category| community_category.id == category[:category_id].to_i }
-    end
-
-    is_community_category.all?
-  end
 
   def custom_field_belongs_to_community?(custom_field, community)
     community.custom_fields.include?(custom_field)

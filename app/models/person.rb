@@ -120,6 +120,7 @@ class Person < ActiveRecord::Base
   has_many :inverse_follower_relationships, :class_name => "FollowerRelationship", :foreign_key => "follower_id"
   has_many :followed_people, :through => :inverse_follower_relationships, :source => "person"
   has_many :experiences, dependent: :destroy
+  has_many :custom_field_values, as: :customizable, dependent: :destroy
 
   has_and_belongs_to_many :followed_listings, :class_name => "Listing", :join_table => "listing_followers"
 
@@ -735,6 +736,10 @@ class Person < ActiveRecord::Base
 
   def self.members_of(community)
     joins(:communities).where("communities.id" => community.id)
+  end
+
+  def answer_for(custom_field)
+    custom_field_values.find { |value| value.custom_field_id == custom_field.id }
   end
 
   private

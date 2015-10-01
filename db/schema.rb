@@ -346,10 +346,12 @@ ActiveRecord::Schema.define(:version => 20151001160517) do
     t.text     "text_value"
     t.float    "numeric_value"
     t.datetime "date_value"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "type"
-    t.boolean  "delta",           :default => true, :null => false
+    t.boolean  "delta",             :default => true, :null => false
+    t.integer  "customizable_id"
+    t.string   "customizable_type"
   end
 
   add_index "custom_field_values", ["listing_id"], :name => "index_custom_field_values_on_listing_id"
@@ -364,7 +366,8 @@ ActiveRecord::Schema.define(:version => 20151001160517) do
     t.float    "min"
     t.float    "max"
     t.boolean  "allow_decimals", :default => false
-    t.string   "for",            :default => "Listing"
+    t.string   "for",            :default => "Listing", :null => false
+    t.boolean  "visible",        :default => true,      :null => false
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"
