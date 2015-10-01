@@ -287,6 +287,9 @@ en:
         commission_from_seller: "Commission percentage from seller"
       paypal_account:
         paypal_admin_account: Payments
+    person_custom_fields:
+      index:
+        listing_fields: "Person fields"
     custom_fields:
       edit:
         edit_listing_field: "Edit listing field '%{field_name}'"

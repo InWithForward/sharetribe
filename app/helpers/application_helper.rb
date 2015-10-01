@@ -643,6 +643,12 @@ module ApplicationHelper
         :icon_class => icon_class("form"),
         :path => admin_custom_fields_path,
         :name => "listing_fields"
+      },
+      {
+        :text => t("admin.person_custom_fields.index.listing_fields"),
+        :icon_class => icon_class("form"),
+        :path => admin_person_custom_fields_path,
+        :name => "person_listing_fields"
       }
     ]
 

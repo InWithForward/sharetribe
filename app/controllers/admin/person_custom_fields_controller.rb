@@ -4,15 +4,13 @@ class Admin::PersonCustomFieldsController < ApplicationController
   before_filter :field_type_is_valid, :only => [:new, :create]
 
   def index
-    @selected_left_navi_link = "listing_fields"
+    @selected_left_navi_link = "person_listing_fields"
     @community = @current_community
     @custom_fields = @current_community.person_custom_fields
-    @new_path = new_admin_person_custom_field_path
-    render 'admin/custom_fields/index'
   end
 
   def new
-    @selected_left_navi_link = "listing_fields"
+    @selected_left_navi_link = "person_listing_fields"
     @community = @current_community
     #before filter checks valid field types and prevents code injection
     @custom_field = params[:field_type].constantize.new
@@ -24,12 +22,10 @@ class Admin::PersonCustomFieldsController < ApplicationController
       @min_option_count = 2
       @custom_field.options = [CustomFieldOption.new, CustomFieldOption.new]
     end
-    @create_path = admin_person_custom_fields_path(:field_type => @custom_field.type)
-    render 'admin/custom_fields/new'
   end
 
   def create
-    @selected_left_navi_link = "listing_fields"
+    @selected_left_navi_link = "person_listing_fields"
     @community = @current_community
 
     # Hack for comma/dot issue. Consider creating an app-wide comma/dot handling mechanism
@@ -53,7 +49,7 @@ class Admin::PersonCustomFieldsController < ApplicationController
 
   def edit
     @selected_tribe_navi_tab = "admin"
-    @selected_left_navi_link = "listing_fields"
+    @selected_left_navi_link = "person_listing_fields"
     @community = @current_community
 
     if params[:field_type] == "CheckboxField"
@@ -74,45 +70,7 @@ class Admin::PersonCustomFieldsController < ApplicationController
 
     @custom_field.update_attributes(params[:custom_field])
 
-    redirect_to admin_custom_fields_path
-  end
-
-  def edit_price
-    @selected_tribe_navi_tab = "admin"
-    @selected_left_navi_link = "listing_fields"
-    @community = @current_community
-  end
-
-  def edit_location
-    @selected_tribe_navi_tab = "admin"
-    @selected_left_navi_link = "listing_fields"
-    @community = @current_community
-  end
-
-  def update_price
-    # To cents
-    params[:community][:price_filter_min] = MoneyUtil.parse_str_to_money(params[:community][:price_filter_min], @current_community.default_currency).cents if params[:community][:price_filter_min]
-    params[:community][:price_filter_max] = MoneyUtil.parse_str_to_money(params[:community][:price_filter_max], @current_community.default_currency).cents if params[:community][:price_filter_max]
-
-    success = @current_community.update_attributes(params[:community])
-
-    if success
-      redirect_to admin_custom_fields_path
-    else
-      flash[:error] = "Price field editing failed"
-      render :action => :edit_price
-    end
-  end
-
-  def update_location
-    success = @current_community.update_attributes(params[:community])
-
-    if success
-      redirect_to admin_custom_fields_path
-    else
-      flash[:error] = "Location field editing failed"
-      render :action => :edit_location
-    end
+    redirect_to admin_person_custom_fields_path
   end
 
   def destroy
@@ -123,7 +81,7 @@ class Admin::PersonCustomFieldsController < ApplicationController
     end
 
     flash[:error] = "Field doesn't belong to current community" unless success
-    redirect_to admin_custom_fields_path
+    redirect_to admin_person_custom_fields_path
   end
 
   def order
@@ -134,7 +92,7 @@ class Admin::PersonCustomFieldsController < ApplicationController
       hash.merge(custom_field_id.to_i => sort_priority)
     end
 
-    @current_community.custom_fields.each do |custom_field|
+    @current_community.person_custom_fields.each do |custom_field|
       custom_field.update_attributes(:sort_priority => sort_priorities[custom_field.id])
     end
 
@@ -156,10 +114,8 @@ class Admin::PersonCustomFieldsController < ApplicationController
     community.custom_fields.include?(custom_field)
   end
 
-  private
-
   def field_type_is_valid
-    redirect_to admin_custom_fields_path unless CustomField::VALID_TYPES.include?(params[:field_type])
+    redirect_to admin_person_custom_fields_path unless CustomField::VALID_TYPES.include?(params[:field_type])
   end
 
 end
