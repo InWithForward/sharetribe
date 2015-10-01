@@ -12,7 +12,7 @@
 
 .left-navi-section
   #new-field-form.new-field-form
-    = form_for @custom_field, :as => :custom_field, :url => (@create_path || admin_custom_fields_path(:field_type => @custom_field.type)) do |form|
+    = form_for @custom_field, :as => :custom_field, :url => admin_custom_fields_path(:field_type => @custom_field.type) do |form|
 
       = render :partial => "admin/custom_fields/form/field_name", :locals => { :form => form }
 
