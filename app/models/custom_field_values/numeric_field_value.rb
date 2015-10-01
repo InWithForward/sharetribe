@@ -12,7 +12,7 @@
 #  updated_at        :datetime         not null
 #  type              :string(255)
 #  delta             :boolean          default(TRUE), not null
-#  customizable_id   :integer
+#  customizable_id   :string(255)
 #  customizable_type :string(255)
 #
 # Indexes

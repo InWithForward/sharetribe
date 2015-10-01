@@ -350,7 +350,7 @@ ActiveRecord::Schema.define(:version => 20151001160517) do
     t.datetime "updated_at",                          :null => false
     t.string   "type"
     t.boolean  "delta",             :default => true, :null => false
-    t.integer  "customizable_id"
+    t.string   "customizable_id"
     t.string   "customizable_type"
   end
 
