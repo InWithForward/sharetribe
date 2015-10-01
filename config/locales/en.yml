@@ -1299,7 +1299,7 @@ en:
       departure_time_radio_buttons:
         repeated: "Repeated (add times and days in the field 'detailed description')"
       description:
-        detailed_description: "Detailed description"
+        detailed_description: "What happens at this experience?"
       destination:
         destination: Destination
       form_content:
