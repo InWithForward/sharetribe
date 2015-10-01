@@ -1,4 +1,4 @@
-class AddForToCustomFields < ActiveRecord::Migration
+class PolymorphCustomFields < ActiveRecord::Migration
   def change
     add_column :custom_fields, :for, :string, default: 'Listing', index: true, null: false
     add_column :custom_fields, :visible, :boolean, default: true, index: true, null: false
