@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150707163756) do
+ActiveRecord::Schema.define(:version => 20151001160517) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -346,10 +346,12 @@ ActiveRecord::Schema.define(:version => 20150707163756) do
     t.text     "text_value"
     t.float    "numeric_value"
     t.datetime "date_value"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "type"
-    t.boolean  "delta",           :default => true, :null => false
+    t.boolean  "delta",             :default => true, :null => false
+    t.string   "customizable_id"
+    t.string   "customizable_type"
   end
 
   add_index "custom_field_values", ["listing_id"], :name => "index_custom_field_values_on_listing_id"
@@ -357,13 +359,15 @@ ActiveRecord::Schema.define(:version => 20150707163756) do
   create_table "custom_fields", :force => true do |t|
     t.string   "type"
     t.integer  "sort_priority"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "community_id"
     t.boolean  "required",       :default => true
     t.float    "min"
     t.float    "max"
     t.boolean  "allow_decimals", :default => false
+    t.string   "for",            :default => "Listing", :null => false
+    t.boolean  "visible",        :default => true,      :null => false
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"

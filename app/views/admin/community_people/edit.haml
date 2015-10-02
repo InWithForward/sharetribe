@@ -50,6 +50,8 @@
     = form.label :shape, t("admin.communities.people.edit.shape")
     = form.file_field :shape, :size => 30, :id => "shape_file"
 
+    = render(partial: 'listings/form/custom_fields', locals: { customizable: @person, custom_fields: @custom_field_questions })
+
     %h2.experiences-header= t('admin.communities.people.edit.experiences')
     #experiences
       = form.fields_for :experiences do |f|

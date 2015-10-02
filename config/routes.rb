@@ -161,6 +161,12 @@ Kassi::Application.routes.draw do
           put :update_location
         end
       end
+      resources :person_custom_fields do
+        collection do
+          get :add_option
+          post :order
+        end
+      end
       resources :categories do
         member do
           get :remove

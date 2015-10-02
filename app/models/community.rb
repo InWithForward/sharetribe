@@ -128,9 +128,11 @@ class Community < ActiveRecord::Base
   has_one :payment_gateway, :dependent => :destroy
   has_one :paypal_account # Admin paypal account
 
-  has_many :custom_fields, :dependent => :destroy
+  has_many :custom_fields, :dependent => :destroy, conditions: { for: 'Listing' }
   has_many :custom_dropdown_fields, :class_name => "CustomField", :conditions => ["type = 'DropdownField'"], :dependent => :destroy
   has_many :custom_numeric_fields, :class_name => "NumericField", :conditions => ["type = 'NumericField'"], :dependent => :destroy
+
+  has_many :person_custom_fields, class_name: "CustomField", conditions: { for: 'Person' }, dependent: :destroy
 
   after_create :initialize_settings
 

@@ -49,6 +49,12 @@
           = t(".shape")
         = image_tag @person.shape.url(:original)
 
+    - @person.custom_field_values.visible.each do |custom_field_value|
+      .row
+        .col-12
+          - custom_field_value.with_type do |question_type|
+            = render :partial => "listings/custom_field_partials/#{question_type}", :locals => { :custom_field_value => custom_field_value }
+
     - if @person.experiences.any?
       .row
         %h2.people-header

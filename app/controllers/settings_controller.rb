@@ -19,6 +19,7 @@ class SettingsController < ApplicationController
     # This is needed if person doesn't yet have a location
     # Build a new one based on old street address or then empty one.
     add_location_to_person
+    @custom_field_questions = @current_community.person_custom_fields.where(visible: true)
   end
 
   def account

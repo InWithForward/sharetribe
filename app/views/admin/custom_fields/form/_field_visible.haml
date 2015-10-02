@@ -1,0 +1,6 @@
+.row
+  .col-12
+    .checkbox-container
+      = form.check_box :visible
+      - custom_field.with_type do |type|
+        = form.label :visible, t(".this_field_is_visible")

@@ -169,6 +169,8 @@ class PeopleController < Devise::RegistrationsController
   end
 
   def update
+    @person.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+
     # If setting new location, delete old one first
     if params[:person] && params[:person][:location] && (params[:person][:location][:address].empty? || params[:person][:street_address].blank?)
       params[:person].delete("location")
