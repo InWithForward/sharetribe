@@ -319,7 +319,6 @@ FactoryGirl.define do
 
   factory :custom_field_value do
     build_association(:question)
-    build_association(:listing)
 
     factory :dropdown_field_value, class: 'DropdownFieldValue' do
       build_association(:custom_dropdown_field, as: :question)
