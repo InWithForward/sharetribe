@@ -1,4 +1,7 @@
 class FreeBookingTransactionsController < ApplicationController
+  before_filter do |controller|
+    controller.ensure_logged_in t("layouts.notifications.you_must_log_in_to_send_a_message")
+  end
 
   before_filter :fetch_listing_from_params
   before_filter :ensure_listing_is_open
@@ -83,7 +86,7 @@ class FreeBookingTransactionsController < ApplicationController
     Delayed::Job.enqueue(
       AutomaticCancellationJob.new(transaction_id),
       priority: 10,
-      run_at: APP_CONFIG.minutes_to_cancel_in.day.from_now
+      run_at: APP_CONFIG.minutes_to_cancel_in.minutes.from_now
     )
 
     redirect_to person_transaction_path(:person_id => @current_user.id, :id => transaction_id)
