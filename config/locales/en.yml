@@ -505,9 +505,11 @@ en:
       rejected_offer: "rejected the offer"
       confirmed_request: "marked the request as completed"
       confirmed_offer: "marked the offer as completed"
-      canceled_request: "canceled the request"
+      canceled_request: "canceled the experience"
       canceled_offer: "canceled the offer"
       paid: "paid %{sum}"
+      requested_request: "requested an experience"
+      booked_request: "booked the experience"
     new:
       offer_message_form_title: "Offer %{listing} to %{person}"
       request_message_form_title: "Request %{listing} from %{person}"
@@ -546,6 +548,8 @@ en:
       send_message_to_user: "Send message to %{person}"
       about_listing: "About listing %{listing_title}"
       author_has_to_accept_request: "%{author_name} needs to accept the request before you can pay"
+      select_availabilities: "Please select two availabilities"
+      submit: 'Confirm'
     show:
       in_response_to_listing: "about listing"
       message_sent_by: "Message sent by"
@@ -585,6 +589,8 @@ en:
           intl: "We couldn't process the PayPal payment because your PayPal account does not have a withdrawal mechanism. Go to %{paypal_url} and sign in to your account to manually accept or reject the payment."
       waiting_for_current_user_to_deliver_listing: "Waiting for you to deliver %{listing_title}"
       waiting_for_listing_author_to_deliver_listing: "Waiting for %{listing_author_name} to deliver %{listing_title}"
+      request_booked: "Experience booked"
+      request_requested: "Requested several times"
       request_accepted: Accepted
       request_rejected: Rejected
       request_confirmed: Completed
@@ -617,6 +623,8 @@ en:
       reject_preauthorized_request: "Not this time"
       confirm: "Mark completed"
       cancel: Dispute
+      different_reason: "Different reason"
+      busy: "I'm busy at these times"
   braintree_accounts:
     new:
       add_payout_details: "Add your payout details"
@@ -660,6 +668,18 @@ en:
   preauthorize_payments:
     edit:
       confirm_payment: "Confirm payment"
+  free_bookings:
+    accept_confirm:
+      heading: "Please confirm booking"
+      submit: "Confirm"
+    rebook_confirm:
+      heading: "You're busy those days"
+      body: "We will prompt the kudoer to choose different time slots. Please update your availability."
+      submit: "Yes, I'm busy"
+    reject_confirm:
+      heading: "Why won't this work for you?"
+      body: "This will cancel the reservation and notify the admin of the reason"
+      submit: "Submit"
   community_memberships:
     access_denied:
       access_denied: "Access denied"
@@ -725,6 +745,16 @@ en:
       giving_feedback_is_good_idea: "You can now give feedback to %{other_party_given_name}. Giving feedback is always a good idea. If everything went well, you should let others know that %{other_party_given_name} can be trusted. If there were any problems, it's good to mention those as well."
       give_feedback_to: "Give feedback to %{other_party_given_name}"
       show_thread: "Show conversation"
+    rebook_to_requester:
+      subject: "Those times don't work with your host"
+      explanation: "Your host can't make it at either of those specific times. Please rebook the experience."
+      button: "Re-book"
+    accept_booking_to_requester:
+      subject: "Your experience is booked"
+      body: "Your experience of %{listing} with %{host} is booked. Here are the details:"
+      date: "Date"
+      time: "Time"
+      button: "View"
     escrow_canceled:
       subject: "Payment canceled"
       has_marked_request_as_canceled: "%{other_party_full_name} has marked the request about '%{request}' canceled. You will not receive money from this transaction."

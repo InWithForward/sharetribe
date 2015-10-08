@@ -185,6 +185,55 @@ class TransactionMailer < ActionMailer::Base
     }
   end
 
+  def canceled_booking_to_admin(person, community, reason)
+    premailer_mail(:to => @community.admin_emails,
+         :from => community_specific_sender(@community),
+         :subject => "Canceled Booking") { |format|
+      format.html {
+        render "canceled_booking_to_admin", locals: {
+          person: @person,
+          community: @community,
+          reason: @reason,
+        }
+      }
+    }
+  end
+
+  def rebook_to_requester(transaction, community)
+    recipient = transaction.requester
+    premailer_mail(:to => recipient.confirmed_notification_emails_to,
+          :from => community_specific_sender(community),
+          :subject => t("emails.rebook_to_requester.subject")) { |format|
+      format.html {
+        render "rebook_to_requester", locals: {
+          transaction: transaction,
+          recipient: recipient,
+          community: community
+        }
+      }
+    }
+  end
+
+  def accept_booking_to_requester(transaction, community)
+    recipient = transaction.requester
+
+    premailer_mail(
+      :to => recipient.confirmed_notification_emails_to,
+      :from => community_specific_sender(community),
+      :subject => t("emails.accept_booking_to_requester.subject")
+    ) do |format|
+      format.html {
+        render "accept_booking_to_requester", locals: {
+          transaction: transaction,
+          recipient: recipient,
+          booking: transaction.booking,
+          community: community
+        }
+      }
+    end
+  end
+
+
   private
 
   def premailer_mail(opts, &block)

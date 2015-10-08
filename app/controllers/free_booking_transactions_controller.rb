@@ -5,8 +5,6 @@ class FreeBookingTransactionsController < ApplicationController
   before_filter :ensure_listing_author_is_not_current_user
   before_filter :ensure_authorized_to_reply
 
-  BookingForm = FormUtils.define_form("BookingForm")
-
   ContactForm = FormUtils.define_form("ListingConversation", :content, :sender_id, :listing_id, :community_id)
     .with_validations { validates_presence_of :content, :listing_id }
 
@@ -14,30 +12,28 @@ class FreeBookingTransactionsController < ApplicationController
     :content,
     :sender_id,
     :contract_agreed,
-    :delivery_method,
-    :listing_id
+    :listing_id,
+    :booking_fields
    ).with_validations {
     validates_presence_of :listing_id
-    validates :delivery_method, inclusion: { in: %w(shipping pickup), message: "%{value} is not shipping or pickup." }, allow_nil: true
+    validates_length_of :booking_fields, is: 2, message: "must have two selections"
   }
 
-  FreeBookingForm = FormUtils.merge("FreeBooking", MessageForm, BookingForm)
+  FreeBookingForm = FormUtils.merge("FreeBooking", MessageForm)
 
   ListingQuery = MarketplaceService::Listing::Query
 
   def new
     @availabilities = Availability
       .unbooked(@listing)
-      .select { |a| a[:start_at] > Time.now + 0.hours }
+      .select { |a| a[:start_at] > Time.now + 48.hours }
       .sort { |x,y| x[:start_at] <=> y[:start_at] }
       .take(6)
 
-    vprms = view_params(listing_id: params[:listing_id],
-                        shipping_enabled: params[:delivery] == "shipping")
+    vprms = view_params(listing_id: params[:listing_id])
 
     render 'free_booking_transactions/new', locals: {
       listing: vprms[:listing],
-      delivery_method: params[:delivery],
       free_booking_form: FreeBookingForm.new(),
       author: query_person_entity(vprms[:listing][:author_id]),
       action_button_label: vprms[:action_button_label],
@@ -53,6 +49,15 @@ class FreeBookingTransactionsController < ApplicationController
         { start_at: start_at, end_at: end_at }
       end
 
+    form = MessageForm.new({
+      listing_id: @listing.id,
+      booking_fields: booking_fields
+    })
+    unless form.valid?
+      flash[:error] = form.errors.full_messages.join(", ")
+      return redirect_to :back
+    end
+
     transaction_response = TransactionService::Transaction.create(
       transaction: {
         community_id: @current_community.id,
@@ -66,8 +71,9 @@ class FreeBookingTransactionsController < ApplicationController
         booking_fields: booking_fields
       }
     )
-
     transaction_id = transaction_response[:data][:transaction][:id]
+    Delayed::Job.enqueue(TransactionCreatedJob.new(transaction_id, @current_community.id))
+
     redirect_to person_transaction_path(:person_id => @current_user.id, :id => transaction_id)
   end
 
@@ -117,20 +123,6 @@ class FreeBookingTransactionsController < ApplicationController
 
   def fetch_listing_from_params
     @listing = Listing.find(params[:listing_id] || params[:id])
-  end
-
-  def valid_delivery_method(delivery_method_str)
-    case delivery_method_str
-    when "shipping"
-      :shipping
-    when "pickup"
-      :pickup
-    else
-      nil
-    end
-  end
-
-  def create_free_booking_transaction(opts)
   end
 
   def query_person_entity(id)

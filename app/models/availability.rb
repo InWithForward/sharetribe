@@ -51,7 +51,7 @@ class Availability < ActiveRecord::Base
   def self.synthesize(availability)
     WEEKS.times.map do |i|
       t = Date.today
-      d = Date.commercial(t.cwyear, t.cweek, availability.dow)
+      d = Date.commercial(t.cwyear, t.cweek, (availability.dow + 1))
       d += i.week
 
       {

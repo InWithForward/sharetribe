@@ -8,8 +8,7 @@
   - author_link = link_to(author[:display_name], person_path(id: author[:username]))
 
   .preauthorize-section
-    %h2
-      = "Please select two availabilities"
+    %h2= t('conversations.new.select_availabilities')
 
   = form_for free_booking_form,
     :url => form_action,
@@ -26,4 +25,4 @@
             = "#{start_at.to_formatted_s(:time)} - #{end_at.to_formatted_s(:time)},  #{start_at.to_date.to_formatted_s(:short)}"
     .row
       .col-12
-        = form.button 'Confirm', :class => "send_button"
+        = form.button t('conversations.new.submit'), :class => "send_button"

@@ -69,6 +69,8 @@ module TransactionViewUtils
       new_state == "paid"
     }
 
+    canceled_request = -> (new_state) { new_state == "canceled" && old_state == "requested" }
+
     message = case transition[:to_state]
     when "preauthorized"
       {
@@ -77,7 +79,7 @@ module TransactionViewUtils
       }
     when "booked"
       {
-        sender: starter,
+        sender: author,
         mood: :positive
       }
     when "requested"
@@ -104,6 +106,11 @@ module TransactionViewUtils
       {
         sender: starter,
         mood: :positive
+      }
+    when canceled_request
+      {
+        sender: author,
+        mood: :negative
       }
     when "canceled"
       {

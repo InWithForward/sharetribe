@@ -326,6 +326,9 @@ Kassi::Application.routes.draw do
 
             get :reject_free_booking, to: 'accept_free_bookings#reject_confirm'
             put :reject_free_booking, to: 'accept_free_bookings#reject'
+
+            get :accept_free_booking, to: 'accept_free_bookings#accept_confirm'
+            put :accept_free_booking, to: 'accept_free_bookings#accept'
           end
           resources :messages
           resources :feedbacks, :controller => :testimonials do

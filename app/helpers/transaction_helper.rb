@@ -456,7 +456,7 @@ module TransactionHelper
     bookings = if conversation.bookings && conversation.booking.nil?
       conversation.bookings.map do |booking|
         {
-          link_href: confirm_booking_path(id: booking.id),
+          link_href: accept_free_booking_person_message_path(@current_user, :id => conversation.id, booking_id: booking.id),
           link_classes: "confirm",
           link_icon_with_text_classes: icon_for("confirmed"),
           link_text_with_icon: booking.start_at.to_formatted_s(:short)
@@ -466,16 +466,16 @@ module TransactionHelper
 
     status_links(bookings + [
       {
-        link_href: reject_free_booking_person_message_path(@current_user, :id => conversation.id),
-        link_classes: "cancel",
-        link_icon_with_text_classes: icon_for("canceled"),
-        link_text_with_icon: link_text_with_icon(conversation, "different_reason")
-      },
-      {
         link_href: rebook_free_booking_person_message_path(@current_user, :id => conversation.id),
         link_classes: "cancel",
         link_icon_with_text_classes: icon_for("canceled"),
         link_text_with_icon: link_text_with_icon(conversation, "busy")
+      },
+      {
+        link_href: reject_free_booking_person_message_path(@current_user, :id => conversation.id),
+        link_classes: "cancel",
+        link_icon_with_text_classes: icon_for("canceled"),
+        link_text_with_icon: link_text_with_icon(conversation, "different_reason")
       }
     ])
   end

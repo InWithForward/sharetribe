@@ -9,15 +9,26 @@ class AcceptFreeBookingsController < ApplicationController
 
   before_filter :ensure_is_author
 
+  def accept_confirm
+    @booking = Booking.find(params[:booking_id])
+  end
+
+  def accept
+    @booking = Booking.find(params[:transaction][:booking_id])
+    TransactionService::Process::FreeBooking.new.confirm(booking: @booking)
+    TransactionMailer.accept_booking_to_requester(@listing_conversation, @current_community).deliver
+    redirect_to person_transaction_path(person_id: @current_user.id, id: @listing_conversation.id)
+  end
+
   def reject
     TransactionService::Process::FreeBooking.new.cancel(tx: @listing_conversation)
-    PersonMailer.canceled_booking_notification(@current_user, @current_community, params[:conversation][:reason])
+    TransactionMailer.canceled_booking_to_admin(@current_user, @current_community, params[:conversation][:reason]).deliver
     redirect_to person_transaction_path(person_id: @current_user.id, id: @listing_conversation.id)
   end
 
   def rebook
     TransactionService::Process::FreeBooking.new.cancel(tx: @listing_conversation)
-    #TODO: send email to kudoer
+    TransactionMailer.rebook_to_requester(@listing_conversation, @current_community).deliver
     redirect_to person_transaction_path(person_id: @current_user.id, id: @listing_conversation.id)
   end
 
