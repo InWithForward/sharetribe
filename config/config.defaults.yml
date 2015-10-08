@@ -223,6 +223,9 @@ default: &default_settings
   knowledge_base_url: http://www.example.com/knowledgebase
   display_knowledge_base_articles: false
 
+  minutes_to_remind_in: 1440 # 60 * 24 * 1
+  minutes_to_cancel_in: 2880 # 60 * 24 * 2
+
 production: &production_settings
   <<: *default_settings
   logger_type: "stdout"
