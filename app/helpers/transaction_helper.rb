@@ -1,28 +1,30 @@
 module TransactionHelper
 
   def icon_for(status)
-    case status
+    icon = case status
     when "accepted"
-      "ss-check"
+      "check"
     when "confirmed"
-      "ss-check"
+      "check"
     when "rejected"
-      "ss-delete"
+      "cross"
     when "canceled"
-      "ss-delete"
+      "cross"
     when "paid"
-      "ss-check"
+      "check"
     when "preauthorized"
-      "ss-check"
+      "check"
     when "pending_ext"
-      "ss-alert"
+      "alert"
     when "accept_preauthorized"
-      "ss-check"
+      "check"
     when "reject_preauthorized"
-      "ss-delete"
+      "cross"
     when "errored"
-      "ss-delete"
+      "cross"
     end
+
+    icon_class(icon)
   end
 
   # Give `status`, `is_author` and `other_party` and get back icon and text for current status
@@ -538,12 +540,12 @@ module TransactionHelper
       :listing_author_name => other_party_link
     ).html_safe
 
-    status_info(link, icon_classes: 'ss-clock')
+    status_info(link, icon_classes: icon_class('clock'))
   end
 
   def waiting_for_buyer_to_pay(conversation)
     link = t("conversations.status.waiting_payment_from_requester", :requester_name => link_to(conversation.requester.given_name_or_username, conversation.requester)).html_safe
-    status_info(link, icon_classes: 'ss-clock')
+    status_info(link, icon_classes: icon_class('clock'))
   end
 
   def waiting_for_buyer_to_confirm(conversation)
@@ -554,7 +556,7 @@ module TransactionHelper
       )
     ).html_safe
 
-    status_info(link, icon_classes: 'ss-clock')
+    status_info(link, icon_classes: icon_class('clock'))
   end
 
   def waiting_for_author_to_accept_preauthorized(conversation)
@@ -565,7 +567,7 @@ module TransactionHelper
       )
     ).html_safe
 
-    status_info(text, icon_classes: 'ss-clock')
+    status_info(text, icon_classes: icon_class('clock'))
   end
 
   def feedback_given_status

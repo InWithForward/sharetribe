@@ -237,7 +237,8 @@ module ApplicationHelper
       "lock" => "icon-lock",
       "unlock" => "icon-unlock",
       "edit" => "icon-edit",
-      "reply" => "icon-reply"
+      "reply" => "icon-reply",
+      'check' => 'icon-check'
     }
   }
 
