@@ -98,7 +98,7 @@ class Admin::PersonCustomFieldsController < ApplicationController
   private
 
   def custom_field_belongs_to_community?(custom_field, community)
-    community.custom_fields.include?(custom_field)
+    community.person_custom_fields.include?(custom_field)
   end
 
   def field_type_is_valid
