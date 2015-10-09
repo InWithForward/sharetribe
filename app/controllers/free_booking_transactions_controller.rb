@@ -80,13 +80,13 @@ class FreeBookingTransactionsController < ApplicationController
     Delayed::Job.enqueue(
       AcceptReminderJob.new(transaction_id, @listing.author.id, @current_community.id),
       priority: 10,
-      run_at: APP_CONFIG.minutes_to_remind_in.minutes.from_now
+      run_at: APP_CONFIG.minutes_to_remind_in.to_i.minutes.from_now
     )
 
     Delayed::Job.enqueue(
       AutomaticCancellationJob.new(transaction_id),
       priority: 10,
-      run_at: APP_CONFIG.minutes_to_cancel_in.minutes.from_now
+      run_at: APP_CONFIG.minutes_to_cancel_in.to_i.minutes.from_now
     )
 
     redirect_to person_transaction_path(:person_id => @current_user.id, :id => transaction_id)
