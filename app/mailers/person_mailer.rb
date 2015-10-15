@@ -145,6 +145,22 @@ class PersonMailer < ActionMailer::Base
          :subject => t("emails.payment_reminder.remember_to_pay", :listing_title => @conversation.listing.title))
   end
 
+  # Remind users before the booking
+  def booking_reminder(booking, recipient, community)
+    @email_type = "email_about_accept_reminders"
+    set_up_urls(recipient, community, @email_type)
+
+    @booking = booking
+    @transaction = booking.transaction
+    @recipient = recipient
+
+    premailer_mail(
+      :to => recipient.confirmed_notification_emails_to,
+      :from => community_specific_sender(community),
+      :subject => t( "emails.booking_reminder.subject")
+    )
+  end
+
   # Remind user to fill in payment details
   def payment_settings_reminder(listing, recipient, community)
     set_up_urls(recipient, community)
