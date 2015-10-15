@@ -37,6 +37,8 @@ Kassi::Application.configure do
       :authentication       => 'plain',
       :enable_starttls_auto => true
     }
+  elsif APP_CONFIG.mail_delivery_method == "letteropener"
+    ActionMailer::Base.delivery_method = :letter_opener
   end
 
   config.active_support.deprecation = :log

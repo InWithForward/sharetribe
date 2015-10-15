@@ -6,4 +6,10 @@
 
       = t("emails.new_message.has_sent_you_a_message_in_kassi", :sender => @message.sender.name(@current_community))
 
+%tr
+  %td{:align => "left", :style => "padding-top: 15px;"}
+    %font{body_font}
+      - text_with_line_breaks do
+        = @message.content
+
 = render :partial => "action_button", :locals => { :text => t("emails.new_message.view_message"), :url => url}

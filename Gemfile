@@ -101,6 +101,7 @@ group :development do
   gem 'annotate'
   gem 'zeus', '0.15.1'
   gem 'i18n-tasks', '~> 0.6.2'
+  gem "letter_opener"
 end
 
 group :test do
