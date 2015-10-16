@@ -58,7 +58,7 @@ gem 'postmark-rails' # could be removed as not currently used
 gem 'rails-i18n'
 gem 'devise', "~>2.2.4"  #3.0rc requires bit bigger changes
 gem "devise-encryptable"
-gem "omniauth-facebook"
+gem "omniauth-facebook", '~> 2.0.1'
 gem 'spreadsheet'
 gem 'rabl'
 gem 'rake'
@@ -83,6 +83,7 @@ gem 'paypal-sdk-merchant', '~> 1.116.0'
 gem 'airbrake', '~>4.1.0'
 gem 'youtube_addy', '~> 1.0.4'
 gem 'cocoon', '~> 1.2.6'
+gem 'twilio-ruby', '~> 4.2.0'
 
 group :staging, :production do
   gem 'newrelic_rpm', '~> 3.9.1.236'

@@ -76,6 +76,7 @@ class FreeBookingTransactionsController < ApplicationController
     )
     transaction_id = transaction_response[:data][:transaction][:id]
     Delayed::Job.enqueue(TransactionCreatedJob.new(transaction_id, @current_community.id))
+    Delayed::Job.enqueue(BookingRequestSMSJob.new(transaction_id, @current_community.id))
 
     Delayed::Job.enqueue(
       AcceptReminderJob.new(transaction_id, @listing.author.id, @current_community.id),

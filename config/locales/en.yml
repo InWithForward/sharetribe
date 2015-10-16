@@ -961,6 +961,8 @@ en:
       cancel_error: "An error occured during cancellation. Could not finalize cancel."
       accept_authorization_error: "An error occured while trying to accept preauthorized Paypal payment. Please, try again."
       reject_authorization_error: "An error occured while trying to reject preauthorized Paypal payment. Please, try again."
+  sms:
+    booking_request: "%{listing_title} requested from %{requester}"
   error_pages:
     back_to_kassi_front_page: "Back to the front page"
     error_404:

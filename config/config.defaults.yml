@@ -227,6 +227,10 @@ default: &default_settings
   minutes_to_cancel_in: 2880 # 60 * 24 * 2
   immediate_booking_reminder: false
 
+  twilio_account_sid: ACd353b0a32f97c10aa4472821a16cba6a
+  twilio_auth_token: 4e4e984351f7177fa9daf700d963d459
+  twilio_from: "+17782001710"
+
 production: &production_settings
   <<: *default_settings
   logger_type: "stdout"
