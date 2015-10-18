@@ -52,3 +52,24 @@ input.auto_width {
   }
 
 }
+
+.buttonish.checkbox {
+  padding: 10px 20px;
+  color: $body;
+  cursor: pointer;
+  width: 100%;
+  @include border-radius(em(5));
+  border: 2px solid $border;
+  &:hover { background: $highlight; }
+  margin-bottom: lines(0.25);
+  .link-icon {
+    position: absolute;
+    top: em(8);
+    left: em(12);
+  }
+  .link-text {
+    margin-left: em(40);
+    margin-right: lines(1.5);
+    padding: em(6) 0 em(10) 0;
+  }
+}

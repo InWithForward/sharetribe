@@ -22,10 +22,7 @@
   .preauthorize-section
     %h2= t('conversations.new.select_availabilities')
 
-  = form_for free_booking_form,
-    :url => form_action,
-      :method => "post",
-      :html => { :id => "" } do |form|
+  = form_for free_booking_form, :url => form_action, :method => "post" do |form|
 
     %ul.no-bullets
       - @availabilities.each_with_index do |availability, i|
@@ -33,7 +30,7 @@
         - identifier = "#{start_at.to_i}_#{end_at.to_i}".to_sym
         - hidden_class = (i > 6) ? "hidden" : ""
         %li.availability(class=hidden_class)
-          = form.label identifier, class: 'button checkbox' do
+          = form.label identifier, class: 'buttonish checkbox' do
             = check_box(:free_booking, identifier)
             = "#{start_at.to_formatted_s(:time)} - #{end_at.to_formatted_s(:time)},  #{start_at.to_date.to_formatted_s(:short)}"
 
