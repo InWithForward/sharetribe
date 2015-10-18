@@ -3,6 +3,18 @@
     = action_button_label
     = link_to(listing[:title], listing_path(listing[:id]))
 
+
+- content_for :extra_javascript do
+  :javascript
+    $('#show-more').click(function(event) {
+      $('.availability.hidden').slice(0, 6).removeClass('hidden');
+
+      if($('.availability.hidden').length === 0)
+        $('#show-more').addClass('hidden');
+
+      return false;
+    });
+
 .centered-section
 
   - author_link = link_to(author[:display_name], person_path(id: author[:username]))
@@ -16,13 +28,17 @@
       :html => { :id => "" } do |form|
 
     %ul.no-bullets
-      - @availabilities.each do |availability|
+      - @availabilities.each_with_index do |availability, i|
         - start_at, end_at = availability[:start_at], availability[:end_at]
         - identifier = "#{start_at.to_i}_#{end_at.to_i}".to_sym
-        %li
+        - hidden_class = (i > 6) ? "hidden" : ""
+        %li.availability(class=hidden_class)
           = form.label identifier, class: 'button checkbox' do
             = check_box(:free_booking, identifier)
             = "#{start_at.to_formatted_s(:time)} - #{end_at.to_formatted_s(:time)},  #{start_at.to_date.to_formatted_s(:short)}"
+
+    %a#show-more{href:"#"}
+      More Times
     .row
       .col-12
         = form.button t('conversations.new.submit'), :class => "send_button"

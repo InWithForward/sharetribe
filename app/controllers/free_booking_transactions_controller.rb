@@ -31,7 +31,7 @@ class FreeBookingTransactionsController < ApplicationController
       .unbooked(@listing)
       .select { |a| a[:start_at] > Time.now + 48.hours }
       .sort { |x,y| x[:start_at] <=> y[:start_at] }
-      .take(6)
+      .take(18)
 
     vprms = view_params(listing_id: params[:listing_id])
 
