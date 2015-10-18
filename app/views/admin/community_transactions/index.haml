@@ -12,20 +12,21 @@
     %thead
       %tr
         %th= render partial: "layouts/sort_link", locals: { column: "listing", direction: sort_link_direction("listing"), title: t("admin.communities.transactions.headers.listing") }
+        %th=t("admin.communities.transactions.headers.status")
         - if show_status_and_sum
-          %th=t("admin.communities.transactions.headers.status")
           %th=t("admin.communities.transactions.headers.sum")
         %th= render partial: "layouts/sort_link", locals: { column: "started", direction: sort_link_direction("started"), title: t("admin.communities.transactions.headers.started") }
         %th= render partial: "layouts/sort_link", locals: { column: "last_activity", direction: sort_link_direction("last_activity"), title: t("admin.communities.transactions.headers.last_activity") }
         %th=t("admin.communities.transactions.headers.initiated_by")
         %th=t("admin.communities.transactions.headers.other_party")
+        %th=t("admin.communities.transactions.headers.booking_at")
 
     %tbody
       - conversations.each do |conversation|
         %tr
           %td=Maybe(conversation[:listing]).map { |listing| link_to_unless(listing[:deleted], listing[:title], conversation[:listing_url]) }.or_else("")
+          %td=t("admin.communities.transactions.status.#{conversation[:status]}")
           - if show_status_and_sum
-            %td=t("admin.communities.transactions.status.#{conversation[:status]}")
             %td=conversation[:payment_total] ? humanized_money_with_symbol(conversation[:payment_total]) : ""
           %td=l(conversation[:created_at], format: :short_date)
           - last_activity_at = 0
@@ -38,6 +39,7 @@
           %td=l(last_activity_at, format: :short_date)
           %td=Maybe(conversation[:starter]).map { |p| link_to_unless(p[:is_deleted], p[:display_name], p[:url]) }.or_else("")
           %td=Maybe(conversation[:author]).map { |p| link_to_unless(p[:is_deleted], p[:display_name], p[:url]) }.or_else("")
+          %td=Maybe(conversation[:booking]).map { |p| l(conversation[:booking].start_at, format: :short) }.or_else("")
   .row
     .col-12
       = will_paginate conversations

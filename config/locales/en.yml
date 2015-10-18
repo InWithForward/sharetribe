@@ -265,6 +265,7 @@ en:
           last_activity: "Latest activity"
           initiated_by: Starter
           other_party: "Other party"
+          booking_at: "Booked for"
         status:
           free: Conversation
           pending: Pending
@@ -276,6 +277,8 @@ en:
           canceled: Canceled
           initiated: "Waiting PayPal payment"
           pending_ext: "Waiting PayPal payment"
+          booked: Booked
+          requested: Requested
       braintree_payment_gateway:
         braintree_payment_gateway: "Braintree Payment API keys"
         environment: Environment
