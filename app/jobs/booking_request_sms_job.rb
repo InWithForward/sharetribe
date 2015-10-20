@@ -14,6 +14,7 @@ class BookingRequestSMSJob < Struct.new(:transaction_id, :community_id)
     transaction = Transaction.find(transaction_id)
     recipient = transaction.author
     return unless to_number = recipient.phone_number
+    bookings = transaction.bookings
 
     client = Twilio::REST::Client.new
     client.messages.create(
@@ -21,7 +22,9 @@ class BookingRequestSMSJob < Struct.new(:transaction_id, :community_id)
       from: APP_CONFIG.twilio_from,
       body: I18n.t("sms.booking_request",
         requester: transaction.starter.name,
-        listing_title: transaction.listing.title
+        listing_title: transaction.listing.title,
+        first_time: l(bookings[0].start_at, format: :short),
+        second_time: l(bookings[1].start_at, format: :short)
       )
     )
   end
