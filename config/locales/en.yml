@@ -374,13 +374,13 @@ en:
     transaction_types:
       sell: Selling
       rent: "Renting out"
-      give: "Give away"
+      give: "Experience"
       lend: Lending
       swap: Swapping
       service: Offering
       request: Requesting
       inquiry: Inquiry
-      share_for_free: "Sharing for free"
+      share_for_free: "Badge"
       default_action_button_labels:
         sell: Buy
         rent: Rent
@@ -401,7 +401,7 @@ en:
       offer: offer
       borrow: borrowing
       buy: buying
-      give_away: "giving away"
+      give_away: "experience"
       lend: lending
       receive: "taking for free"
       rent: renting
@@ -409,7 +409,7 @@ en:
       sell: selling
       offer_to_swap: swapping
       request_to_swap: swapping
-      share_for_free: "sharing for free"
+      share_for_free: "badge"
       accept_for_free: "wanting to use for free"
     categories:
       item: Items
@@ -1395,7 +1395,7 @@ en:
         select: Select
         borrow: Borrowing
         buy: Buying
-        give_away: "Giving away"
+        give_away: "Experiences"
         lend: Lending
         offer_type: "Offer type"
         receive: "Accepting for free"
@@ -1403,7 +1403,7 @@ en:
         rent_out: "Renting out"
         request_type: "Request type"
         sell: Selling
-        share_for_free: "Sharing for free"
+        share_for_free: "Badges"
         accept_for_free: "Accepting for free"
         trade: Swapping
       tag_list:
@@ -1453,7 +1453,7 @@ en:
       borrows: Borrowing
       buys: Buying
       favors: Services
-      give_aways: "Giving away"
+      give_aways: "Experiences"
       housings: Spaces
       items: Items
       lends: Lending
@@ -1462,7 +1462,7 @@ en:
       rents: Renting
       rideshares: Rideshare
       sells: Selling
-      share_for_frees: "Sharing for free"
+      share_for_frees: "Badges"
       accept_for_frees: "Accepting for free"
       trades: Swapping
     listing_actions:
