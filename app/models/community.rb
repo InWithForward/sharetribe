@@ -132,7 +132,7 @@ class Community < ActiveRecord::Base
   has_many :custom_dropdown_fields, :class_name => "CustomField", :conditions => ["type = 'DropdownField'"], :dependent => :destroy
   has_many :custom_numeric_fields, :class_name => "NumericField", :conditions => ["type = 'NumericField'"], :dependent => :destroy
 
-  has_many :person_custom_fields, class_name: "CustomField", conditions: { for: 'Person' }, dependent: :destroy
+  has_many :person_custom_fields, class_name: "CustomField", conditions: { for: 'Person' }, dependent: :destroy, order: "sort_priority"
 
   after_create :initialize_settings
 
