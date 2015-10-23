@@ -757,8 +757,8 @@ en:
       explanation: "Your host can't make it at either of those specific times. Please rebook the experience."
       button: "Re-book"
     accept_booking_to_requester:
-      subject: "Your experience is booked"
-      body: "Your experience of %{listing} with %{host} is booked. Here are the details:"
+      subject: "Hurray! Your Kudoz experience has been confirmed."
+      body: "Your doing %{listing} with %{host}. Here are the details:"
       date: "Date"
       time: "Time"
       button: "View"
