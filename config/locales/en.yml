@@ -69,7 +69,7 @@ en:
         edit_info: "Edit information"
         see_how_it_looks_like: "See how it looks"
         verification_to_post_listings_info_content: "Info text to non-verified users"
-        verification_to_post_listings_info_content_description: "You currently require your users to be verified manually by you before they can post listings. Here you can set the default text that is shown to non-verified users when they try to post a new listing."
+        verification_to_post_listings_info_content_description: "You currently require your users to be verified manually by you before they can post listings. Here you can set the default text that is shown to non-verified users when they try to post a new experience."
         verification_to_post_listings_info_content_default: "%{service_name} requires people to be verified manually by admin before they can post listings. You have not yet been verified. Please %{contact_admin_link} to be verified."
         contact_admin_link_text: "contact the admin"
         save: "Save settings"
@@ -707,8 +707,8 @@ en:
       you_can_accept_or_reject_offer_at: "You can accept or reject the offer at"
       you_can_accept_or_reject_request_at: "You can accept or reject the request at"
       you_have_not_yet_accepted_or_rejected_offer: "You have not yet accepted or rejected the offer %{title} you received %{date}."
-      you_have_not_yet_accepted_or_rejected_request: "You have not yet accepted or rejected the request %{title} you received %{date}."
-      show_thread: "Show conversation"
+      you_have_not_yet_accepted_or_rejected_request: "Outstanding Request from %{date}: You have not yet confirmed a time with %{requester_name} for %{title}. Please confirm your availablity as soon as possible."
+      show_thread: "Show details"
     braintree_account_approved:
       account_ready: "You are ready to receive payments"
       message: "Your payment information has been confirmed and you are now ready to receive payments in %{service_name}."
@@ -852,7 +852,7 @@ en:
       title_link_text: "%{community_name}"
       intro_paragraph: "Here are some of the things that happened on %{community_link} during the past %{time_since_last_update}."
       intro_paragraph_link_text: "%{community_name}"
-      post_a_new_listing: "Post a new listing!"
+      post_a_new_listing: "Post a new experience!"
       reduce_email_footer_text: "Too much email? %{settings_link} or %{unsubscribe_link}."
       settings_link_text: "Edit your email settings here"
       unsubscribe_link_text: unsubscribe
@@ -1471,7 +1471,7 @@ en:
       booking_to: To
       how_paypal_works: "How PayPal Works"
     new:
-      post_a_new_listing: "Post a new listing" 
+      post_a_new_listing: "Post a new experience" 
       listing: listing
       selected_category: "Category: %{category}"
       selected_subcategory: "Subcategory: %{subcategory}"
