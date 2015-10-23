@@ -226,15 +226,15 @@ en:
         empty: "You don't have any additional menu links"
       people:
         edit:
-          about_you: "About me"
-          ask_me: "Things you can ask me about"
-          signup_reason: "I've signed up for Kudoz, because"
+          about_you: "Here’s some things I tell new people about myself"
+          ask_me: "Things I like to talk about"
+          signup_reason: "I'm signing up for Kudoz, because"
           city: City
           family_name: "Last name"
           given_name: "First name"
           first_name_with_initial: "(only first letter shown to other users)"
           first_name_only: "(not shown to other users)"
-          phone_number: "Phone number"
+          phone_number: "Cell phone #"
           profile_picture: "Profile picture"
           profile_video: "Make a quick & easy video about yourself on your phone. Upload and share the URL below (this is optional)"
           invisible: "(not shown to other users)"
@@ -473,7 +473,7 @@ en:
       confirm_description: "If your request has been fulfilled you should confirm it as done. Then you can give feedback to the other party."
       cancel_description: "If your request was not fulfilled, you can mark it as 'not happened'. You can still give feedback to the other party and describe what happened."
       cancel_payed_description: "If your request was accepted but you're having second thoughts, you can still cancel the request before the payment."
-      canceling_payed_transaction: "Cancel transaction"
+      canceling_payed_transaction: "Cancel"
       confirm: "Mark experience as done"
       cancel: Cancel
       continue: Continue
@@ -593,7 +593,7 @@ en:
       waiting_for_current_user_to_deliver_listing: "Waiting for you to deliver %{listing_title}"
       waiting_for_listing_author_to_deliver_listing: "Waiting for %{listing_author_name} to deliver %{listing_title}"
       request_booked: "Your Experience has been booked!"
-      request_requested: "Requested several times"
+      request_requested: "Excellent! You requested several times. We're waiting for the host's response."
       request_accepted: Accepted
       request_rejected: Rejected
       request_confirmed: Completed
@@ -602,13 +602,13 @@ en:
       request_preauthorized: "Payment successful"
       skip_feedback: "Skip feedback"
       waiting_for_listing_author_to_accept_offer: "Waiting for %{listing_author_name} to accept the offer"
-      waiting_for_listing_author_to_accept_request: "Waiting for %{listing_author_name} to accept the request"
-      waiting_for_you_to_accept_request: "Waiting for you to accept the request"
-      waiting_confirmation_from_requester: "Waiting for %{requester_name} to mark the request completed"
-      waiting_confirmation_from_you: "Waiting for you to mark the request completed"
+      waiting_for_listing_author_to_accept_request: "Waiting for %{listing_author_name} to accept one of the requests you made"
+      waiting_for_you_to_accept_request: "Waiting for you to choose once of the timeslots requested by %{requester_name}"
+      waiting_confirmation_from_requester: "Exciting! This experience is scheduled. Once it happens %{requester_name} will mark off that it's done."
+      waiting_confirmation_from_you: "Exciting! This experience is scheduled. Once it happens, you can come back here and mark the Experience as complete."
       waiting_payment_from_requester: "Waiting for %{requester_name} to pay"
       waiting_payment_from_you: "Waiting for you to pay"
-      waiting_feedback_from_you: "Waiting for you to give feedback"
+      waiting_feedback_from_you: "Waiting for you to give feedback on how it went"
       pending_external_inbox:
         paypal:
           multicurrency: "Waiting for you to accept the PayPal payment"
@@ -714,8 +714,8 @@ en:
     confirm_reminder:
       you_have_not_yet_confirmed_or_canceled_request: "You have not yet confirmed or canceled the request %{request_link}. If the request has been completed, you should confirm that. After that you can give feedback to %{other_party_given_name}."
     booking_reminder:
-      subject: "You've got an upcoming experience"
-      body: "You've got an upcoming experience"
+      subject: "Reminder: You're Kudoz experience:%{listing_title} is coming up."
+      body: "Your upcoming experience %{listing_title} with "
       button: "More Details"
       you_have_not_yet_confirmed_or_canceled_request_escrow_automatic_confirmation: "You have not yet confirmed or canceled the request %{request_link}. We will transfer the money to %{other_party_given_name} only when a) you have marked the request completed or b) %{days_to_automatic_confirmation} days have passed since you paid. After marking the request as completed you can give feedback to %{other_party_given_name}."
       remember_to_confirm_request: "Remember to confirm or cancel a request"
@@ -768,16 +768,16 @@ en:
       if_this_was_error: "If you think this was an error, %{please_contant_admin_link}."
       please_contant_admin_link: "please contact the administrator"
     confirmation_instructions:
-      confirmation_instructions_signature: "Best regards,<br/>The %{service_name} Team"
+      confirmation_instructions_signature: "Cheers,<br/>Team %{service_name}"
       welcome_to_kassi: "Welcome to %{service_name}!"
-      need_to_confirm: "You need to confirm your email address."
+      need_to_confirm: "We're glad to have you. To finish registering, please confirm your email address."
       confirmation_link_text: "Confirm my email"
       or_paste_link: "Alternatively you can copy the following link to the address bar of your browser:"
-      turning_on_confirmations_in_this_community: "We are starting to use email confirmations in this %{service_name} marketplace."
+      turning_on_confirmations_in_this_community: "We are starting to use email confirmations at %{service_name}."
     common:
       check_your_settings: "Check your settings"
       hey: "Hello %{name},"
-      kassi_team: "The %{service_name} Team"
+      kassi_team: "Team %{service_name}"
       thanks: "Thanks,"
       want_to_control_emails: "Want to control which emails you receive from %{service_name}?"
       dont_want_to_receive_these_emails: "Don't want to receive these emails?"
@@ -990,7 +990,7 @@ en:
     about: About
     home: Home
     members: Community
-    new_listing: "New listing"
+    new_listing: "New Experience"
     mobile_version: "Mobile version"
     offers: Offers
     requests: Requests
@@ -1052,7 +1052,7 @@ en:
       is: is
       are: are
       what_do_you_need: "What are you looking for?"
-      post_new_listing: "Post a new listing"
+      post_new_listing: "Post a new experience"
       are_offering: offer
       add_news_item: "Add an article"
       lend_rent_help_carpool: "Sell, lend, help, share rides"
@@ -1121,7 +1121,7 @@ en:
       settings: Settings
       feedback: "Contact us"
     application:
-      join_this_community: "Join marketplace"
+      join_this_community: "Join Kudoz"
       read_more: "Read more"
       feedback: "Get in touch with us!"
       default_feedback: "Do you have any more questions about %{service_name}? Did you encounter any problems, small or large? Have a suggestion for improving %{service_name}? Noticed some suspicious content? Or just have something you want to discuss with us? Let us know!"
@@ -1186,16 +1186,16 @@ en:
       something_went_wrong: "Something went wrong"
       community_updated: "Details updated."
       community_update_failed: "Detail update failed."
-      account_creation_succesful_you_still_need_to_confirm_your_email: "Your account was created successfully. Now you need to confirm your email address."
-      community_joined_succesfully_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. Now you need to confirm your email address."
+      account_creation_succesful_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. To finish registering you need to confirm your email address. Check your Inbox! (Sometimes it takes a few minutes for the email to arrive. Sorry!)"
+      community_joined_succesfully_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. To finish registering you need to confirm your email address. Check your Inbox! (Sometimes it takes a few minutes for the email to arrive. Sorry!)"
       comment_cannot_be_empty: "Comment cannot be empty"
       comment_sent: "Comment sent"
       confirmation_link_is_wrong_or_used: "The confirmation link is already used or otherwise broken. Try signing in, or send feedback if the problem persists."
-      additional_email_confirmed: "The email you entered is now confirmed."
-      could_not_get_email_from_facebook: "Could not get email address from Facebook and can't create an account without email."
-      create_new_listing: "Create another listing"
+      additional_email_confirmed: "Fabulous! The email you entered is now confirmed and you can set up your profile."
+      could_not_get_email_from_facebook: "Oops. We could not get and email address from Facebook and can't create an account without email. Try again please."
+      create_new_listing: "Create another experience"
       create_one_here: "create one here"
-      email_confirmation_sent_to_new_address: "Email confirmation is now sent to the new address."
+      email_confirmation_sent_to_new_address: "Thanks! An email confirmation has been sent to the additional email address."
       email_not_found: "The email you gave was not found from %{service_name} database."
       error_with_session: "Error with session."
       feedback_considered_spam: "Feedback not saved, due to its formatting. Try again or use the feedback forum."
