@@ -165,7 +165,6 @@ class Person < ActiveRecord::Base
   serialize :preferences
 
 #  validates_uniqueness_of :username
-  validates_length_of :phone_number, :maximum => 25, :allow_nil => true, :allow_blank => true
   validates_length_of :username, :within => 3..20
   validates_length_of :given_name, :within => 1..255, :allow_nil => true, :allow_blank => true
   validates_length_of :family_name, :within => 1..255, :allow_nil => true, :allow_blank => true
@@ -477,7 +476,7 @@ class Person < ActiveRecord::Base
   end
 
   def profile_info_empty?
-    (phone_number.nil? || phone_number.blank?) && (description.nil? || description.blank?) && location.nil?
+    location.nil?
   end
 
   def member_of?(community)
@@ -604,7 +603,7 @@ class Person < ActiveRecord::Base
 
     begin
       # Merge data in people table
-      fields_to_check = %w(username given_name family_name phone_number description facebook_id authentication_token)
+      fields_to_check = %w(username given_name family_name facebook_id authentication_token)
       fields_to_check.each do |attr|
         begin
           original_attr_value = self.try(attr)

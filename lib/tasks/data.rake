@@ -11,35 +11,42 @@ namespace :data do
   end
 
   task create_custom_person_text_fields: :environment do
+    def create_field(klass, community, name)
+      field = klass.new(
+        for: Person.to_s,
+        name_attributes: { en: name },
+        required: false
+      ).tap do |field|
+        field.community = community
+        field.save
+      end
+    end
+
+    def create_value(klass, field, value, person)
+      return unless value
+      klass.new(text_value: value).tap do |tf|
+        tf.customizable = person
+        tf.question = field
+        tf.save
+      end
+    end
+
     ActiveRecord::Base.transaction do
       community = Community.first
 
-      create_field = Proc.new do |name|
-        field = TextAreaField.new(
-          for: Person.to_s,
-          name_attributes: { en: name },
-          required: false
-        ).tap do |field|
-          field.community = community
-          field.save
-        end
-      end
-
-      ask_me = create_field.call('Things you can ask me about')
-      signup_reason = create_field.call("I've signed up for Kudoz, because")
-
-      create_value = Proc.new do |field, value, person|
-        next unless value
-        TextFieldValue.new(text_value: value).tap do |tf|
-          tf.customizable = person
-          tf.question = field
-          tf.save
-        end
-      end
+      ask_me = create_field(TextAreaField, community, 'Things you can ask me about')
+      signup_reason = create_field(TextAreaField, community, "I've signed up for Kudoz, because")
+      description = create_field(TextAreaField, community, "About Me")
+      phone_number = create_field(TextField, community, "Phone Number")
+      video = create_field(VideoField, community, "Youtube URL")
 
       Person.all.each do |person|
-        create_value.call(ask_me, person.ask_me, person)
-        create_value.call(signup_reason, person.signup_reason, person)
+        p person
+        create_value(TextAreaFieldValue, ask_me, person.ask_me, person)
+        create_value(TextAreaFieldValue, signup_reason, person.signup_reason, person)
+        create_value(TextFieldValue, phone_number, person.phone_number, person)
+        create_value(TextAreaFieldValue, description, person.description, person)
+        create_value(VideoFieldValue, video, person.video, person)
       end
     end
   end

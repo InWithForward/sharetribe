@@ -45,32 +45,6 @@
     = form.label :image, t(".profile_picture")
     = form.file_field :image, :size => 30, :id => "avatar_file"
 
-    -# Profile Video
-    .inline-label-container
-      = form.label :video, t(".profile_video"), class: 'inline'
-      %small
-        = t('.url')
-    = form.text_field :video, class: "text_field"
-
-    -# About text
-    = form.label :description, t(".about_you"), :class => "input"
-    = form.text_area :description, :class => "update_profile_description_text_area"
-
-    -# Ask Me
-    = form.label :ask_me, t(".ask_me"), :class => "input"
-    = form.text_area :ask_me, :class => "update_profile_description_text_area"
-
-    -# Signup Reason
-    = form.label :signup_reason, t(".signup_reason"), :class => "input"
-    = form.text_area :signup_reason, :class => "update_profile_description_text_area"
-
-    -# Phone number
-    .inline-label-container
-      = form.label :phone_number, t(".phone_number"), :class => "inline"
-      %small
-        = t('.invisible')
-    = form.text_field :phone_number, :class => "text_field", :maxlength => "25"
-
     = render(partial: 'listings/form/custom_fields', locals: { customizable: @person, custom_fields: @custom_field_questions })
 
     = form.fields_for :location do |loc|

@@ -47,7 +47,7 @@ class CustomField < ActiveRecord::Base
 
   belongs_to :community
 
-  VALID_TYPES = ["TextField", "NumericField", "DropdownField", "CheckboxField","DateField", "TextAreaField"]
+  VALID_TYPES = ["TextField", "NumericField", "DropdownField", "CheckboxField","DateField", "TextAreaField", 'VideoField']
 
   validates_length_of :names, :minimum => 1
   validates_length_of :category_custom_fields, :minimum => 1, if: :for_listing?
