@@ -337,6 +337,7 @@ en:
         checkbox_group: "Checkbox group"
         date: Date
         text_area: "Multiline Text"
+        video: "Video"
     emails:
       new:
         send_email_to_members: "Send email to users"
