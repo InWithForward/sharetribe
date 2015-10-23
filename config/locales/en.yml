@@ -1691,7 +1691,7 @@ en:
       no_image: "No image"
     show:
       contact: "Contact %{person}"
-      about_me: "Here’s some things I tell new people about myself"
+      about_me: "Here’s some things I tell new people about myself."
       add_description: "Share something about yourself"
       add_location: "Add location"
       add_phone_number: "Add phone number"
