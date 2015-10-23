@@ -673,7 +673,7 @@ en:
       confirm_payment: "Confirm payment"
   free_bookings:
     accept_confirm:
-      heading: "Please confirm booking"
+      heading: "Just double checking. Are you sure this time and day works well for you?"
       submit: "Confirm"
     rebook_confirm:
       heading: "You're busy those days"
