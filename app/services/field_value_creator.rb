@@ -27,6 +27,10 @@ module FieldValueCreator
         answer = TextFieldValue.new
         answer.text_value = answer_value
         answer
+      when :video
+        answer = VideoFieldValue.new
+        answer.text_value = answer_value
+        answer
       when :text_area
         answer = TextAreaFieldValue.new
         answer.text_value = answer_value
