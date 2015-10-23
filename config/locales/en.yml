@@ -236,7 +236,7 @@ en:
           first_name_only: "(not shown to other users)"
           phone_number: "Phone number"
           profile_picture: "Profile picture"
-          profile_video: "Youtube video"
+          profile_video: "Make a quick & easy video about yourself on your phone. Upload and share the URL below (this is optional)"
           invisible: "(not shown to other users)"
           shape: 'Badges:'
           url: "URL"
@@ -1849,7 +1849,7 @@ en:
       location_description: "You can give either your exact location or, for example, only your zip code. Please add at least your zip code. You can also select a location from the map below."
       phone_number: "Phone number"
       profile_picture: "Profile picture"
-      profile_video: "Youtube video"
+      profile_video: "Some other Kudoz folks don’t read much & would love to watch a video about you if you can make one on your phone. Upload and share the URL below (this is optional)"
       postal_code: "Postal code"
       profile_page: "in your profile page"
       profilemap: Mapview
