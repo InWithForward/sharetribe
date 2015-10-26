@@ -15,6 +15,7 @@
     = form_for @custom_field, :as => :custom_field, :url => admin_custom_fields_path(:field_type => @custom_field.type) do |form|
 
       = render :partial => "admin/custom_fields/form/field_name", :locals => { :form => form }
+      = render :partial => "admin/custom_fields/form/field_key", :locals => { :form => form }
 
       = render :partial => "admin/custom_fields/form/field_required", :locals => { :form => form, :custom_field => @custom_field }
 
