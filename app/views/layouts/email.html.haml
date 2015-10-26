@@ -15,7 +15,7 @@
                 - if @community
                   %tr
                     %td{:align => "center", :style => "padding-top: 20px; padding-bottom: 5px;"}
-                      = image_tag(@community.logo.url(:header))
+                      = image_tag(@community.wide_logo.url(:header))
                 - if @recipient && ! @no_recipient_name
                   %tr
                     %td{:align => "left", :style => "padding-top: 20px; padding-bottom: 10px;"}
