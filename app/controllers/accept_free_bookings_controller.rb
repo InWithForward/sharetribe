@@ -18,11 +18,17 @@ class AcceptFreeBookingsController < ApplicationController
     TransactionService::Process::FreeBooking.new.confirm(booking: @booking)
     TransactionMailer.accept_booking_to_requester(@listing_conversation, @current_community).deliver
 
+    run_at = if APP_CONFIG.immediate_booking_reminder
+               Time.now + 10.seconds
+             else
+               @booking.start_at - 48.hours
+             end
+
     [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
       Delayed::Job.enqueue(
         klass.new(@booking.id, @current_community.id),
         priority: 10,
-        run_at: (@booking.start_at - 48.hours)
+        run_at: run_at
       )
     end
 
