@@ -1,0 +1,4 @@
+= form.label :key, t("admin.custom_fields.index.key")
+.row
+  .col-8
+    = text_field_tag "custom_field[key]", @custom_field.key, :class => "new-field-name-locale-text-field"

@@ -146,18 +146,65 @@ class PersonMailer < ActionMailer::Base
   end
 
   # Remind users before the booking
-  def booking_reminder(booking, recipient, community)
-    @email_type = "email_about_accept_reminders"
-    set_up_urls(recipient, community, @email_type)
-
+  def booking_reminder_to_author(booking, community)
     @booking = booking
     @transaction = booking.transaction
-    @recipient = recipient
+    @listing = @transaction.listing
+    @recipient = @listing.author
+    @location = @listing.location
+    @requester = @transaction.starter
+
+    @email_type = "email_about_accept_reminders"
+    set_up_urls(@recipient, community, @email_type)
+
+    custom_fields = custom_fields_hash(@listing)
+
+    @body_variables = {
+      title: @listing.title,
+      date: @booking.start_at.to_date.to_formatted_s(:long),
+      time: @booking.start_at.strftime("%I:%M %p"),
+      requester_name: @requester.name,
+      profile_image_url: @requester.image.url(:thumb),
+      profile_url: person_url(@requester, @url_params),
+      conversation_url: person_message_url(@recipient, @url_params.merge({:id => @transaction.id.to_s}))
+    }.merge(custom_fields)
 
     premailer_mail(
-      :to => recipient.confirmed_notification_emails_to,
+      :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder.subject")
+      :subject => t( "emails.booking_reminder_to_author.subject", time: booking.start_at.to_formatted_s(:short))
+    )
+  end
+
+  def booking_reminder_to_requester(booking, community)
+    @booking = booking
+    @transaction = booking.transaction
+    @recipient = @transaction.starter
+    @listing = @transaction.listing
+    @location = @listing.location
+    @author = @transaction.author
+
+    @email_type = "email_about_accept_reminders"
+    set_up_urls(@recipient, community, @email_type)
+
+    custom_fields = custom_fields_hash(@listing)
+
+    @body_variables = {
+      title: @listing.title,
+      date: @booking.start_at.to_date.to_formatted_s(:long),
+      time: @booking.start_at.strftime("%I:%M %p"),
+      address: @location.address,
+      google_address: @location.google_address,
+      author_name: @author.name,
+      profile_image_url: @author.image.url(:thumb),
+      latitude_longitude: [@location.latitude, @location.longitude].join(','),
+      profile_url: person_url(@author, @url_params)
+    }.merge(custom_fields)
+
+    premailer_mail(
+      :to => @recipient.confirmed_notification_emails_to,
+      :from => community_specific_sender(community),
+      :subject => t( "emails.booking_reminder_to_requester.subject", time: booking.start_at.to_formatted_s(:short))
     )
   end
 
@@ -485,5 +532,13 @@ class PersonMailer < ActionMailer::Base
     else
       new_person_message_payment_url(recipient, url_params.merge({:message_id => conversation.id}))
     end
+  end
+
+  def custom_fields_hash(listing)
+    custom_fields = listing.category.custom_fields.map do |field|
+      value = listing.answer_for(field).try(:text_value)
+      [field.key, value]
+    end
+    Hash[custom_fields].symbolize_keys
   end
 end

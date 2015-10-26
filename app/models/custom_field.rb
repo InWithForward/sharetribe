@@ -14,6 +14,7 @@
 #  allow_decimals :boolean          default(FALSE)
 #  for            :string(255)      default("Listing"), not null
 #  visible        :boolean          default(TRUE), not null
+#  key            :string(255)
 #
 # Indexes
 #
@@ -33,7 +34,8 @@ class CustomField < ActiveRecord::Base
     :min,
     :max,
     :for,
-    :visible
+    :visible,
+    :key
   )
 
   has_many :names, :class_name => "CustomFieldName", :dependent => :destroy

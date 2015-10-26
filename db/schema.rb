@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151003150000) do
+ActiveRecord::Schema.define(:version => 20151026174321) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -380,6 +380,7 @@ ActiveRecord::Schema.define(:version => 20151003150000) do
     t.boolean  "allow_decimals", :default => false
     t.string   "for",            :default => "Listing", :null => false
     t.boolean  "visible",        :default => true,      :null => false
+    t.string   "key"
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"

@@ -14,6 +14,7 @@
 #  allow_decimals :boolean          default(FALSE)
 #  for            :string(255)      default("Listing"), not null
 #  visible        :boolean          default(TRUE), not null
+#  key            :string(255)
 #
 # Indexes
 #

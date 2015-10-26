@@ -1,5 +1,4 @@
-
-class BookingReminderJob < Struct.new(:booking_id, :community_id)
+class BookingReminderToAuthorJob < Struct.new(:booking_id, :community_id)
 
   include DelayedAirbrakeNotification
 
@@ -13,10 +12,8 @@ class BookingReminderJob < Struct.new(:booking_id, :community_id)
   def perform
     community = Community.find(community_id)
     booking = Booking.find(booking_id)
-    transaction = booking.transaction
 
-    PersonMailer.send("booking_reminder", booking, transaction.listing.author, community).deliver
-    PersonMailer.send("booking_reminder", booking, transaction.starter, community).deliver
+    PersonMailer.send("booking_reminder_to_author", booking, community).deliver
   end
 
 end

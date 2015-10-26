@@ -14,9 +14,8 @@
               %tbody
                 - if @community
                   %tr
-                    %td{:align => "left", :style => "padding-top: 20px; padding-bottom: 5px; border-bottom:1px dotted grey;"}
-                      %font{:size => 5, :color => "grey", :face => "font-family:Helvetica Neue, Arial, Helvetica, Arial, sans-serif;", :style => "font-size:20px;line-height:28px;"}
-                        = @community.full_name(I18n.locale)
+                    %td{:align => "center", :style => "padding-top: 20px; padding-bottom: 5px;"}
+                      = image_tag(@community.logo.url(:header))
                 - if @recipient && ! @no_recipient_name
                   %tr
                     %td{:align => "left", :style => "padding-top: 20px; padding-bottom: 10px;"}

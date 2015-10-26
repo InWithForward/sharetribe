@@ -712,12 +712,47 @@ en:
     braintree_account_approved:
       account_ready: "You are ready to receive payments"
       message: "Your payment information has been confirmed and you are now ready to receive payments in %{service_name}."
+    booking_reminder_to_author:
+      subject: "Reminder - you’re hosting a Kudoz experience on %{time}"
+      body: "
+        <h3>Just a friendly reminder that you’re hosting %{title}</h3>
+        <ul>
+          <li>on %{date}</li>
+          <li>at %{time} <small>Experiences usually only last an hour but we’ve booked you for 1.5 hrs in case the kudoer arrives late or the experience goes a bit over</small></li>
+        </ul>
+        <h3>Get to know the Kudoer you’ll be meeting:</h3>
+        <p>
+          <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{requester_name}</a>
+        </p>
+        <p><a href='%{conversation_url}'>Send %{requester_name} a note</a> if you have any questions or special instructions for them.</p>
+        <p>If you need some help preparing your learning experience, <a href=''>check out our tips</a> or <a href=''>get in touch</a>. We would love to help.</p>
+        <p>Thanks, <br /> Team Kudoz</p>
+      "
+    booking_reminder_to_requester: 
+      subject: "Reminder - Kudoz experience coming up - %{time}"
+      body: "
+        <p>So exciting! You’re going on the %{title} experience</p>
+        <ul>
+          <li>on %{date}</li>
+          <li>at %{time}</li>
+        </ul>
+        <p><b>What to bring:</b></p>
+        <ul>
+          <li>Your phone or iPod with the Kudoz App. Don’t forget to charge it!</li>
+          <li>Money? %{bring_money}</li>
+          <li>Anything else? %{what_else}</li>
+        </ul>
+        <p><b>Where you’re going:</b> <a href='http://maps.google.com/?q=%{latitude_longitude}'>%{address}</a></p>
+        <p><b>Closest skytrain station</b>: %{nearest_skytrain_station}</p>
+        <p>
+          <b>Get to know your host</b>: <br />
+          <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{author_name}</a>
+        </p>
+        <p>Can’t wait to hear how it goes!</p>
+        <p>Cheers, <br /> Team Kudoz</p>
+      "
     confirm_reminder:
       you_have_not_yet_confirmed_or_canceled_request: "You have not yet confirmed or canceled the request %{request_link}. If the request has been completed, you should confirm that. After that you can give feedback to %{other_party_given_name}."
-    booking_reminder:
-      subject: "Reminder: You're Kudoz experience:%{listing_title} is coming up."
-      body: "Your upcoming experience %{listing_title} with "
-      button: "More Details"
       you_have_not_yet_confirmed_or_canceled_request_escrow_automatic_confirmation: "You have not yet confirmed or canceled the request %{request_link}. We will transfer the money to %{other_party_given_name} only when a) you have marked the request completed or b) %{days_to_automatic_confirmation} days have passed since you paid. After marking the request as completed you can give feedback to %{other_party_given_name}."
       remember_to_confirm_request: "Remember to confirm or cancel a request"
       if_will_not_happen_you_should_cancel: "If you think this request will not be completed for one reason or another, you can %{cancel_it_link}."
@@ -759,7 +794,7 @@ en:
       button: "Re-book"
     accept_booking_to_requester:
       subject: "Hurray! Your Kudoz experience has been confirmed."
-      body: "Your doing %{listing} with %{host}. Here are the details:"
+      body: "You're doing %{listing} with %{host}. Here are the details:"
       date: "Date"
       time: "Time"
       button: "View"
