@@ -536,8 +536,18 @@ class PersonMailer < ActionMailer::Base
 
   def custom_fields_hash(listing)
     custom_fields = listing.category.custom_fields.map do |field|
-      value = listing.answer_for(field).try(:text_value)
-      [field.key, value]
+      value = listing.answer_for(field)
+
+      text = case value.try(:type)
+      when "DropdownFieldValue"
+        value.selected_options.first.title(I18n.locale)
+      when "DateFieldValue"
+        l(value.date_value, format: :short_date)
+      else
+        value.try(:text_value) || value.try(:display_value)
+      end
+
+      [field.key, text]
     end
     Hash[custom_fields].symbolize_keys
   end
