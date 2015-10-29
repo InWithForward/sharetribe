@@ -962,7 +962,7 @@ en:
       accept_authorization_error: "An error occured while trying to accept preauthorized Paypal payment. Please, try again."
       reject_authorization_error: "An error occured while trying to reject preauthorized Paypal payment. Please, try again."
   sms:
-    booking_request: "%{listing_title} requested by %{requester}. Please select a time: 1) %{first_time}, 2) %{second_time}, 3) Neither"
+    booking_request: "%{listing_title} requested by %{requester}. Please reply with a time selection: '%{first_id}' for %{first_time}, '%{second_id}' for %{second_time}, or '0' for Neither."
   error_pages:
     back_to_kassi_front_page: "Back to the front page"
     error_404:
