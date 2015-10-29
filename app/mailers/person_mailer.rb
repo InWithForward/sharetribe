@@ -4,6 +4,7 @@ include ApplicationHelper
 include PeopleHelper
 include ListingsHelper
 include TruncateHtmlHelper
+include CustomFieldsHelper
 
 class PersonMailer < ActionMailer::Base
   include MailUtils
@@ -157,7 +158,7 @@ class PersonMailer < ActionMailer::Base
     @email_type = "email_about_accept_reminders"
     set_up_urls(@recipient, community, @email_type)
 
-    custom_fields = custom_fields_hash(@listing)
+    custom_fields = CustomFieldsHelper.custom_fields_hash(@listing)
 
     @body_variables = {
       title: @listing.title,
@@ -187,7 +188,7 @@ class PersonMailer < ActionMailer::Base
     @email_type = "email_about_accept_reminders"
     set_up_urls(@recipient, community, @email_type)
 
-    custom_fields = custom_fields_hash(@listing)
+    custom_fields = CustomFieldsHelper.custom_fields_hash(@listing)
 
     @body_variables = {
       title: @listing.title,
@@ -532,23 +533,5 @@ class PersonMailer < ActionMailer::Base
     else
       new_person_message_payment_url(recipient, url_params.merge({:message_id => conversation.id}))
     end
-  end
-
-  def custom_fields_hash(listing)
-    custom_fields = listing.category.custom_fields.map do |field|
-      value = listing.answer_for(field)
-
-      text = case value.try(:type)
-      when "DropdownFieldValue"
-        value.selected_options.first.title(I18n.locale)
-      when "DateFieldValue"
-        l(value.date_value, format: :short_date)
-      else
-        value.try(:text_value) || value.try(:display_value)
-      end
-
-      [field.key, text]
-    end
-    Hash[custom_fields].symbolize_keys
   end
 end

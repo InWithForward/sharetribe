@@ -7,7 +7,7 @@ ThinkingSphinx::Index.define :custom_field_value, :with => :active_record, :delt
   set_property :utf8? => true
 
   # attributes
-  has listing_id
+  has customizable_id
   has custom_field_id
   has numeric_value
 

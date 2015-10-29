@@ -186,14 +186,15 @@ class TransactionMailer < ActionMailer::Base
   end
 
   def canceled_booking_to_admin(person, community, reason)
-    premailer_mail(:to => @community.admin_emails,
-         :from => community_specific_sender(@community),
+    p community.admin_emails
+    premailer_mail(:to => community.admin_emails,
+         :from => community_specific_sender(community),
          :subject => "Canceled Booking") { |format|
       format.html {
         render "canceled_booking_to_admin", locals: {
-          person: @person,
-          community: @community,
-          reason: @reason,
+          person: person,
+          community: community,
+          reason: reason,
         }
       }
     }

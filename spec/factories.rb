@@ -319,7 +319,7 @@ FactoryGirl.define do
 
   factory :custom_field_value do
     build_association(:question)
-    build_association(:listing)
+    build_association(:listing, as: :customizable)
 
     factory :dropdown_field_value, class: 'DropdownFieldValue' do
       build_association(:custom_dropdown_field, as: :question)
@@ -336,6 +336,10 @@ FactoryGirl.define do
     factory :custom_numeric_field_value, class: 'NumericFieldValue' do
       build_association(:custom_numeric_field, as: :question)
       numeric_value 0
+    end
+
+    factory :date_field_value, class: 'DateFieldValue' do
+      date_value Time.now
     end
   end
 

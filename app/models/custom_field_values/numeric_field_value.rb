@@ -56,7 +56,7 @@ class NumericFieldValue < CustomFieldValue
       NumericFieldValue.search_with_listing_ids(with_many.first, ids)
     else
       first_with, *rest_withs = *with_many # http://devblog.avdi.org/2010/01/31/first-and-rest-in-ruby/
-      new_ids = NumericFieldValue._search_many(rest_withs, ids).collect(&:listing_id)
+      new_ids = NumericFieldValue._search_many(rest_withs, ids).collect(&:customizable_id)
 
       if new_ids.empty?
         # Stop searching, if nothing found
@@ -68,6 +68,6 @@ class NumericFieldValue < CustomFieldValue
   end
 
   def self.search_with_listing_ids(with, ids)
-    NumericFieldValue.search(with: with.merge({listing_id: ids}), per_page: Listing::SPHINX_MAX_MATCHES)
+    NumericFieldValue.search(with: with.merge({customizable_id: ids}), per_page: Listing::SPHINX_MAX_MATCHES)
   end
 end

@@ -23,6 +23,16 @@ class Availability < ActiveRecord::Base
 
   validates :start_at_hour, :start_at_minute, :end_at_hour, :end_at_minute, presence: true
 
+  def start_at=(time)
+    self.start_at_hour = time.hour
+    self.start_at_minute = time.min
+  end
+
+  def end_at=(time)
+    self.end_at_hour = time.hour
+    self.end_at_minute = time.min
+  end
+
   def self.unbooked(listing)
     bookings = Booking.joins(:transaction).
       where(transactions: { listing_id: listing.id }).
