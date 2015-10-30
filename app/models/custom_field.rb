@@ -56,10 +56,11 @@ class CustomField < ActiveRecord::Base
   validates_presence_of :community
 
   def name_attributes=(attributes)
-    build_attrs = attributes.map { |locale, value| {locale: locale, value: value } }
+    build_attrs = attributes.map { |locale, value| {locale: locale, value: value[:value], hint: value[:hint] } }
     build_attrs.each do |name|
       if existing_name = names.find_by_locale(name[:locale])
         existing_name.update_attribute(:value, name[:value])
+        existing_name.update_attribute(:hint, name[:hint])
       else
         names.build(name)
       end
@@ -73,6 +74,10 @@ class CustomField < ActiveRecord::Base
 
   def name(locale="en")
     TranslationCache.new(self, :names).translate(locale, :value)
+  end
+
+  def hint(locale="en")
+    TranslationCache.new(self, :names).translate(locale, :hint)
   end
 
   def can_filter?

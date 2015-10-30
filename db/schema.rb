@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151026174321) do
+ActiveRecord::Schema.define(:version => 20151030155345) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(:version => 20151026174321) do
     t.string   "custom_field_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "hint"
   end
 
   add_index "custom_field_names", ["custom_field_id", "locale"], :name => "locale_index"

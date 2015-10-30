@@ -316,6 +316,7 @@ en:
         cancel: Cancel
         save: Save
         field_title: "Field title"
+        field_hint: "Field placeholder text"
         field_type: "Field type"
         categories: "Listing categories where the field is used"
         options: Options
