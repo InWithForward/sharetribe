@@ -593,7 +593,7 @@ en:
           intl: "We couldn't process the PayPal payment because your PayPal account does not have a withdrawal mechanism. Go to %{paypal_url} and sign in to your account to manually accept or reject the payment."
       waiting_for_current_user_to_deliver_listing: "Waiting for you to deliver %{listing_title}"
       waiting_for_listing_author_to_deliver_listing: "Waiting for %{listing_author_name} to deliver %{listing_title}"
-      request_booked: "Your Experience has been booked!"
+      request_booked: "Exciting! Your experience request has been confirmed!"
       request_requested: "Excellent! You've requested this experience several times."
       request_accepted: Accepted
       request_rejected: Rejected
@@ -605,8 +605,8 @@ en:
       waiting_for_listing_author_to_accept_offer: "Waiting for %{listing_author_name} to accept the offer"
       waiting_for_listing_author_to_accept_request: "Now we're waiting for %{listing_author_name} to confirm one of the requests."
       waiting_for_you_to_accept_request: "Waiting for you to choose once of the timeslots requested by %{requester_name}"
-      waiting_confirmation_from_requester: "Exciting! This experience is scheduled. Once it happens %{requester_name} will mark off that it's done."
-      waiting_confirmation_from_you: "Exciting! This experience is scheduled. Once it happens, you can come back here and mark the Experience as complete."
+      waiting_confirmation_from_requester: "Details: %{listing_title} on %{date} at %{time} with %{requester_name}. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href="http://www.kudoz.ca/en/andie/person_messages/">a quick note.</a>"
+      waiting_confirmation_from_you: "Details: %{listing_title} on %{date} at %{time} with {listing_author_name}. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href="http://www.kudoz.ca/en/andie/person_messages/">a quick note.</a>"
       waiting_payment_from_requester: "Waiting for %{requester_name} to pay"
       waiting_payment_from_you: "Waiting for you to pay"
       waiting_feedback_from_you: "Waiting for you to give feedback on how it went"
@@ -729,7 +729,7 @@ en:
         <p>Thanks, <br /> Team Kudoz</p>
       "
     booking_reminder_to_requester: 
-      subject: "Reminder - Kudoz experience coming up - %{time}"
+      subject: "Reminder - Kudoz experience coming up - %{date}, %{time}"
       body: "
         <p>So exciting! You’re going on the %{title} experience</p>
         <ul>
