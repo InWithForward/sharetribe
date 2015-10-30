@@ -160,10 +160,13 @@ class PersonMailer < ActionMailer::Base
 
     custom_fields = CustomFieldsHelper.custom_fields_hash(@listing)
 
+    date = @booking.start_at.to_date.to_formatted_s(:long)
+    time = @booking.start_at.strftime("%I:%M %p")
+
     @body_variables = {
       title: @listing.title,
-      date: @booking.start_at.to_date.to_formatted_s(:long),
-      time: @booking.start_at.strftime("%I:%M %p"),
+      date: date,
+      time: time,
       requester_name: @requester.name,
       profile_image_url: @requester.image.url(:thumb),
       profile_url: person_url(@requester, @url_params),
@@ -173,7 +176,7 @@ class PersonMailer < ActionMailer::Base
     premailer_mail(
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder_to_author.subject", time: booking.start_at.to_formatted_s(:short))
+      :subject => t( "emails.booking_reminder_to_author.subject", time: time, date: date)
     )
   end
 
@@ -190,10 +193,13 @@ class PersonMailer < ActionMailer::Base
 
     custom_fields = CustomFieldsHelper.custom_fields_hash(@listing)
 
+    date =  @booking.start_at.to_date.to_formatted_s(:long)
+    time =  @booking.start_at.strftime("%I:%M %p")
+
     @body_variables = {
       title: @listing.title,
-      date: @booking.start_at.to_date.to_formatted_s(:long),
-      time: @booking.start_at.strftime("%I:%M %p"),
+      date: date,
+      time: time,
       address: @location.address,
       google_address: @location.google_address,
       author_name: @author.name,
@@ -205,7 +211,7 @@ class PersonMailer < ActionMailer::Base
     premailer_mail(
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder_to_requester.subject", time: booking.start_at.to_formatted_s(:short))
+      :subject => t( "emails.booking_reminder_to_requester.subject", time: time, date: date)
     )
   end
 

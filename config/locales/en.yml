@@ -605,8 +605,8 @@ en:
       waiting_for_listing_author_to_accept_offer: "Waiting for %{listing_author_name} to accept the offer"
       waiting_for_listing_author_to_accept_request: "Now we're waiting for %{listing_author_name} to confirm one of the requests."
       waiting_for_you_to_accept_request: "Waiting for you to choose once of the timeslots requested by %{requester_name}"
-      waiting_confirmation_from_requester: "Details: %{listing_title} on %{date} at %{time} with %{requester_name}. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href="http://www.kudoz.ca/en/andie/person_messages/">a quick note.</a>"
-      waiting_confirmation_from_you: "Details: %{listing_title} on %{date} at %{time} with {listing_author_name}. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href="http://www.kudoz.ca/en/andie/person_messages/">a quick note.</a>"
+      waiting_confirmation_from_requester: "Exciting! This experience is scheduled. Once it happens %{requester_name} will mark off that it's done. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href='http://www.kudoz.ca/en/andie/person_messages/'>a quick note.</a>"
+      waiting_confirmation_from_you: "Exciting! This experience is scheduled. Once it happens, you can come back here and mark the Experience as complete. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href='http://www.kudoz.ca/en/andie/person_messages/'>a quick note.</a>"
       waiting_payment_from_requester: "Waiting for %{requester_name} to pay"
       waiting_payment_from_you: "Waiting for you to pay"
       waiting_feedback_from_you: "Waiting for you to give feedback on how it went"
@@ -713,7 +713,7 @@ en:
       account_ready: "You are ready to receive payments"
       message: "Your payment information has been confirmed and you are now ready to receive payments in %{service_name}."
     booking_reminder_to_author:
-      subject: "Reminder - you’re hosting a Kudoz experience on %{time}"
+      subject: "Reminder - you’re hosting a Kudoz experience on - %{date}, %{time}"
       body: "
         <h3>Just a friendly reminder that you’re hosting %{title}</h3>
         <ul>
@@ -727,7 +727,7 @@ en:
         <p><a href='%{conversation_url}'>Send %{requester_name} a note</a> if you have any questions or special instructions for them.</p>
         <p>If you need some help preparing your learning experience, <a href=''>check out our tips</a> or <a href=''>get in touch</a>. We would love to help.</p>
         <p>Thanks, <br /> Team Kudoz</p>
-      "
+    "
     booking_reminder_to_requester: 
       subject: "Reminder - Kudoz experience coming up - %{date}, %{time}"
       body: "
@@ -750,7 +750,7 @@ en:
         </p>
         <p>Can’t wait to hear how it goes!</p>
         <p>Cheers, <br /> Team Kudoz</p>
-      "
+    "
     confirm_reminder:
       you_have_not_yet_confirmed_or_canceled_request: "You have not yet confirmed or canceled the request %{request_link}. If the request has been completed, you should confirm that. After that you can give feedback to %{other_party_given_name}."
       you_have_not_yet_confirmed_or_canceled_request_escrow_automatic_confirmation: "You have not yet confirmed or canceled the request %{request_link}. We will transfer the money to %{other_party_given_name} only when a) you have marked the request completed or b) %{days_to_automatic_confirmation} days have passed since you paid. After marking the request as completed you can give feedback to %{other_party_given_name}."
@@ -794,7 +794,7 @@ en:
       button: "Re-book"
     accept_booking_to_requester:
       subject: "Hurray! Your Kudoz experience has been confirmed."
-      body: "You're scheduled for %{listing} with %{host}. Please be sure to mark your calendar & <a href="https://docs.google.com/forms/d/1D9aTMZYQWN3LedA4Oc-IF6tTpGG0ZtIoJmFtJHfL7Mk/viewform">let us know</a> if you need any help getting to your experience. <br/><br/>Experience details:"
+      body: "You're scheduled for %{listing} with %{host}. Please be sure to mark your calendar & <a href='https://docs.google.com/forms/d/1D9aTMZYQWN3LedA4Oc-IF6tTpGG0ZtIoJmFtJHfL7Mk/viewform'>let us know</a> if you need any help getting to your experience. <br/><br/>Experience details:"
       date: "Date"
       time: "Time" 
       button: "See more"
