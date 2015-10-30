@@ -12,11 +12,8 @@ class BookingRequestSMSJob < Struct.new(:transaction_id, :community_id)
 
   def perform
     transaction = Transaction.find(transaction_id)
-    recipient = transaction.author
+    return unless to_number = transaction.author.phone_number
 
-    field = CustomField.where(id: 37).first
-    to_number = recipient.answer_for(field).text_value
-    return unless to_number
     bookings = transaction.bookings
 
     client = Twilio::REST::Client.new
@@ -28,6 +25,7 @@ class BookingRequestSMSJob < Struct.new(:transaction_id, :community_id)
         listing_title: transaction.listing.title,
         first_id: bookings[0].id,
         second_id: bookings[1].id,
+        transaction_id: transaction.id,
         first_time: I18n.l(bookings[0].start_at, format: :short),
         second_time: I18n.l(bookings[1].start_at, format: :short)
       )

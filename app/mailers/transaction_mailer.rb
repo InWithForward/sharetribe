@@ -199,7 +199,9 @@ class TransactionMailer < ActionMailer::Base
     }
   end
 
-  def rebook_to_requester(transaction, community)
+  def rebook_to_requester(transaction, community = nil)
+    community = transaction.community if community.nil?
+
     recipient = transaction.requester
     premailer_mail(:to => recipient.confirmed_notification_emails_to,
           :from => community_specific_sender(community),
@@ -214,7 +216,8 @@ class TransactionMailer < ActionMailer::Base
     }
   end
 
-  def accept_booking_to_requester(transaction, community)
+  def accept_booking_to_requester(transaction, community = nil)
+    community = transaction.community if community.nil?
     recipient = transaction.requester
 
     premailer_mail(

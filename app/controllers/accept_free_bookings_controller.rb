@@ -16,22 +16,6 @@ class AcceptFreeBookingsController < ApplicationController
   def accept
     @booking = Booking.find(params[:transaction][:booking_id])
     TransactionService::Process::FreeBooking.new.confirm(booking: @booking)
-    TransactionMailer.accept_booking_to_requester(@listing_conversation, @current_community).deliver
-
-    run_at = if APP_CONFIG.immediate_booking_reminder
-               Time.now + 30.seconds
-             else
-               @booking.start_at - 48.hours
-             end
-
-    [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
-      Delayed::Job.enqueue(
-        klass.new(@booking.id, @current_community.id),
-        priority: 10,
-        run_at: run_at
-      )
-    end
-
     redirect_to person_transaction_path(person_id: @current_user.id, id: @listing_conversation.id)
   end
 

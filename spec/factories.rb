@@ -142,6 +142,12 @@ FactoryGirl.define do
     build_association(:transaction)
     start_on 1.day.from_now
     end_on 2.days.from_now
+
+
+    factory :free_booking, class: 'Booking' do
+      start_at 1.day.from_now
+      end_at (1.day.from_now + 2.hours)
+    end
   end
 
   factory :message do

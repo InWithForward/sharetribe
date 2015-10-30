@@ -45,6 +45,13 @@
     = form.label :image, t(".profile_picture")
     = form.file_field :image, :size => 30, :id => "avatar_file"
 
+    -# Phone number
+    .inline-label-container
+      = form.label :phone_number, t(".phone_number"), :class => "inline"
+      %small
+        = t('.invisible')
+    = form.text_field :phone_number, :class => "text_field", :maxlength => "25"
+
     = render(partial: 'listings/form/custom_fields', locals: { customizable: @person, custom_fields: @custom_field_questions })
 
     = form.fields_for :location do |loc|
