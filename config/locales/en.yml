@@ -794,10 +794,10 @@ en:
       button: "Re-book"
     accept_booking_to_requester:
       subject: "Hurray! Your Kudoz experience has been confirmed."
-      body: "You're doing %{listing} with %{host}. Here are the details:"
+      body: "You're scheduled for %{listing} with %{host}. Please be sure to mark your calendar & <a href="https://docs.google.com/forms/d/1D9aTMZYQWN3LedA4Oc-IF6tTpGG0ZtIoJmFtJHfL7Mk/viewform">let us know</a> if you need any help getting to your experience. <br/><br/>Experience details:"
       date: "Date"
-      time: "Time"
-      button: "View"
+      time: "Time" 
+      button: "See more"
     escrow_canceled:
       subject: "Payment canceled"
       has_marked_request_as_canceled: "%{other_party_full_name} has marked the request about '%{request}' canceled. You will not receive money from this transaction."
