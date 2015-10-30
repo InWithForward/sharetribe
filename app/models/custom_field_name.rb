@@ -17,7 +17,7 @@
 #
 
 class CustomFieldName < ActiveRecord::Base
-  attr_accessible :locale, :value
+  attr_accessible :locale, :value, :hint
   belongs_to :custom_field, touch: true
   validates :locale, :value, presence: true
 end
