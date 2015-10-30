@@ -20,7 +20,7 @@
           = t(".shape")
         = image_tag @person.shape.url(:original)
 
-    - @person.custom_field_values.visible.each do |custom_field_value|
+    - @person.custom_field_values.only_visible(@current_user).each do |custom_field_value|
       .row
         .col-12
           - custom_field_value.with_type do |question_type|
