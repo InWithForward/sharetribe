@@ -848,8 +848,8 @@ en:
       listing_you_follow_has_a_new_comment: "%{author} has commented on a listing you follow in %{service_name}"
       has_commented_listing_you_follow_in_kassi: "%{author} has commented on the listing '%{listing}' you are following in %{service_name}."
     new_message:
-      view_message: "Reply"
-      has_sent_you_a_message_in_kassi: "%{sender} has sent you a message in %{service_name}:"
+      view_message: "View Message"
+      has_sent_you_a_message_in_kassi: "%{sender} has sent you a message."
       you_have_a_new_message: "A new message in %{service_name} from %{sender_name}"
     new_payment:
       new_payment: "You have received a new payment"
