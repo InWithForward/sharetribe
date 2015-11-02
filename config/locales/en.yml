@@ -962,7 +962,9 @@ en:
       accept_authorization_error: "An error occured while trying to accept preauthorized Paypal payment. Please, try again."
       reject_authorization_error: "An error occured while trying to reject preauthorized Paypal payment. Please, try again."
   sms:
-    booking_request: "%{listing_title} requested by %{requester}. Please reply with a time selection: '%{transaction_id}-%{first_id}' for %{first_time}, '%{transaction_id}-%{second_id}' for %{second_time}, or '%{transaction_id}-0' for Neither."
+    booking_request: "Congrats! %{requester} wants to go on your Kudoz experience! Can you do...? %{first_time} text back '%{transaction_id}-%{first_id}', %{second_time} text back '%{transaction_id}-%{second_id}'. Can't do either, text back '%{transaction_id}-0'."
+    booking_confirmed: "Thanks - you're a star! We'll send you a reminder 48 hrs before you host with more info. Text back anytime for coaching or visit http://kudoz.ca/hostips"
+    booking_canceled: "Howdy, Kudoz again. Please go to kudoz.ca to upate your host calendar today. Then, we'll ask the Kudoer to try again."
   error_pages:
     back_to_kassi_front_page: "Back to the front page"
     error_404:

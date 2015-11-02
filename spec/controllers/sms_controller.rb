@@ -5,12 +5,13 @@ describe SmsController do
     let(:community) { FactoryGirl.create(:community) }
 
     let!(:person) do
-      FactoryGirl.create(:person).tap do |person|
+      FactoryGirl.create(:person, phone_number: '+1 555-555-5555').tap do |person|
         community.members << person
       end
     end
 
-    let!(:listing) { FactoryGirl.create(:listing) }
+    let!(:location) { FactoryGirl.create(:location) }
+    let!(:listing) { FactoryGirl.create(:listing, author: person, location: location) }
     let!(:transaction) do
       FactoryGirl.create(:transaction, listing: listing).tap do |tx|
         conversation = tx.build_conversation(
@@ -39,15 +40,15 @@ describe SmsController do
     end
 
     it "books the passed in time" do
-      post :accept, { 'Body' => "#{transaction.id}-#{bookings[0].id}", 'From' => '+12062890319' }
-      expect(bookings[0].reload).to be_confirmed
+      post :accept, { 'Body' => "#{transaction.id}-#{bookings[0].id}", 'From' => '+15555555555' }
       expect(response.status).to eql(200)
+      expect(bookings[0].reload).to be_confirmed
     end
 
     it "books rebooks if 0" do
-      post :accept, { 'Body' => "#{transaction.id}-0", 'From' => '+12062890319' }
-      expect(transaction.reload.status).to eql("canceled")
+      post :accept, { 'Body' => "#{transaction.id}-0", 'From' => '+15555555555' }
       expect(response.status).to eql(200)
+      expect(transaction.reload.status).to eql("canceled")
     end
 
     it 'ignores request from different number' do
