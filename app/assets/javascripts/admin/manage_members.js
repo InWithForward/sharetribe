@@ -41,8 +41,9 @@ window.ST.initializeManageMembers = function() {
 
   var postingAllowed = createCheckboxAjaxRequest(".admin-members-can-post-listings", "posting_allowed", "allowed_to_post", "disallowed_to_post");
   var isAdmin = createCheckboxAjaxRequest(".admin-members-is-admin", "promote_admin", "add_admin", "remove_admin");
+  var requestingAllowed = createCheckboxAjaxRequest(".admin-members-can-request-listings", "requesting_allowed", "allowed_to_request", "disallowed_to_request");
 
-  var ajaxRequest = postingAllowed.merge(isAdmin);
+  var ajaxRequest = postingAllowed.merge(isAdmin).merge(requestingAllowed);
   var ajaxResponse = ajaxRequest.ajax().endOnError();
 
   var ajaxStatus = window.ST.ajaxStatusIndicator(ajaxRequest, ajaxResponse);

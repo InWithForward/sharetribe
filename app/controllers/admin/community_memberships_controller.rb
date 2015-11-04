@@ -44,6 +44,13 @@ class Admin::CommunityMembershipsController < ApplicationController
     render nothing: true, status: 200
   end
 
+  def requesting_allowed
+    @current_community.community_memberships.where(:person_id => params[:allowed_to_request]).update_all("can_request_listings = 1")
+    @current_community.community_memberships.where(:person_id => params[:disallowed_to_request]).update_all("can_request_listings = 0")
+
+    render nothing: true, status: 200
+  end
+
   private
 
   def removes_itself?(ids, current_admin_user, community)

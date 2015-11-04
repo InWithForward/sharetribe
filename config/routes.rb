@@ -145,6 +145,7 @@ Kassi::Application.routes.draw do
           collection do
             post :promote_admin
             post :posting_allowed
+            post :requesting_allowed
           end
         end
         resource :paypal_preferences, only: :index do
