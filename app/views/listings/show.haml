@@ -126,8 +126,7 @@
     .row-with-divider
       .col-12
         #listing-message-links
-          - if @current_user.can_request_listings_at?(@current_community)
-            = render :partial => "listing_actions", locals: { form_path: form_path, payment_gateway: payment_gateway, delivery_opts: delivery_opts }
+          = render :partial => "listing_actions", locals: { form_path: form_path, payment_gateway: payment_gateway, delivery_opts: delivery_opts }
 
     .row-with-divider
       .col-12

@@ -1,3 +1,4 @@
+- can_request = Maybe(@current_user).can_request_listings_at?(@current_community).or_else(false)
 - is_author = current_user?(@listing.author)
 - is_marketplace_admin = Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
 - is_authorized = is_author || is_marketplace_admin
@@ -16,7 +17,7 @@
             .text-part= t("listings.edit_links.reopen_listing")
 - else
 
-  - unless is_author
+  - if can_request && !is_author
 
     = form_tag form_path, :method => :get, :id => "booking-dates" do
 
