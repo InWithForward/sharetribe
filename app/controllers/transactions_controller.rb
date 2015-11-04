@@ -34,12 +34,15 @@ class TransactionsController < ApplicationController
 
     MarketplaceService::Transaction::Command.mark_as_seen_by_current(params[:id], @current_user.id)
 
+    other_party = transaction_conversation[:__model].conversation.other_party(@current_user)
+    other_person = MarketplaceService::Person::Entity.person(other_party, @current_community.id)
+
     render "transactions/show", locals: {
       messages: messages_and_actions.reverse,
       transaction: tx,
       listing: listing,
       transaction_model: tx_model,
-      conversation_other_party: person_entity_with_url(conversation[:other_person]),
+      conversation_other_party: person_entity_with_url(other_person),
       is_author: listing.author_id == @current_user.id,
       message_form: MessageForm.new({sender_id: @current_user.id, conversation_id: conversation[:id]}),
       message_form_action: person_message_messages_path(@current_user, :message_id => conversation[:id])
