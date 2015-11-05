@@ -747,7 +747,7 @@ class Person < ActiveRecord::Base
   end
 
   def visible_custom_field_values(user, community)
-    if id == user.id || user.is_admin_of?(community)
+    if user && (id == user.id || user.is_admin_of?(community))
       custom_field_values
     else 
       custom_field_values.where(custom_fields: { visible: true })
