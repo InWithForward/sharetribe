@@ -607,7 +607,7 @@ en:
       waiting_for_listing_author_to_accept_offer: "Waiting for %{listing_author_name} to accept the offer"
       waiting_for_listing_author_to_accept_request: "Now we're waiting for %{listing_author_name} to confirm one of the requests."
       waiting_for_you_to_accept_request: "Waiting for you to choose once of the timeslots requested by %{requester_name}"
-      waiting_confirmation_from_requester: "Experience details: (date) & (time) with %{requester_name}.<br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href='http://www.kudoz.ca/en/andie/person_messages/'>a quick note.</a>"
+      waiting_confirmation_from_requester: "Experience details: %{date} at %{time} with %{requester_name}.<br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href='http://www.kudoz.ca/en/andie/person_messages/'>a quick note.</a>"
       waiting_confirmation_from_you: "Exciting! This experience is scheduled. Once it happens, you can come back here and mark the Experience as complete. <br/> <b>Questions or anything?</b> Send our Experience Curator, Andie, <a href='http://www.kudoz.ca/en/andie/person_messages/'>a quick note.</a>"
       waiting_payment_from_requester: "Waiting for %{requester_name} to pay"
       waiting_payment_from_you: "Waiting for you to pay"

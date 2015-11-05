@@ -746,6 +746,14 @@ class Person < ActiveRecord::Base
     custom_field_values.find { |value| value.custom_field_id == custom_field.id }
   end
 
+  def visible_custom_field_values(user, community)
+    if id == user.id || user.is_admin_of?(community)
+      custom_field_values
+    else 
+      custom_field_values.where(custom_fields: { visible: true })
+    end
+  end
+
   private
 
   # This method constructs a key to be used in caching.

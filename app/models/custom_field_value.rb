@@ -24,9 +24,4 @@ class CustomFieldValue < ActiveRecord::Base
   delegate :with_type, :to => :question
 
   default_scope includes(:question).order("custom_fields.sort_priority")
-  scope :only_visible, ->(user = nil) do
-    if user.nil?
-      where(custom_fields: { visible: true })
-    end
-  end
 end

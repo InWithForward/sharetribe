@@ -549,11 +549,18 @@ module TransactionHelper
   end
 
   def waiting_for_buyer_to_confirm(conversation)
+    if conversation.booking
+      start_at = conversation.booking.start_at
+      time = start_at.to_formatted_s(:time)
+      date = start_at.to_date.to_formatted_s(:long)
+    end
+
     link = t("conversations.status.waiting_confirmation_from_requester",
       :requester_name => link_to(
         conversation.other_party(@current_user).given_name_or_username,
         conversation.other_party(@current_user)
-      )
+      ),
+      time: time, date: date
     ).html_safe
 
     status_info(link, icon_classes: icon_class('clock'))
