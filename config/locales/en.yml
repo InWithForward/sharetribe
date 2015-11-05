@@ -778,7 +778,7 @@ en:
       request_marked_as_canceled: "Request canceled"
       has_marked_request_as_confirmed: "%{other_party_full_name} has marked the request about '%{request}' completed. You can now give feedback to %{other_party_given_name}."
       has_marked_request_as_canceled: "%{other_party_full_name} has canceled the request about '%{request}'. You can still give feedback to %{other_party_given_name}."
-      giving_feedback_is_good_idea: "Giving feedback is always a good idea. If everything went well, you should let others know that %{other_party_given_name} can be trusted. If there were any problems, it's good to mention those as well."
+      giving_feedback_is_good_idea: "Giving feedback is always a good idea. If everything went well, you should let others know that %{other_party_given_name} is an excellent host. If anything could have been improved it's good to mention that too."
       give_feedback_to: "Give feedback to %{other_party_given_name}"
     transaction_automatically_confirmed:
       subject: "Request automatically completed - remember to give feedback"
