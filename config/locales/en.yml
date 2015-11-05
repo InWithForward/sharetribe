@@ -740,14 +740,14 @@ en:
         </ul>
         <p><b>What to bring:</b></p>
         <ul>
-          <li>Your phone or iPod with the Kudoz App. Don’t forget to charge it!</li>
-          <li>Money? %{bring_money}</li>
-          <li>Anything else? %{what_else}</li>
+          <li>Your smart phone or iPod</li>
+          <li>%{bring_money}</li>
+          <li>%{what_else}</li>
         </ul>
-        <p><b>Where you’re going:</b> <a href='http://maps.google.com/?q=%{latitude_longitude}'>%{address}</a></p>
+        <p><b>Location:</b> <a href='http://maps.google.com/?q=%{latitude_longitude}'>%{address}</a></p>
         <p><b>Closest skytrain station</b>: %{nearest_skytrain_station}</p>
         <p>
-          <b>Get to know your host</b>: <br />
+          <b>You'll meet...</b>: <br />
           <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{author_name}</a>
         </p>
         <p>Can’t wait to hear how it goes!</p>
