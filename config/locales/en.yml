@@ -1228,8 +1228,8 @@ en:
       something_went_wrong: "Something went wrong"
       community_updated: "Details updated."
       community_update_failed: "Detail update failed."
-      account_creation_succesful_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. To finish registering you need to confirm your email address. Check your Inbox! (Sometimes it takes a few minutes for the email to arrive. Sorry!)"
-      community_joined_succesfully_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. To finish registering you need to confirm your email address. Check your Inbox! (Sometimes it takes a few minutes for the email to arrive. Sorry!)"
+      account_creation_succesful_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. To finish registering you need to confirm your email address."
+      community_joined_succesfully_you_still_need_to_confirm_your_email: "Thanks for joining %{service_name}. To finish registering you need to confirm your email address."
       comment_cannot_be_empty: "Comment cannot be empty"
       comment_sent: "Comment sent"
       confirmation_link_is_wrong_or_used: "The confirmation link is already used or otherwise broken. Try signing in, or send feedback if the problem persists."
@@ -1817,10 +1817,10 @@ en:
       your_current_email_is: "Your email is %{email}."
       change_email: Change
       confirm_your_email: "Please confirm your email"
-      account_confirmation_instructions: "You will soon receive an email with a link that you need to click to confirm the email address you entered. After confirming your email you can join %{service_name}."
-      account_confirmation_instructions_title_admin: "Welcome to your marketplace!"
+      account_confirmation_instructions: "Please check your email. (Sometimes it takes a few minutes for the email to arrive. Sorry!)"
+      account_confirmation_instructions_title_admin: "Welcome to %{service_name}!"
       your_marketplace_has_now_been_created: "Your marketplace site has now been created. That was easy, wasn't it? There's just one more step before you can access your site: you need to confirm your email address."
-      account_confirmation_instructions_admin: "You will soon receive an email with a link that you need to click to confirm the email address you entered. After confirming your email you can start configuring your marketplace."
+      account_confirmation_instructions_admin: "Please check your email. (Sometimes it takes a few minutes for the email to arrive. Sorry!)"
   settings:
     account:
       change: Change
