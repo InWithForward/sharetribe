@@ -1893,10 +1893,10 @@ en:
       profile_picture: "Profile picture"
       profile_video: "Some other Kudoz folks don’t read much & would love to watch a video about you if you can make one on your phone. Upload and share the URL below (this is optional)"
       postal_code: "Postal code"
-      profile_page: "in your profile page"
+      profile_page: "in your profile"
       profilemap: Mapview
       street_address: Location
-      these_fields_are_shown_in_your: "This information is visible to all %{service_name} users"
+      these_fields_are_shown_in_your: "Some of this information is visible to all %{service_name} users"
       visible_to_everybody: "visible to everybody"
       visible_to_registered_users: "(visible to users that have signed in)"
       default_in_listing: "(used only as a default when creating a new listing)"
