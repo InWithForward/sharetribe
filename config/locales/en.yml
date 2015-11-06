@@ -155,9 +155,9 @@ en:
         general: General
         users_can_review_each_other_after_transaction: "Users can review each other after transaction"
         access: Access
-        join_with_invite_only: "Users can only join this marketplace with an invite from another user"
-        users_can_invite_new_users: "All users can invite new users to this marketplace"
-        private: "This marketplace is private (only registered users can see the content)"
+        join_with_invite_only: "Users can only join Kudoz with an invite from another user"
+        users_can_invite_new_users: "All users can invite new users to Kudoz"
+        private: "Kudoz is private (only registered users can see the content)"
         require_verification_to_post_listings: "Only users verified by admin can post new listings"
         listing_preferences: "Listing preferences"
         transaction_preferences: "Transaction preferences"
@@ -1120,7 +1120,7 @@ en:
       send_invitation: "Send invitation"
       add_as_many_emails_as_you_want: "Add the email addresses of the people you are inviting to the field below. If you add multiple email addresses, separate them with comma."
       invitation_emails_field_placeholder: "friend1@example.com, friend2@example.com, ..."
-      invitation_message_field_placeholder: "I joined this amazing marketplace. You should too!"
+      invitation_message_field_placeholder: "I've joined Kudoz & you should too!"
       errors_in_emails: "Check that the email addresses you added are valid. If you added multiple addresses, make sure they are separated with comma."
     list_item:
       review: review
@@ -1150,7 +1150,7 @@ en:
   infos:
     about:
       default_about_text_title: "What is Sharetribe?"
-      default_about_text: "This marketplace is powered by Sharetribe platform. With Sharetribe you can easily create your own marketplace website. It's free and only takes a minute. %{click_here_link} to learn more!"
+      default_about_text: "Kudoz is powered by Sharetribe platform. With Sharetribe you can easily create your own marketplace website. It's free and only takes a minute. %{click_here_link} to learn more!"
       click_here_link_text: "Click here"
     how_to_use:
       default_title: "How it works"
