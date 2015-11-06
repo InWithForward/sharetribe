@@ -128,7 +128,8 @@ class ListingsController < ApplicationController
 
     delivery_opts = delivery_config(@listing.require_shipping_address, @listing.pickup_enabled, @listing.shipping_price, @listing.currency)
 
-    render locals: {form_path: form_path, payment_gateway: payment_gateway, delivery_opts: delivery_opts}
+    template = @listing.transaction_type.is_badge? ? 'badge' : 'show'
+    render template, locals: {form_path: form_path, payment_gateway: payment_gateway, delivery_opts: delivery_opts}
   end
 
   def new
@@ -145,11 +146,11 @@ class ListingsController < ApplicationController
 
     if request.xhr? # AJAX request to get the actual form contents
       @listing.category = @current_community.categories.find(params[:subcategory].blank? ? params[:category] : params[:subcategory])
-      @custom_field_questions = @listing.category.custom_fields
-      @numeric_field_ids = numeric_field_ids(@custom_field_questions)
 
       @listing.transaction_type = @current_community.transaction_types.find(params[:transaction_type])
       logger.info "Category: #{@listing.category.inspect}"
+
+      set_custom_field_questions
 
       payment_type = MarketplaceService::Community::Query.payment_type(@current_community.id)
       allow_posting, error_msg = payment_setup_status(
@@ -169,7 +170,7 @@ class ListingsController < ApplicationController
   end
 
   def create
-    if params[:listing][:origin_loc_attributes][:address].empty? || params[:listing][:origin_loc_attributes][:address].blank?
+    if params[:listing][:origin_loc_attributes] && (params[:listing][:origin_loc_attributes][:address].empty? || params[:listing][:origin_loc_attributes][:address].blank?)
       params[:listing].delete("origin_loc_attributes")
     end
 
@@ -210,9 +211,7 @@ class ListingsController < ApplicationController
     if !@listing.origin_loc
         @listing.build_origin_loc(:location_type => "origin_loc")
     end
-
-    @custom_field_questions = @listing.category.custom_fields.find_all_by_community_id(@current_community.id)
-    @numeric_field_ids = numeric_field_ids(@custom_field_questions)
+    set_custom_field_questions
 
     render locals: commission(@current_community).merge(shipping_enabled: shipping_enabled?(@current_community))
   end
@@ -224,6 +223,8 @@ class ListingsController < ApplicationController
         @listing.origin_loc.delete
       end
     end
+
+    params[:listing][:sub_listings_attributes] ||= {}
 
     @listing.custom_field_values = FieldValueCreator.call(params[:custom_fields])
 
@@ -506,6 +507,15 @@ class ListingsController < ApplicationController
     listing_params.except(:delivery_methods).tap do |l|
       l[:require_shipping_address] = Maybe(listing_params[:delivery_methods]).map { |d| d.include?("shipping") }.or_else(false)
       l[:pickup_enabled] = Maybe(listing_params[:delivery_methods]).map { |d| d.include?("pickup") }.or_else(false)
+    end
+  end
+
+  def set_custom_field_questions
+    if !@listing.transaction_type.is_badge?
+      @custom_field_questions = @listing.category.custom_fields
+      @numeric_field_ids = numeric_field_ids(@custom_field_questions)
+    else
+      @numeric_field_ids = []
     end
   end
 end
