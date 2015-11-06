@@ -39,6 +39,10 @@ class Offer < TransactionType
     false
   end
 
+  def is_badge?
+    false
+  end
+
   def status_after_reply
     process_res = TransactionService::API::Api.processes.get(
       community_id: community_id,

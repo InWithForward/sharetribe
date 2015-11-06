@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151104174951) do
+ActiveRecord::Schema.define(:version => 20151030155345) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -272,15 +272,14 @@ ActiveRecord::Schema.define(:version => 20151104174951) do
   create_table "community_memberships", :force => true do |t|
     t.string   "person_id"
     t.integer  "community_id"
-    t.boolean  "admin",                :default => false
+    t.boolean  "admin",               :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "consent"
     t.integer  "invitation_id"
     t.datetime "last_page_load_date"
-    t.string   "status",               :default => "accepted", :null => false
-    t.boolean  "can_post_listings",    :default => false
-    t.boolean  "can_request_listings", :default => false
+    t.string   "status",              :default => "accepted", :null => false
+    t.boolean  "can_post_listings",   :default => false
   end
 
   add_index "community_memberships", ["community_id"], :name => "index_community_memberships_on_community_id"
@@ -490,6 +489,15 @@ ActiveRecord::Schema.define(:version => 20151104174951) do
   end
 
   add_index "listing_images", ["listing_id"], :name => "index_listing_images_on_listing_id"
+
+  create_table "listing_relationships", :force => true do |t|
+    t.integer  "parent_id",  :null => false
+    t.integer  "child_id",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "listing_relationships", ["parent_id", "child_id"], :name => "index_listing_relationships_on_parent_id_and_child_id", :unique => true
 
   create_table "listings", :force => true do |t|
     t.string   "author_id"

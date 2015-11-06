@@ -375,6 +375,7 @@ en:
       minimum_listing_price_below_tx_fee: "has to be at least the same as minimum transaction fee %{minimum_transaction_fee}."
       minimum_listing_price_below_min: "has to be greater than minimum commission %{minimum_commission}."
     transaction_types:
+      badge: "Badge"
       sell: Selling
       rent: "Renting out"
       give: "Experience"
@@ -383,13 +384,13 @@ en:
       service: Offering
       request: Requesting
       inquiry: Inquiry
-      share_for_free: "Badge"
       default_action_button_labels:
         sell: Buy
         rent: Rent
         request: Offer
         offer: Request
         inquiry: Contact
+        badge: Badge
   common:
     edit_page: "Edit page"
     default_community_slogan:  # was: "Community marketplace"
@@ -1567,6 +1568,8 @@ en:
       delivery: Delivery
       shipping: "Shipping (%{price})"
       pickup: "Pickup (%{price})"
+      sub_listings: "To unlock this badge select three of the experiences from below & book them."
+      sub_listings_sub_heading: "You must request each one seperatly."
     verification_required:
       verification_required: "Verification required"
   listing_conversations:
