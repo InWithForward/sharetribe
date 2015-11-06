@@ -17,7 +17,7 @@
                           %p= t("emails.common.hey", :name => @recipient.given_name_or_username)
                           - customization = @current_community.community_customizations.find_by_locale(@url_params[:locale])
                           - if customization && !customization.welcome_email_content.blank?
-                            = customization.welcome_email_content.html_safe
+                            = I18n.interpolate(customization.welcome_email_content, person_url: profile_person_settings_url(@recipient, @url_params)).html_safe
                           - else
                             = render :partial => "admin/communities/default_welcome_email"
                       %td{:width => "7.5%"}
