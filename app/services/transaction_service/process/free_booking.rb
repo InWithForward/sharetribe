@@ -30,7 +30,8 @@ module TransactionService::Process
                                       transaction_id: tx[:id],
                                       person_id: tx[:listing_author_id])
       end
-      TransactionMailer.accept_booking_to_requester(tx).deliver
+
+      Delayed::Job.enqueue(BookingReminderToRequesterJob.new(booking.id, tx[:community_id]))
 
       [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
         job = klass.new(booking.id, tx[:community_id])
