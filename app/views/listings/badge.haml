@@ -63,9 +63,6 @@
       - if @listing.description && !@listing.description.blank?
         - text_with_line_breaks do
           = @listing.description
-    .col-12
-      #listing-message-links
-        = render :partial => "listing_actions", locals: { form_path: form_path, payment_gateway: payment_gateway, delivery_opts: delivery_opts }
 
 
 - if @listing.sub_listings.any?
