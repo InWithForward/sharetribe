@@ -24,7 +24,7 @@
       = render :partial => "listings/form/origin", :locals => { :form => form, :origin_loc => @listing.origin_loc }
       = render :partial => "listings/form/googlemap", :locals => { :form => form, :run_js_immediately => false}
     = render :partial => "listings/form/images", :locals => { :form => form, :run_js_immediately => false }
-    = render :partial => "listings/form/sub_listings", :locals => { :form => form, listings: @current_community.listings.currently_open }
+    = render :partial => "listings/form/sub_listings", :locals => { :form => form, listings: @current_community.listings.non_badge.currently_open }
     - if @listing.closed?
       = form.hidden_field :open, :value => true
     = form.hidden_field :last_modified, :value => DateTime.now

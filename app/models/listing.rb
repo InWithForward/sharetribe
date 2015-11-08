@@ -69,6 +69,7 @@ class Listing < ActiveRecord::Base
       association_foreign_key: "child_id",
       join_table: "listing_relationships"
 
+  has_many :transactions
   has_many :availabilities, :dependent => :destroy
   has_many :conversations
   has_many :comments, :dependent => :destroy
@@ -98,6 +99,8 @@ class Listing < ActiveRecord::Base
 
   scope :public, :conditions  => "privacy = 'public'"
   scope :private, :conditions  => "privacy = 'private'"
+
+  scope :non_badge, -> { joins(:transaction_type).where('transaction_types.type != ?', 'Badge') }
 
   # Create an "empty" relationship. This is needed in search when we want to stop the search chain (NumericFields)
   # and just return empty result.
