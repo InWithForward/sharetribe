@@ -46,6 +46,13 @@ class TransactionType < ActiveRecord::Base
 
   acts_as_url :url_source, scope: :community_id, sync_url: true, blacklist: %w{new all}
 
+
+  scope :user_can_create, ->(community, user) {
+    if user.nil? || !user.has_admin_rights_in?(community)
+      where("type != 'Badge'")
+    end
+  }
+
   def to_param
     url
   end

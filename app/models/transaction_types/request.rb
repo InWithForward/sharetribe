@@ -47,4 +47,8 @@ class Request < TransactionType
     false
   end
 
+  def is_badge?
+    false
+  end
+
 end

@@ -1,0 +1,16 @@
+.row
+  - image = listing.listing_images.first
+  - if image
+    .col-4
+      = link_to listing_url(listing) do
+        = image_tag image.image.url(:medium)
+  .col-8
+    .row
+      .col-2
+        = small_avatar_thumb(listing.author, {:class => "listing-author-avatar-image"})
+      .col-6
+        %h2= link_to listing.title, listing_url(listing)
+        %h3= link_to listing.author.name, person_url(listing.author)
+    .row
+      - text_with_line_breaks do
+        %p= listing.description

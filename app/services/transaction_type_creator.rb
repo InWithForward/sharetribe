@@ -63,7 +63,13 @@ module TransactionTypeCreator
       translation_key: "admin.transaction_types.swap",
       action_button_translation_key: "admin.transaction_types.default_action_button_labels.offer",
       defaults: Swap::DEFAULTS
-    }
+    },
+    "Badge" => {
+      label: "Badge",
+      translation_key: "admin.transaction_types.badge",
+      action_button_translation_key: "admin.transaction_types.default_action_button_labels.badge",
+      defaults: Badge::DEFAULTS
+    },
   }
 
   TRANSACTION_PROCESSES = [:none, :preauthorize, :postpay]

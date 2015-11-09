@@ -41,4 +41,8 @@ class Inquiry < TransactionType
     true
   end
 
+  def is_badge?
+    false
+  end
+
 end

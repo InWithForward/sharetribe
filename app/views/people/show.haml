@@ -33,6 +33,12 @@
         = render(partial: "listed_experience", collection: @person.experiences, as: :experience)
 
     .row
+      %h2.people-header= "Badges"
+    #profile-listings-list
+      - limit = 6
+      = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: persons_badges(@person, limit)}
+
+    .row
       %h2.people-header
         - if @listings.count > 0
           - if current_user?(@person) && params[:show_closed]
@@ -53,7 +59,7 @@
 
     #profile-listings-list
       - limit = 6
-      = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit}
+      = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: persons_listings(@person, limit)}
 
     - if @current_community.follow_in_use?
       = render :partial => "followed_people", :locals => { :person => @person, :limit => 6 }

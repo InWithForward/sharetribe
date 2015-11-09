@@ -1,0 +1,12 @@
+- if @listing.transaction_type.is_badge?
+  = form.label :sub_listing_attributes, "Badge Listings"
+  .row
+    .col-12
+      #options.custom-field-options
+        %script{type: "text/template", class: "template", id: "new-option-tmpl"}
+          = render :partial => "listings/form/new_sub_listing", :locals => { listings: listings, :option_id => "${id}" }
+        - @listing.sub_listings.each_with_index do |option, index|
+          = render :partial => "listings/form/new_sub_listing", :locals => { listings: listings, :option_id => option.id || "new-#{index+1}" }
+  .row
+    .col-12
+      = link_to t("admin.custom_fields.index.add_option"), "#", :id => "custom-fields-add-option"

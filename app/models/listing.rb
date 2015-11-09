@@ -63,6 +63,13 @@ class Listing < ActiveRecord::Base
 
   has_many :listing_images, :dependent => :destroy
 
+  has_and_belongs_to_many :sub_listings,
+      class_name: "Listing",
+      foreign_key: "parent_id",
+      association_foreign_key: "child_id",
+      join_table: "listing_relationships"
+
+  has_many :transactions
   has_many :availabilities, :dependent => :destroy
   has_many :conversations
   has_many :comments, :dependent => :destroy
@@ -74,7 +81,7 @@ class Listing < ActiveRecord::Base
   has_one :location, :dependent => :destroy
   has_one :origin_loc, :class_name => "Location", :conditions => ['location_type = ?', 'origin_loc'], :dependent => :destroy
   has_one :destination_loc, :class_name => "Location", :conditions => ['location_type = ?', 'destination_loc'], :dependent => :destroy
-  accepts_nested_attributes_for :origin_loc, :destination_loc, :availabilities
+  accepts_nested_attributes_for :origin_loc, :destination_loc, :availabilities, :sub_listings
 
   has_and_belongs_to_many :communities
   has_and_belongs_to_many :followers, :class_name => "Person", :join_table => "listing_followers"
@@ -92,6 +99,8 @@ class Listing < ActiveRecord::Base
 
   scope :public, :conditions  => "privacy = 'public'"
   scope :private, :conditions  => "privacy = 'private'"
+
+  scope :non_badge, -> { joins(:transaction_type).where('transaction_types.type != ?', 'Badge') }
 
   # Create an "empty" relationship. This is needed in search when we want to stop the search chain (NumericFields)
   # and just return empty result.
@@ -297,6 +306,20 @@ class Listing < ActiveRecord::Base
       listings = joins(joined_tables).where(query).currently_open(params[:status]).visible_to(current_user, current_community).includes(params[:include]).order("listings.sort_date DESC").paginate(:per_page => per_page, :page => page)
     end
     return listings
+  end
+
+  def sub_listings_attributes=(attributes)
+    sub_listing_ids = []
+    attributes.each do |_, listing_id|
+      sub_listing = sub_listings.where(:id => listing_id).first
+      if !sub_listing
+        self.sub_listings << sub_listing = Listing.where(id: listing_id).first
+      end
+      sub_listing_ids << sub_listing.id
+    end
+    sub_listings.each do |sub_listing|
+      sub_listings.delete(sub_listing) unless sub_listing_ids.include?(sub_listing.id)
+    end
   end
 
   def self.search_out_of_bounds?(per_page, page)

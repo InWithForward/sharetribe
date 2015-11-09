@@ -1,0 +1,11 @@
+.custom-field-option-container{:data => {:"field-id" => "#{option_id}"}}
+  .custom-field-option-locales
+    .row
+      .col-8.custom-field-column-without-bottom-margin
+        = fields_for "listing[sub_listings_attributes][#{option_id}]" do |option_form|
+          .custom-field-option-locale-column{:class => "col-12"}
+            = select_tag "listing[sub_listings_attributes][#{option_id}]", options_from_collection_for_select(listings.sort_by(&:title), "id", "title", option_id), :class => "required", id:"listing[sub_listings_attributes][#{option_id}]" 
+
+      .col-4.custom-field-actions
+        = link_to "#", :class => "custom-field-option-remove custom-field-option-without-locale-remove", :tabindex => "-1", :id => "custom-field-option-remove-#{option_id}" do
+          = icon_tag("cross", ["icon-fix"])
