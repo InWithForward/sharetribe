@@ -1572,6 +1572,8 @@ en:
       sub_listings_sub_heading: "You must request each one seperatly."
     verification_required:
       verification_required: "Verification required"
+    sub_listing:
+      read_more: "Read More"
   listing_conversations:
     preauthorize:
       details: Details

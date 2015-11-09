@@ -14,4 +14,4 @@
     .row
       - text_with_line_breaks do
         %p= truncate(listing.description, length: 520, separator: ' ')
-        %p= link_to("Read More", listing_path(listing))
+        %p= link_to(t('.read_more'), listing_path(listing))
