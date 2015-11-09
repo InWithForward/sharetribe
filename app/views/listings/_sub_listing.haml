@@ -3,7 +3,7 @@
   - if image
     .col-4
       = link_to listing_url(listing) do
-        = image_tag image.image.url(:medium)
+        = image_tag image.image.url(:medium), { class: 'sub-listings-img' }
   .col-8
     .row
       .col-2
@@ -13,4 +13,5 @@
         %h3= link_to listing.author.name, person_url(listing.author)
     .row
       - text_with_line_breaks do
-        %p= listing.description
+        %p= truncate(listing.description, length: 520, separator: ' ')
+        %p= link_to("Read More", listing_path(listing))

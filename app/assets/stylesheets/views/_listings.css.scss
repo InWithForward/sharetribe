@@ -178,3 +178,7 @@ $listing-author-avatar-height: 108;
   text-align: center;
   @include border-radius($default-border-radius);
 }
+
+.sub-listings-img {
+  width: 100%;
+}

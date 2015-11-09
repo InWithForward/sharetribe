@@ -17,7 +17,7 @@
             .text-part= t("listings.edit_links.reopen_listing")
 - else
 
-  - if can_request && !is_author
+  - if can_request && !is_author && !@listing.transaction_type.is_badge?
 
     = form_tag form_path, :method => :get, :id => "booking-dates" do
 
