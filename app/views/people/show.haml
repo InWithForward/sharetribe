@@ -37,7 +37,7 @@
     #profile-listings-list
       - limit = 6
       - badges = persons_badges(@person, limit)
-      - if badges.any?
+      - if badges
         = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: badges}
 
     .row
