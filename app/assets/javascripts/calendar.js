@@ -110,8 +110,8 @@ function initCalendar() {
     var calEvent;
     if(recurring) {
       calEvent = {
-        start: start.format('hh:mm'),
-        end: end.format('hh:mm'),
+        start: start.format('HH:mm'),
+        end: end.format('HH:mm'),
         dow: [start.day()]
       };
     } else {

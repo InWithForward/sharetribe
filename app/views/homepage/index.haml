@@ -58,7 +58,7 @@
 
             .home-toolbar-share-type-menu.toggle-menu.hidden
               = link_to t("homepage.filters.all_listing_types"), params.merge({transaction_type: "all"})
-              - @transaction_types.each do |transaction_type|
+              - @transaction_types.sort_by(&:type).each do |transaction_type|
                 = link_to params.merge({transaction_type: transaction_type}), :class => "toggle-menu-subitem" do
                   = transaction_type.display_name(I18n.locale).mb_chars.capitalize.to_s
 

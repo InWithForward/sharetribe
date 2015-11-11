@@ -2,8 +2,8 @@
   #calendar
 
   = render layout: "layouts/lightbox", locals: { id: "add_availability_dialog"} do
-    %h2="Recurring or One Time"
-    %p Is this a weekly recurring availability or one time?
+    %h2=t('listings.form.availabilities.recurring_prompt_title')
+    %p= t('listings.form.availabilities.recurring_prompt')
     %button#add-recurring
       .content="Recurring"
     %button#add-once
