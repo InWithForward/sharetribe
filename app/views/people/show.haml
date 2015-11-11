@@ -36,7 +36,9 @@
       %h2.people-header= "Badges"
     #profile-listings-list
       - limit = 6
-      = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: persons_badges(@person, limit)}
+      - badges = persons_badges(@person, limit)
+      - if badges.any?
+        = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: badges}
 
     .row
       %h2.people-header
