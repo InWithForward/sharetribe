@@ -53,7 +53,7 @@
           - else
             = t(".no_open_listings")
         %span.people-show-closed-link
-          - if current_user?(@person)
+          - if current_user?(@person) || Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
             - if params[:show_closed]
               = link_to t("people.profile_listings.show_only_open"), person_path(@person)
             - else
