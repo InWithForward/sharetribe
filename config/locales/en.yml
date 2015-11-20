@@ -1945,11 +1945,11 @@ en:
       send_feedback: "Send feedback"
       slightly_better_than_expected: "Slightly better than expected"
       slightly_less_than_expected: "Slightly worse than expected"
-      textual_feedback: "How did things go?"
+      textual_feedback: "How did the experience go?"
       this_will_be_shown_in_profile: "The feedback you give will be visible to others on %{person}'s profile. When other Kudoers are booking their experience, or a host is confirming a Kudoer, they can decide if %{person} will be a good match."
       positive: Positive
       negative: Negative
-      default_textual_feedback: "Everything went smoothly, thanks a lot!"
+      default_textual_feedback: "What was fun and surprizing? What was challenging?"
     testimonial:
       about_listing: "about listing"
   date:
