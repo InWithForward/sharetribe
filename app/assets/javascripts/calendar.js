@@ -46,6 +46,8 @@ function initCalendar() {
     },
     dayClick: function(startDate, jsEvent, view) {
       var dialog = $('#add_availability_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
+      if(!startDate.hasTime())
+        startDate.hour(13);
 
       $('#add-recurring').click(function() {
         $('#add-recurring').unbind("click");
