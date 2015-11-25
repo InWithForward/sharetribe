@@ -260,6 +260,13 @@ namespace :sharetribe do
     end
   end
 
+  namespace :check_availabilities do
+    desc "Checks and sends the no availaiblities email"
+    task :deliver => :environment do |t, args|
+      AvailabilityChecker.call
+    end
+  end
+
   def random_location_around(coordinate_string, location_type)
     lat = coordinate_string.split(",")[0].to_f + rand*2*MAX_LOC_DIFF - MAX_LOC_DIFF
     lon =  coordinate_string.split(",")[1].to_f + rand*2*MAX_LOC_DIFF - MAX_LOC_DIFF

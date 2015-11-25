@@ -1,0 +1,8 @@
+%tr
+  %td{:align => "left", :style => "padding-top: 15px;"}
+    %font{body_font}
+      = t('emails.insufficient_availabilities_to_admin.body', listing_title: listing.title).html_safe
+
+%tr
+  %td    
+    = render :partial => "action_button", :locals => { :text => t("emails.insufficient_availabilities_to_admin.view_listing"), :url => listing_url}

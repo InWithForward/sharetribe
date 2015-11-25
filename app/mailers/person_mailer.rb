@@ -362,6 +362,43 @@ class PersonMailer < ActionMailer::Base
     end
   end
 
+  def insufficient_availabilities_to_author(community, listing)
+    recipient = community.admins.first
+    @url_params = build_url_params(community, recipient)
+
+    email = premailer_mail(
+      :to => recipient.confirmed_notification_email_addresses,
+      :from => community_specific_sender(community),
+      :subject => t('emails.insufficient_availabilities_to_author.subject')
+    ) do |format|
+      format.html {
+        render locals: {
+          recipient: recipient,
+          listing: listing,
+          listing_url: listing_url(@url_params.merge({:id => listing.id}))
+        }
+      }
+    end
+  end
+
+  def insufficient_availabilities_to_admin(community, listing)
+    recipient = community.admins.first
+    @url_params = build_url_params(community, recipient)
+
+    email = premailer_mail(
+      :to => recipient.confirmed_notification_email_addresses,
+      :from => community_specific_sender(community),
+      :subject => t('emails.insufficient_availabilities_to_admin.subject', listing_title: listing.title)
+    ) do |format|
+      format.html {
+        render locals: {
+          listing: listing,
+          listing_url: listing_url(@url_params.merge({:id => listing.id}))
+        }
+      }
+    end
+  end
+
   # Old layout
 
   def new_member_notification(person, community, email)
@@ -539,5 +576,13 @@ class PersonMailer < ActionMailer::Base
     else
       new_person_message_payment_url(recipient, url_params.merge({:message_id => conversation.id}))
     end
+  end
+
+  def build_url_params(community, recipient, ref="email")
+    {
+      host: community.full_domain,
+      ref: ref,
+      locale: recipient.locale
+    }
   end
 end

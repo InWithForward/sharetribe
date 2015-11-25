@@ -946,6 +946,18 @@ en:
       has_posted_a_new_listing: "%{author_name} has posted a new listing:"
       you_are_receiving_this_because: "You received this notification because you follow %{author_name}."
       view_listing: "View listing"
+
+    insufficient_availabilities_to_admin:
+      subject: "Not enough availabilities for %{listing_title}"
+      view_listing: "View listing"
+      body: "The listing %{listing_title} has less than 3 timeslots available"
+    insufficient_availabilities_to_author:
+      subject: "Please update your Kudoz calendar!"
+      view_listing: "View listing"
+      body: "
+        Kudoers would love to book your listing but there aren’t many times for them to choose from.<br /><br />
+        Please login to your Kudoz account and go to your profile > listing.<br /> <br />
+        Edit listing to see the availability calendar and add some time slots!"
   error_messages:
     listings:
       departure_time: "Departure time must be between current time and one year from now."
