@@ -69,7 +69,7 @@
           - text_with_line_breaks do
             = @listing.description
 
-    - @listing.custom_field_values.each do |custom_field_value|
+    - @listing.visible_custom_field_values(@current_user, @current_community).each do |custom_field_value|
       .row
         .col-12
           - custom_field_value.with_type do |question_type|

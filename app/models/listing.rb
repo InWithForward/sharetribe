@@ -440,4 +440,12 @@ class Listing < ActiveRecord::Base
   def availabilities_json
     availabilities.to_json
   end
+
+  def visible_custom_field_values(user, community)
+    if user && (author_id == user.id || user.is_admin_of?(community))
+      custom_field_values
+    else 
+      custom_field_values.where(custom_fields: { visible: true })
+    end
+  end
 end
