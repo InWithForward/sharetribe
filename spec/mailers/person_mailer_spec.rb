@@ -124,7 +124,6 @@ describe PersonMailer do
     email = PersonMailer.testimonial_reminder(conversation, author, @community).deliver
     assert !ActionMailer::Base.deliveries.empty?
     assert_equal author.confirmed_notification_email_addresses, email.to
-    assert_equal "Reminder: remember to give feedback to Teppo T", email.subject
   end
 
   it "should remind to accept or reject" do

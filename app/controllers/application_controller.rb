@@ -114,7 +114,7 @@ class ApplicationController < ActionController::Base
   def ensure_authorized(error_message)
     if logged_in?
       @person = Person.find(params[:person_id] || params[:id])
-      return if current_user?(@person)
+      return if current_user?(@person) || fetch_community_admin_status
     end
 
     # This is reached only if not authorized

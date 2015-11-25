@@ -1,4 +1,4 @@
-- if current_user?(@person)
+- if current_user?(@person) || Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
   = render :partial => "people/edit_profile_button"
 - else
   %a.profile-contact-link{href: new_person_person_message_path(@person)}

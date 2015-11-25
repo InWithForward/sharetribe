@@ -196,7 +196,11 @@ class PeopleController < Devise::RegistrationsController
 
         if params[:person][:email_attributes] && params[:person][:email_attributes][:address]
           # A new email was added, send confirmation email to the latest address
-          Email.send_confirmation(@person.emails.last, @current_community)
+          if fetch_community_admin_status
+            @person.emails.last.confirm!
+          else
+            Email.send_confirmation(@person.emails.last, @current_community)
+          end
         end
 
         flash[:notice] = t("layouts.notifications.person_updated_successfully")
