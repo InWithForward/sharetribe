@@ -533,6 +533,12 @@ module ApplicationHelper
       }
     end
     links << {
+      :text => t('layouts.infos.home'),
+      :icon_class => icon_class("home"),
+      :path => APP_CONFIG.marketing_site,
+      :name => "home"
+    }
+    links << {
       :text => t('layouts.infos.register_details'),
       :icon_class => icon_class("privacy"),
       :path => privacy_infos_path,

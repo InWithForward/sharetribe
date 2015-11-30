@@ -1196,6 +1196,7 @@ en:
       news: News
       register_details: "Privacy"
       terms: "Terms of Use"
+      home: "Home"
     logged_in:
       admin: Admin
       go_to_your_profile_page: Profile
