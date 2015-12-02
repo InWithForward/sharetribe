@@ -523,14 +523,7 @@ module ApplicationHelper
 
   # About view left hand navigation content
   def about_links
-    links = [
-      {
-        :text => t('layouts.infos.about'),
-        :icon_class => icon_class("information"),
-        :path => about_infos_path,
-        :name => "about"
-      }
-    ]
+    links = []
     if @community_customization && !@community_customization.how_to_use_page_content.blank?
       links << {
         :text => t('layouts.infos.how_to_use'),
@@ -539,22 +532,12 @@ module ApplicationHelper
         :name => "how_to_use"
       }
     end
-    if @community_customization && !@community_customization.custom_page_content.blank?
-      links << {
-        :text => t('layouts.infos.custom'),
-        :icon_class => icon_class("custom"),
-        :path => custom_infos_path,
-        :name => "custom"
-      }
-    end
-    if @community_customization && !@community_customization.custom_two_page_content.blank?
-      links << {
-        :text => t('layouts.infos.custom_two'),
-        :icon_class => icon_class("custom_two"),
-        :path => custom_two_infos_path,
-        :name => "custom_two"
-      }
-    end
+    links << {
+      :text => t('layouts.infos.home'),
+      :icon_class => icon_class("home"),
+      :path => APP_CONFIG.marketing_site,
+      :name => "home"
+    }
     links << {
       :text => t('layouts.infos.register_details'),
       :icon_class => icon_class("privacy"),

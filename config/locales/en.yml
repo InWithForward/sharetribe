@@ -1206,10 +1206,9 @@ en:
       how_to_use: "Host Page"   # was "How it works"
       info_about_kassi: "About %{service_name}"
       news: News
-      register_details: "Families & Caregivers" # was Privacy
-      terms: "The Science" # was "Terms of use"
-      custom: "Custom"
-      custom_two: "Custom Two"
+      register_details: "Privacy"
+      terms: "Terms of Use"
+      home: "Home"
     logged_in:
       admin: Admin
       go_to_your_profile_page: Profile
