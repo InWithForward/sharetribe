@@ -74,5 +74,5 @@
     .col-12
       .sub-listings-header
         %h2= t("listings.show.sub_listings").html_safe
-        %h3= t("listings.show.sub_listings").html_safe
+        %h3= t("listings.show.sub_listings_sub_heading").html_safe
       = render(partial: "sub_listing", collection: @listing.sub_listings, as: :listing)
