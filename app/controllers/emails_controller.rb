@@ -7,24 +7,26 @@ class EmailsController < ApplicationController
   end
 
   def send_confirmation
-    @email = Email.find_by_id_and_person_id(params[:id], @current_user.id)
+    person = Person.find_by_username(params[:person_id])
+    @email = Email.find_by_id_and_person_id(params[:id], person.id)
     if(@email.confirmed_at.present?)
       flash[:notice] = t("settings.account.email_already_confirmed")
-      return redirect_to account_person_settings_path(@current_user)
+      return redirect_to account_person_settings_path(person)
     end
 
     Email.send_confirmation(@email, @current_community)
     flash[:notice] = t("sessions.confirmation_pending.check_your_email")
-    redirect_to account_person_settings_path(@current_user)
+    redirect_to account_person_settings_path(person)
   end
 
   def destroy
+    person = Person.find_by_id(params[:person_id])
     email_id = params[:id]
-    email = Email.find_by_id_and_person_id(email_id, @current_user.id)
+    email = Email.find_by_id_and_person_id(email_id, person.id)
 
     if !email.nil? then
-      list_of_allowed_emails = @current_user.communities.collect(&:allowed_emails)
-      can_delete = EmailService.can_delete_email(@current_user.emails, email, list_of_allowed_emails)
+      list_of_allowed_emails = person.communities.collect(&:allowed_emails)
+      can_delete = EmailService.can_delete_email(person.emails, email, list_of_allowed_emails)
       if can_delete[:result] == true then
         # Deleting email
         email.destroy

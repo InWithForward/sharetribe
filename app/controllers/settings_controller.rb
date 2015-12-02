@@ -29,7 +29,7 @@ class SettingsController < ApplicationController
     marketplaces = @person.community_memberships
                    .map { |m| Maybe(m.community).name(I18n.locale).or_else(nil) }
                    .compact
-    has_unfinished = TransactionService::Transaction.has_unfinished_transactions(@current_user.id)
+    has_unfinished = TransactionService::Transaction.has_unfinished_transactions(@person.id)
 
     render locals: {marketplaces: marketplaces, has_unfinished: has_unfinished}
   end
