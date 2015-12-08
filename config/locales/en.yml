@@ -1908,7 +1908,7 @@ en:
       first_name_with_initial: "(only first letter shown to other users)"
       first_name_only: "(not shown to other users)"
       location_description: "This location shows on your profile so we suggest sharing only your postal code unless your location is a business and you're comfortable sharing the exact address. You can also select a location from the map below by dragging the marker."
-      phone_number: "Phone number"
+      phone_number: "Primary phone number (we send your SMS notifications to this number)"
       profile_picture: "Profile picture"
       profile_video: "Some other Kudoz folks don’t read much & would love to watch a video about you if you can make one on your phone. Upload and share the URL below (this is optional)"
       postal_code: "Postal code"
