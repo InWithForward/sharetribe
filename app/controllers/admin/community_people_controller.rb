@@ -4,7 +4,7 @@ class Admin::CommunityPeopleController < ApplicationController
   before_filter :fetch_person
 
   def edit
-    @custom_field_questions = @current_community.person_custom_fields
+    @custom_field_questions = @person.role.custom_fields
   end
 
   def update

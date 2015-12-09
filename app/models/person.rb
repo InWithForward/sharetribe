@@ -46,6 +46,7 @@
 #  shape_content_type                 :string(255)
 #  shape_file_size                    :integer
 #  shape_updated_at                   :datetime
+#  role_id                            :integer
 #
 # Indexes
 #
@@ -83,7 +84,7 @@ class Person < ActiveRecord::Base
 
   # Setup accessible attributes for your model (the rest are protected)
   attr_accessible :username, :password, :password2, :password_confirmation,
-                  :remember_me, :consent, :login
+                  :remember_me, :consent, :login, :role_id
 
   attr_accessor :guid, :password2, :form_login,
                 :form_given_name, :form_family_name, :form_password,
@@ -121,6 +122,8 @@ class Person < ActiveRecord::Base
   has_many :followed_people, :through => :inverse_follower_relationships, :source => "person"
   has_many :experiences, dependent: :destroy
   has_many :custom_field_values, as: :customizable, dependent: :destroy
+
+  belongs_to :role
 
   has_and_belongs_to_many :followed_listings, :class_name => "Listing", :join_table => "listing_followers"
 
@@ -748,10 +751,16 @@ class Person < ActiveRecord::Base
 
   def visible_custom_field_values(user, community)
     if user && (id == user.id || user.is_admin_of?(community))
-      custom_field_values
+      custom_field_values_for_role
     else 
-      custom_field_values.where(custom_fields: { visible: true })
+      custom_field_values_for_role.where(custom_fields: { visible: true })
     end
+  end
+
+  def custom_field_values_for_role
+    custom_field_values.
+      includes(question: :role_custom_fields).
+      where(role_custom_fields: { role_id: role.id })
   end
 
   private

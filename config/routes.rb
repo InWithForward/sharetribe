@@ -294,6 +294,8 @@ Kassi::Application.routes.draw do
         member do
           put :activate
           put :deactivate
+          get :role
+          put :update_role
         end
         resources :listings do
           member do

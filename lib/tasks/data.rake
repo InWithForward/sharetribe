@@ -50,4 +50,10 @@ namespace :data do
       end
     end
   end
+
+  task add_roles: :environment do
+    community = Community.first
+    Role.create(community: community, name: 'Host')
+    Role.create(community: community, name: 'Guest')
+  end
 end

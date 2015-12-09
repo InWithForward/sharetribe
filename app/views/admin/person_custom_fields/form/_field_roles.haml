@@ -1,0 +1,11 @@
+- if @current_community.roles.size > 1
+  = form.label :role_attributes, t("admin.custom_fields.index.roles")
+  .row
+    .col-12
+      .custom-field-categories-container.clearfix#custom-field-categories-container
+        - @current_community.roles.each do |role|
+          .custom-field-categories-checkbox-container
+            = check_box_tag "custom_field[role_attributes][][role_id]", "#{role.id}", @custom_field.roles.include?(role), :id => "#{role.id}_checkbox", :class => "custom-field-category-checkbox"
+            = label_tag "#{role.id}_checkbox", role.name, :class => "custom-field-category-checkbox-label"
+- else
+  = hidden_field_tag "custom_field[role_attributes][][role_id]", @current_community.roles.first.id

@@ -40,4 +40,6 @@
       .links
         = link_to_add_association t('admin.communities.people.edit.add_experience'), form, :experiences
 
+    = render(partial: 'admin/community_people/role_field', locals: { person: @person, form: form })
+
     = form.button t("settings.save_information"), :class => "send_button"
