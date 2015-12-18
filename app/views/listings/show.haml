@@ -128,6 +128,7 @@
         #listing-message-links
           = render :partial => "listing_actions", locals: { form_path: form_path, payment_gateway: payment_gateway, delivery_opts: delivery_opts }
 
+    - can_request = Maybe(@current_user).can_request_listings_at?(@current_community).or_else(false)
     .row-with-divider
       .col-12
         .listing-author
@@ -136,7 +137,7 @@
           .listing-author-details
             .listing-author-name
               = link_to @listing.author.name(@current_community), @listing.author, :id => "listing-author-link", :class => "listing-author-name-link", :title => "#{@listing.author.name(@current_community)}"
-            - unless current_user?(@listing.author) || @listing.transaction_type.is_inquiry?
+            - unless current_user?(@listing.author) || @listing.transaction_type.is_inquiry? || !can_request
               .listing-author-contact
                 %a#listing-contact{href: contact_to_listing_path(:listing_id => @listing.id.to_s), :class => "listing-author-contact-button"}
                   .content

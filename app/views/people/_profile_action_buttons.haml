@@ -1,6 +1,8 @@
+- can_request = Maybe(@current_user).can_request_listings_at?(@current_community).or_else(false)
+
 - if current_user?(@person) || Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
   = render :partial => "people/edit_profile_button"
-- else
+- elsif can_request
   %a.profile-contact-link{href: new_person_person_message_path(@person)}
     .content
       = t("people.show.contact", :person => @person.given_name_or_username)
