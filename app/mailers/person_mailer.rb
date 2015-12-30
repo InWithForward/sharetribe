@@ -147,7 +147,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   # Remind users before the booking
-  def booking_reminder_to_author(booking, community)
+  def booking_reminder_to_author(booking, community, type=:reminder)
     @booking = booking
     @transaction = booking.transaction
     @listing = @transaction.listing
@@ -173,14 +173,25 @@ class PersonMailer < ActionMailer::Base
       conversation_url: person_message_url(@recipient, @url_params.merge({:id => @transaction.id.to_s}))
     }.merge(custom_fields)
 
+    subject = if type == :reminder
+                t("emails.booking_reminder_to_author.subject",
+                  time: time,
+                  date: date)
+              else
+                t("emails.booking_reminder_to_author.confirmation_subject",
+                  time: time,
+                  date: date,
+                  title: @listing.title)
+              end
+
     premailer_mail(
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder_to_author.subject", time: time, date: date)
+      :subject => subject
     )
   end
 
-  def booking_reminder_to_requester(booking, community)
+  def booking_reminder_to_requester(booking, community, type=:reminder)
     @booking = booking
     @transaction = booking.transaction
     @recipient = @transaction.starter
@@ -208,10 +219,21 @@ class PersonMailer < ActionMailer::Base
       profile_url: person_url(@author, @url_params)
     }.merge(custom_fields)
 
+    subject = if type == :reminder
+                t("emails.booking_reminder_to_author.subject",
+                  time: time,
+                  date: date)
+              else
+                t("emails.booking_reminder_to_author.confirmation_subject",
+                  time: time,
+                  date: date,
+                  title: @listing.title)
+              end
+
     premailer_mail(
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder_to_requester.subject", time: time, date: date)
+      :subject => subject 
     )
   end
 

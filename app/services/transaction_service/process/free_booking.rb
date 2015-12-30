@@ -31,15 +31,15 @@ module TransactionService::Process
                                       person_id: tx[:listing_author_id])
       end
 
-      Delayed::Job.enqueue(BookingReminderToRequesterJob.new(booking.id, tx[:community_id]))
-
       [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
-        job = klass.new(booking.id, tx[:community_id])
-        if APP_CONFIG.immediate_booking_reminder
-          job.perform
-        else
-          Delayed::Job.enqueue(job, run_at: booking.start_at - 48.hours)
-        end
+        Delayed::Job.enqueue(
+          klass.new(booking.id, tx[:community_id], :confirmation),
+          run_at: Time.now + 10.seconds
+        )
+        Delayed::Job.enqueue(
+          klass.new(booking.id, tx[:community_id], :reminder),
+          run_at: booking.start_at - 48.hours
+        )
       end
       Result::Success.new({result: true})
     end

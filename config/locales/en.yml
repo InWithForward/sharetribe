@@ -716,6 +716,7 @@ en:
       account_ready: "You are ready to receive payments"
       message: "Your payment information has been confirmed and you are now ready to receive payments in %{service_name}."
     booking_reminder_to_author:
+      confirmation_subject: "Confirmed: %{title} %{date} %{time}"
       subject: "Reminder - you’re hosting a Kudoz experience on - %{date}, %{time}"
       body: "
         <h3>Just a friendly reminder that you’re hosting %{title}</h3>
@@ -723,6 +724,7 @@ en:
           <li>on %{date}</li>
           <li>at %{time} <small>Experiences usually only last an hour but we’ve booked you for 1.5 hrs in case the kudoer arrives late or the experience goes a bit over</small></li>
         </ul>
+        <p><b>Location details & meeting up:</b> %{location_details}</p>
         <h3>Get to know the Kudoer you’ll be meeting:</h3>
         <p>
           <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{requester_name}</a>
@@ -732,6 +734,7 @@ en:
         <p>Thanks, <br /> Team Kudoz</p>
     "
     booking_reminder_to_requester: 
+      confirmation_subject: "Confirmed: %{title} %{date} %{time}"
       subject: "Reminder - Kudoz experience coming up - %{date}, %{time}"
       body: "
         <p>So exciting! You’re going on the %{title} experience</p>
@@ -746,6 +749,7 @@ en:
           <li>%{what_else}</li>
         </ul>
         <p><b>Location:</b> <a href='http://maps.google.com/?q=%{latitude_longitude}'>%{address}</a></p>
+        <p><b>Location details & meeting up:</b> %{location_details}</p>
         <p><b>Closest skytrain station</b>: %{nearest_skytrain_station}</p>
         <p>
           <b>You'll meet...</b>: <br />
