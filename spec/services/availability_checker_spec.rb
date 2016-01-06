@@ -63,7 +63,11 @@ describe AvailabilityChecker do
 
   context 'when the listing has availabilities' do
     # Since this is recurring, it will be more than enough availabilities
-    let!(:availability) { FactoryGirl.create(:availability, listing: listing, dow: 1, date: time.to_date) }
+    let!(:availabilities) do
+      4.times do |i|
+        FactoryGirl.create(:availability, listing: listing, date: (time.to_date + (i + 1).weeks))
+      end
+    end
 
     it "does not send emails" do
       dont_expect_emails

@@ -51,7 +51,7 @@ describe TransactionService::Process::FreeBooking do
     it 'sends out reminders' do
       described_class.new.confirm(booking: bookings.first)
       Timecop.freeze(48.hours.from_now)
-      successes, failures = Delayed::Worker.new.work_off
+      successes, failures = Delayed::Worker.new(quiet: false).work_off
       expect(ActionMailer::Base.deliveries.count).to eql(4)
     end
 

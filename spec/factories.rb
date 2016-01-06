@@ -442,5 +442,6 @@ FactoryGirl.define do
     build_association(:listing)
     start_at DateTime.now
     end_at (DateTime.now + 1.hour)
+    date Date.today
   end
 end

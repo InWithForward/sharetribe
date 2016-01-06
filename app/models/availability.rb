@@ -12,6 +12,12 @@
 #  date            :date
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  recurring       :boolean          default(FALSE)
+#
+# Indexes
+#
+#  index_availabilities_on_date        (date)
+#  index_availabilities_on_listing_id  (listing_id)
 #
 
 class Availability < ActiveRecord::Base
@@ -19,9 +25,9 @@ class Availability < ActiveRecord::Base
 
   belongs_to :listing
 
-  attr_accessible :transaction_id, :start_at_hour, :start_at_minute, :end_at_hour, :end_at_minute, :dow, :date
+  attr_accessible :transaction_id, :start_at_hour, :start_at_minute, :end_at_hour, :end_at_minute, :date, :recurring
 
-  validates :start_at_hour, :start_at_minute, :end_at_hour, :end_at_minute, presence: true
+  validates :start_at_hour, :start_at_minute, :end_at_hour, :end_at_minute, :date, presence: true
 
   def start_at=(time)
     self.start_at_hour = time.hour
@@ -43,11 +49,7 @@ class Availability < ActiveRecord::Base
         end_at: booking.end_at.to_time
       } }
 
-    recurring = listing.availabilities.where('dow is not null').map do |availability|
-      synthesize availability
-    end.flatten(1)
-
-    singles = listing.availabilities.where('dow is null').map do |availability|
+    availabilities = listing.availabilities.where(date: Date.today..(Date.today + WEEKS.weeks)).map do |availability|
       d = availability.date
       {
         start_at: Time.new(d.year, d.month, d.day, availability.start_at_hour, availability.start_at_minute, 0),
@@ -55,19 +57,6 @@ class Availability < ActiveRecord::Base
       }
     end
 
-    (recurring + singles) - bookings
-  end
-
-  def self.synthesize(availability)
-    WEEKS.times.map do |i|
-      t = Date.today
-      d = Date.commercial(t.cwyear, t.cweek, (availability.dow + 1))
-      d += i.week
-
-      {
-        start_at: Time.new(d.year, d.month, d.day, availability.start_at_hour, availability.start_at_minute, 0),
-        end_at: Time.new(d.year, d.month, d.day, availability.end_at_hour, availability.end_at_minute, 0)
-      }
-    end
+    availabilities - bookings
   end
 end

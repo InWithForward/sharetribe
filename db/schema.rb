@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151030155345) do
+ActiveRecord::Schema.define(:version => 20160105211949) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -34,9 +34,13 @@ ActiveRecord::Schema.define(:version => 20151030155345) do
     t.integer  "end_at_minute"
     t.integer  "dow"
     t.date     "date"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "recurring",       :default => false
   end
+
+  add_index "availabilities", ["date"], :name => "index_availabilities_on_date"
+  add_index "availabilities", ["listing_id"], :name => "index_availabilities_on_listing_id"
 
   create_table "billing_agreements", :force => true do |t|
     t.integer  "paypal_account_id",    :null => false
@@ -272,14 +276,15 @@ ActiveRecord::Schema.define(:version => 20151030155345) do
   create_table "community_memberships", :force => true do |t|
     t.string   "person_id"
     t.integer  "community_id"
-    t.boolean  "admin",               :default => false
+    t.boolean  "admin",                :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "consent"
     t.integer  "invitation_id"
     t.datetime "last_page_load_date"
-    t.string   "status",              :default => "accepted", :null => false
-    t.boolean  "can_post_listings",   :default => false
+    t.string   "status",               :default => "accepted", :null => false
+    t.boolean  "can_post_listings",    :default => false
+    t.boolean  "can_request_listings", :default => false
   end
 
   add_index "community_memberships", ["community_id"], :name => "index_community_memberships_on_community_id"
@@ -497,7 +502,9 @@ ActiveRecord::Schema.define(:version => 20151030155345) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "listing_relationships", ["child_id"], :name => "index_listing_relationships_on_child_id"
   add_index "listing_relationships", ["parent_id", "child_id"], :name => "index_listing_relationships_on_parent_id_and_child_id", :unique => true
+  add_index "listing_relationships", ["parent_id"], :name => "index_listing_relationships_on_parent_id"
 
   create_table "listings", :force => true do |t|
     t.string   "author_id"
@@ -847,6 +854,20 @@ ActiveRecord::Schema.define(:version => 20151030155345) do
     t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "role_custom_fields", :force => true do |t|
+    t.integer  "role_id",         :null => false
+    t.integer  "custom_field_id", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name",         :null => false
+    t.integer  "community_id", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "sessions", :force => true do |t|

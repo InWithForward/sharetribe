@@ -50,4 +50,30 @@ namespace :data do
       end
     end
   end
+
+  task create_availabilities_from_recurring: :environment do
+    weeks = 52 * 2
+
+    ActiveRecord::Base.transaction do
+      Availability.where('dow IS NOT NULL').each do |availability|
+        weeks.times do |i|
+          t = Date.today
+          d = Date.commercial(t.cwyear, t.cweek, (availability.dow + 1))
+          d += i.week
+
+          p d
+          availability.listing.availabilities.create(
+            date: d,
+            start_at_hour: availability.start_at_hour,
+            start_at_minute: availability.start_at_minute,
+            end_at_hour: availability.end_at_hour,
+            end_at_minute: availability.end_at_minute,
+            recurring: true
+          )
+        end
+
+        availability.delete
+      end
+    end
+  end
 end

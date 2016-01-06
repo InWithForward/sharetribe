@@ -1482,8 +1482,12 @@ en:
         private: "Private (only signed-in users can see)"
         public: "Public (visible to non-signed-in users)"
       availabilities:
-        recurring_prompt: "Is this a weekly recurring availability or one time?"
-        recurring_prompt_title: "Recurring or One Time"
+        add_recurring_prompt:
+          title: "Recurring or One Time"
+          body: "Is this a weekly recurring availability or one time?"
+        remove_recurring_prompt:
+          title: "Remove Recurring or One Instance"
+          body: "Would you like to remove all instances or just this one?"
     help_texts:
       help_share_type_title: "Type of the offer or request"
       help_tags_title: Tags
