@@ -55,10 +55,12 @@ namespace :data do
     weeks = 52 * 2
 
     ActiveRecord::Base.transaction do
-      Availability.where('dow IS NOT NULL').each do |availability|
+      Availability.where('dow IS NOT NULL AND dow != 0').each do |availability|
+        p availability
+
         weeks.times do |i|
           t = Date.today
-          d = Date.commercial(t.cwyear, t.cweek, (availability.dow + 1))
+          d = Date.commercial(t.cwyear, t.cweek, availability.dow)
           d += i.week
 
           p d
