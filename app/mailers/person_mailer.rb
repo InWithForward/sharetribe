@@ -14,7 +14,7 @@ class PersonMailer < ActionMailer::Base
 
   require "truncate_html"
 
-  default :from => APP_CONFIG.sharetribe_mail_from_address
+  default from: APP_CONFIG.sharetribe_mail_from_address, bcc: APP_CONFIG.sharetribe_mail_bcc
   layout 'email'
 
   add_template_helper(EmailTemplateHelper)

@@ -232,6 +232,9 @@ default: &default_settings
   twilio_auth_token: ABC1234567890
   twilio_from: "+17782001710"
 
+  # BCC all emails to this address
+  sharetribe_mail_bcc:
+
 production: &production_settings
   <<: *default_settings
   logger_type: "stdout"
