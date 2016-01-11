@@ -303,6 +303,7 @@ Kassi::Application.routes.draw do
           end
         end
         resources :person_messages
+        resources :phone_number_shares
 
         resource :inbox, :only => [:show]
 

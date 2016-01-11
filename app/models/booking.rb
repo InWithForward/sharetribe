@@ -20,7 +20,6 @@ class Booking < ActiveRecord::Base
   attr_accessible :transaction_id, :end_on, :start_on, :start_at, :end_at
 
   validates_date :end_on, on_or_after: :start_on, allow_blank: true
-  validates_time :end_at, on_or_after: :start_at, allow_blank: true
 
   ## TODO REMOVE THIS
   def duration

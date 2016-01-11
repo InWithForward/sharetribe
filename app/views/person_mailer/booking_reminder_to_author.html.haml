@@ -1,4 +1,16 @@
+- share_number_url = new_person_phone_number_share_url(@requester, @url_params)
+
 %tr
   %td{:align => "left"}
     %font{body_font}
       =t("emails.booking_reminder_to_author.body", @body_variables).html_safe
+%tr
+  %td{:align => "left"}
+    %font{body_font}
+      %h3= t('emails.booking_reminder_to_author.share_number_heading').html_safe
+      %p= t('emails.booking_reminder_to_author.share_number_paragraph').html_safe
+= render :partial => "person_mailer/action_button", :locals => { :text => t("emails.booking_reminder_to_author.button"), :url => share_number_url }
+%tr
+  %td{:align => "left"}
+    %font{body_font}
+      =t("emails.booking_reminder_to_author.end", @body_variables).html_safe

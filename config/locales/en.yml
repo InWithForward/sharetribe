@@ -718,6 +718,9 @@ en:
     booking_reminder_to_author:
       confirmation_subject: "Confirmed: %{title} %{date} %{time}"
       subject: "Reminder - you’re hosting a Kudoz experience on - %{date}, %{time}"
+      share_number_heading: "Exchange Details"
+      share_number_paragraph: "Are you comfortable sharing your cell phone number with this person? It’s helpful to have each other's numbers when meeting up."
+      button: "yes, I'll share my phone #"
       body: "
         <h3>Just a friendly reminder that you’re hosting %{title}</h3>
         <ul>
@@ -729,13 +732,18 @@ en:
         <p>
           <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{requester_name}</a>
         </p>
+      "
+      end: "
         <p><a href='%{conversation_url}'>Send %{requester_name} a note</a> if you have any questions or special instructions for them.</p>
         <p>If you need some help preparing your learning experience, <a href=''>check out our tips</a> or <a href=''>get in touch</a>. We would love to help.</p>
         <p>Thanks, <br /> Team Kudoz</p>
-    "
+      "
     booking_reminder_to_requester: 
       confirmation_subject: "Confirmed: %{title} %{date} %{time}"
       subject: "Reminder - Kudoz experience coming up - %{date}, %{time}"
+      share_number_heading: "Exchange Details"
+      share_number_paragraph: "Are you comfortable sharing your cell phone number with this person? It’s helpful to have each other's numbers when meeting up."
+      button: "yes, I'll share my phone #"
       body: "
         <p>So exciting! You’re going on the %{title} experience</p>
         <ul>
@@ -755,9 +763,11 @@ en:
           <b>You'll meet...</b>: <br />
           <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{author_name}</a>
         </p>
+        "
+      end: "
         <p>Can’t wait to hear how it goes!</p>
         <p>Cheers, <br /> Team Kudoz</p>
-    "
+      "
     confirm_reminder:
       you_have_not_yet_confirmed_or_canceled_request: "You have not yet confirmed or canceled the request %{request_link}. If the request has been completed, you should confirm that. After that you can give feedback to %{other_party_given_name}."
       you_have_not_yet_confirmed_or_canceled_request_escrow_automatic_confirmation: "You have not yet confirmed or canceled the request %{request_link}. We will transfer the money to %{other_party_given_name} only when a) you have marked the request completed or b) %{days_to_automatic_confirmation} days have passed since you paid. After marking the request as completed you can give feedback to %{other_party_given_name}."
@@ -962,6 +972,9 @@ en:
         Kudoers would love to book your listing but there aren’t many times for them to choose from.<br /><br />
         Please login to your Kudoz account and go to your profile > listing.<br /> <br />
         Edit listing to see the availability calendar and add some time slots!"
+    share_phone_number:
+      body: "Fellow Kudoz member, %{username}, has shared their phone # with you: %{phone_number}. Don’t forget to add to your contacts!"
+      subject: "Fellow Kudoz member, %{username}, has shared their phone number"
   error_messages:
     listings:
       departure_time: "Departure time must be between current time and one year from now."
@@ -983,6 +996,7 @@ en:
     booking_request: "Congrats! %{requester} wants to go on your Kudoz experience! Can you do...? %{first_time} text back '%{transaction_id}-%{first_id}', %{second_time} text back '%{transaction_id}-%{second_id}'. Can't do either, text back '%{transaction_id}-0'."
     booking_confirmed: "Thanks - you're a star! We'll send you a reminder 48 hrs before you host with more info. Text back anytime for coaching or visit http://kudoz.ca/hostips"
     booking_canceled: "Howdy, Kudoz again. Please go to kudoz.ca to upate your host calendar today. Then, we'll ask the Kudoer to try again."
+    share_phone_number: "Fellow Kudoz member, %{username}, has shared their phone # with you: %{phone_number}. Don’t forget to add to your contacts!"
   error_pages:
     back_to_kassi_front_page: "Back to the front page"
     error_404:
@@ -1807,6 +1821,11 @@ en:
       following: Following
       follow: Follow
       unfollow: Unfollow
+  phone_number_shares:
+    new:
+      heading: "Share your phone number"
+      button: "Share"
+      phone_number: "Cell Phone Number"
   search:
     show:
       all_results: "All results"

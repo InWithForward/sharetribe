@@ -424,6 +424,18 @@ class PersonMailer < ActionMailer::Base
     end
   end
 
+  def share_phone_number(community, person, recipient)
+    premailer_mail(
+      :to => recipient.confirmed_notification_email_addresses,
+      :from => community_specific_sender(community),
+      :subject => t('emails.share_phone_number.subject', username: person.username)
+    ) do |format|
+      format.html do
+        render locals: { person: person }
+      end
+    end
+  end
+
   # Old layout
 
   def new_member_notification(person, community, email)
