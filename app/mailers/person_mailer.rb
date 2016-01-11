@@ -152,7 +152,6 @@ class PersonMailer < ActionMailer::Base
     @transaction = booking.transaction
     @listing = @transaction.listing
     @recipient = @listing.author
-    @location = @listing.location
     @requester = @transaction.starter
 
     @email_type = "email_about_accept_reminders"
@@ -196,7 +195,11 @@ class PersonMailer < ActionMailer::Base
     @transaction = booking.transaction
     @recipient = @transaction.starter
     @listing = @transaction.listing
-    @location = @listing.location
+    if @location = @listing.location
+      address = @location.address
+      google_address = @location.google_address
+      latitude_longitude = [@location.latitude, @location.longitude].join(',')
+    end
     @author = @transaction.author
 
     @email_type = "email_about_accept_reminders"
@@ -211,11 +214,11 @@ class PersonMailer < ActionMailer::Base
       title: @listing.title,
       date: date,
       time: time,
-      address: @location.address,
-      google_address: @location.google_address,
+      address: address,
+      google_address: google_address,
       author_name: @author.name,
       profile_image_url: @author.image.url(:thumb),
-      latitude_longitude: [@location.latitude, @location.longitude].join(','),
+      latitude_longitude: latitude_longitude,
       profile_url: person_url(@author, @url_params)
     }.merge(custom_fields)
 

@@ -307,4 +307,49 @@ describe PersonMailer do
 
   end
 
+  describe "#booking_reminder_to_requester" do
+
+    let(:booking) { FactoryGirl.create(:free_booking) }
+    let(:transaction) { booking.transaction }
+    let(:listing) { transaction.listing }
+    let(:community) { listing.communities.last }
+
+    before do
+      {
+        location_details: 'location',
+        bring_money: 'bring money',
+        what_else: 'what else',
+        nearest_skytrain_station: 'nearest station'
+      }.each_pair do |key, value|
+        question = FactoryGirl.create(:question, key: key)
+        custom_field_value = FactoryGirl.create(:custom_field_value, text_value: value, question: question)
+        question.categories << listing.category
+      end
+    end
+
+    it "notifies requester of a confirmed booking" do
+      recipient_email = transaction.starter.confirmed_notification_emails_to
+
+      email = described_class.booking_reminder_to_requester(booking, community, :reminder)
+      expect(email).to be_delivered_to recipient_email
+    end
+
+    context 'when there is no location' do
+
+      before do
+        listing.location = nil
+        listing.save
+      end
+
+      it "notifies requester of a confirmed booking" do
+        recipient_email = transaction.starter.confirmed_notification_emails_to
+
+        email = described_class.booking_reminder_to_requester(booking, community, :reminder)
+        expect(email).to be_delivered_to recipient_email
+      end
+
+    end
+
+  end
+
 end
