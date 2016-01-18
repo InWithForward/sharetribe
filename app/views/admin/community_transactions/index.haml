@@ -44,10 +44,14 @@
           %td=l(last_activity_at, format: :short_date)
           %td
             = Maybe(conversation[:starter]).map { |p| link_to_unless(p[:is_deleted], p[:display_name], p[:url]) }.or_else("")
-            = icon_tag('check') if conversation[:testimonial_from_starter]
+            - if conversation[:testimonial_from_starter]
+              = " &nbsp; ".html_safe
+              = icon_tag('check')
           %td
             = Maybe(conversation[:author]).map { |p| link_to_unless(p[:is_deleted], p[:display_name], p[:url]) }.or_else("")
-            = icon_tag('check') if conversation[:testimonial_from_author]
+            - if conversation[:testimonial_from_author]
+              = " &nbsp; ".html_safe
+              = icon_tag('check')
           %td=Maybe(conversation[:booking]).map { |p| l(conversation[:booking].start_at, format: :short) }.or_else("")
   .row
     .col-12
