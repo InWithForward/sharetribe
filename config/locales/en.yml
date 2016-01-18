@@ -264,8 +264,8 @@ en:
           sum: Sum
           started: Started
           last_activity: "Latest activity"
-          initiated_by: Starter
-          other_party: "Other party"
+          initiated_by: "Kudoer - Feedback?"
+          other_party: "Author - Feedback?"
           booking_at: "Booked for"
         status:
           free: Conversation
