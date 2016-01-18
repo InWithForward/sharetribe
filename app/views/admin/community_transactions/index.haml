@@ -13,6 +13,7 @@
       %tr
         %th= render partial: "layouts/sort_link", locals: { column: "listing", direction: sort_link_direction("listing"), title: t("admin.communities.transactions.headers.listing") }
         %th=t("admin.communities.transactions.headers.status")
+        %th= "Complete"
         - if show_status_and_sum
           %th=t("admin.communities.transactions.headers.sum")
         %th= render partial: "layouts/sort_link", locals: { column: "started", direction: sort_link_direction("started"), title: t("admin.communities.transactions.headers.started") }
@@ -26,6 +27,10 @@
         %tr
           %td=Maybe(conversation[:listing]).map { |listing| link_to_unless(listing[:deleted], listing[:title], conversation[:listing_url]) }.or_else("")
           %td=t("admin.communities.transactions.status.#{conversation[:status]}")
+          %td
+            - if conversation[:status] == "booked"
+              - complete_action = admin_community_transaction_path(community_id: @current_community.id, id: conversation[:id], action: 'completed')
+              = button_to "Complete", complete_action, method: :put, data: {confirm: 'Are you sure?'}
           - if show_status_and_sum
             %td=conversation[:payment_total] ? humanized_money_with_symbol(conversation[:payment_total]) : ""
           %td=l(conversation[:created_at], format: :short_date)
