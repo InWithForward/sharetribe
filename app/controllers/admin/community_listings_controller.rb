@@ -8,7 +8,7 @@ class Admin::CommunityListingsController < ApplicationController
     @listings = Listing.find_with(nil, nil, @current_community, 50, params[:page])
   end
 
-  def complete
+  def update
     if @listing.update_attributes(params[:listing])
       flash[:notice] = t("layouts.notifications.listing_updated_successfully")
     else

@@ -9,4 +9,7 @@
     = form.label :invisible, t("admin.communities.listings.invisible")
     = form.text_field :invisible, :class => "text_field"
 
+    = form.label :sort_date, t("admin.communities.listings.sort_date")
+    = form.date_select :sort_date
+
     = form.button t("settings.save_information"), :class => "send_button"

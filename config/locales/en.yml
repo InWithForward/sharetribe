@@ -254,6 +254,7 @@ en:
         title: 'Title'
         author: 'Author'
         invisible: 'Invisible & Searchable'
+        sort_date: "Sort Date"
         edit: 'Edit'
       transactions:
         transactions: "View experiences"
