@@ -256,7 +256,7 @@ en:
         invisible: 'Invisible & Searchable'
         edit: 'Edit'
       transactions:
-        transactions: "View transactions"
+        transactions: "View experiences"
         headers:
           conversation: "Conversation thread"
           listing: Listing
@@ -274,7 +274,7 @@ en:
           accepted: Accepted
           rejected: Rejected
           paid: Paid
-          confirmed: Confirmed
+          confirmed: Completed
           canceled: Canceled
           initiated: "Waiting PayPal payment"
           pending_ext: "Waiting PayPal payment"
