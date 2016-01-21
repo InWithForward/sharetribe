@@ -515,6 +515,7 @@ DEPENDENCIES
   dynamic_form
   email_spec
   factory_girl_rails
+  faraday
   fb-channel-file
   flying-sphinx (~> 1.2.0)
   guard-livereload
