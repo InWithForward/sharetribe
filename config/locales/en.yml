@@ -307,6 +307,8 @@ en:
         edit_location_field: "Edit location field"
         this_field_is_required: "This field is required"
       form:
+        field_display_on_transaction:
+          display_on_transaction: "Show this field on the Kudoer's booked experience page"
         field_required:
           this_field_is_required: "This field is required"
           this_field_is_required_checkbox: "This field is required (user has to select at least one option)"
