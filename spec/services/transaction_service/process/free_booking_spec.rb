@@ -55,6 +55,11 @@ describe TransactionService::Process::FreeBooking do
       expect(ActionMailer::Base.deliveries.count).to eql(4)
     end
 
+    it 'creates a Trello card' do
+      expect(CreateTrelloCardJob).to receive(:new).and_return(mock(perform: true))
+      described_class.new.confirm(booking: bookings.first)
+    end
+
   end
 
 end

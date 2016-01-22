@@ -123,6 +123,7 @@ group :test do
   gem 'database_cleaner'
   gem 'connection_pool'
   gem 'coveralls', require: false
+  gem 'webmock'
 end
 
 group :development, :test do

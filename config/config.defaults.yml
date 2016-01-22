@@ -236,6 +236,8 @@ default: &default_settings
   sharetribe_mail_bcc:
 
   trello_api_key: ""
+  trello_api_token: ""
+  trello_board_id: ""
 
 production: &production_settings
   <<: *default_settings
