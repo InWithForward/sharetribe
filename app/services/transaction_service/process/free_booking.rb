@@ -21,6 +21,8 @@ module TransactionService::Process
     def confirm(booking:)
       tx = booking.transaction
 
+      Delayed::Job.enqueue(CreateTrelloCardJob.new(booking.id, tx[:community_id]))
+
       ActiveRecord::Base.transaction do
         booking.confirmed = true
         booking.save!

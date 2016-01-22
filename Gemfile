@@ -84,6 +84,7 @@ gem 'airbrake', '~>4.1.0'
 gem 'youtube_addy', '~> 1.0.4'
 gem 'cocoon', '~> 1.2.6'
 gem 'twilio-ruby', '~> 4.2.0'
+gem 'faraday'
 
 group :staging, :production do
   gem 'newrelic_rpm', '~> 3.9.1.236'
@@ -122,6 +123,7 @@ group :test do
   gem 'database_cleaner'
   gem 'connection_pool'
   gem 'coveralls', require: false
+  gem 'webmock'
 end
 
 group :development, :test do
