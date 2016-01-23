@@ -397,7 +397,8 @@ class PeopleController < Devise::RegistrationsController
   end
 
   def about_me_value(person)
-    person.custom_field_values.where(custom_fields: { key: 'about_me' }).first.text_value
+    custom_field = person.custom_field_values.where(custom_fields: { key: 'about_me' }).first
+    Maybe(custom_field).text_value.or_else(nil)
   end
 
 end
