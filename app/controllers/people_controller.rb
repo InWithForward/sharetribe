@@ -170,7 +170,9 @@ class PeopleController < Devise::RegistrationsController
 
   def update
     if params[:custom_fields]
+      old_about_me_value = about_me_value @person
       @person.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+      new_about_me_value = about_me_value @person
     end
 
     # If setting new location, delete old one first
@@ -212,6 +214,17 @@ class PeopleController < Devise::RegistrationsController
             @person.send_confirmation_instructions(request.host_with_port, @current_community)
             flash[:notice] = t("layouts.notifications.email_confirmation_sent_to_new_address")
         end
+
+        if old_about_me_value && old_about_me_value != new_about_me_value
+          Delayed::Job.enqueue(
+            MixpanelTrackerJob.new(@person.id, @current_community.id, 'About Me Changed', {
+              old: old_about_me_value,
+              new: new_about_me_value
+            })
+          )
+        end
+
+        Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id))
       else
         flash[:error] = t("layouts.notifications.#{@person.errors.first}")
       end
@@ -381,6 +394,10 @@ class PeopleController < Devise::RegistrationsController
         render :layout => false
       }
     end
+  end
+
+  def about_me_value(person)
+    person.custom_field_values.where(custom_fields: { key: 'about_me' }).first.text_value
   end
 
 end

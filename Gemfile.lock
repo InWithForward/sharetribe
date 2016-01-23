@@ -254,6 +254,7 @@ GEM
     method_source (0.8.2)
     middleware (0.1.0)
     mime-types (1.25.1)
+    mixpanel-ruby (2.2.0)
     monetize (1.1.0)
       money (~> 6.5.0)
     money (6.5.1)
@@ -538,6 +539,7 @@ DEPENDENCIES
   mail_view (~> 1.0.3)
   memcachier
   mercury-rails
+  mixpanel-ruby
   money-rails
   multi_json (~> 1.7.3)
   mysql2

@@ -15,6 +15,23 @@ module TransactionService::Process
                                      transaction_id: tx[:id],
                                      person_id: tx[:listing_author_id])
 
+      starter =  Person.where(id: tx[:starter_id]).first
+      author = Person.where(id: tx[:listing_author_id]).first
+
+      Delayed::Job.enqueue(
+        MixpanelTrackerJob.new(starter.id, tx[:community_id], 'Experience Attended', {
+          title: tx[:listing_title],
+          host: author.username 
+        })
+      )
+
+      Delayed::Job.enqueue(
+        MixpanelTrackerJob.new(author.id, tx[:community_id], 'Experience Hosted', {
+          title: tx[:listing_title],
+          attendee: starter.username
+        })
+      )
+
       Result::Success.new({result: true})
     end
 

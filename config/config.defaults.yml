@@ -239,6 +239,8 @@ default: &default_settings
   trello_api_token: ""
   trello_board_id: ""
 
+  mixpanel_id: ""
+
 production: &production_settings
   <<: *default_settings
   logger_type: "stdout"

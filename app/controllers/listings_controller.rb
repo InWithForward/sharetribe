@@ -183,6 +183,13 @@ class ListingsController < ApplicationController
     @listing.custom_field_values = FieldValueCreator.call(params[:custom_fields])
 
     if @listing.save
+      Delayed::Job.enqueue(
+        MixpanelTrackerJob.new(@current_user.id, @current_community.id, 'Listing Created', {
+          title: @listing.title,
+          category: @listing.category.display_name(I18n.locale)
+        })
+      )
+
       listing_image_ids = params[:listing_images].collect { |h| h[:id] }.select { |id| id.present? }
       ListingImage.where(id: listing_image_ids, author_id: @current_user.id).update_all(listing_id: @listing.id)
 
