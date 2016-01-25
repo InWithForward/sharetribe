@@ -16,4 +16,6 @@ class Role < ActiveRecord::Base
 
   has_many :role_custom_fields, :dependent => :destroy
   has_many :custom_fields, :through => :role_custom_fields, :order => "sort_priority"
+
+  has_and_belongs_to_many :people
 end

@@ -264,7 +264,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_role
-    if @current_community && @current_user && !@current_user.role
+    if @current_community && @current_user && @current_user.roles.empty?
       redirect_to role_person_path(@current_user)
     end
   end

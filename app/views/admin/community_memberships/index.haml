@@ -38,6 +38,7 @@
           %th= t("admin.communities.manage_members.admin")
           %th= t("admin.communities.manage_members.ban_user")
           %th= t("admin.communities.manage_members.edit")
+          %th= t("admin.communities.manage_members.role")
       %tbody
         - @memberships.each do |membership|
           - member = membership.person
@@ -55,6 +56,8 @@
               = link_to(icon_tag("cross"), ban_admin_community_community_membership_path(@current_community.id, membership.id), method: :put, :data => {:confirm => t("admin.communities.manage_members.ban_user_confirmation")}, :class => "admin-members-remove-user")
             %td.admin-members-full-name
               = link_to t("admin.communities.manage_members.edit"), edit_admin_community_person_path(@current_community.id, membership.person.id)
+            %td
+              = link_to t("admin.communities.manage_members.role"), roles_admin_community_person_path(@current_community.id, membership.person.id)
 
   .row
     .col-12

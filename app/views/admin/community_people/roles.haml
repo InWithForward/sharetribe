@@ -1,0 +1,14 @@
+- content_for :title_header do
+  %h1= t("layouts.admin.admin")
+
+= render :partial => "admin/left_hand_navigation", :locals => { :links => admin_links_for(@current_community) }
+
+
+#person_settings_form.left-navi-section.settings-section
+  = form_for [:admin, @current_community, @person] do |form|
+
+    = form.label :roles, t("admin.communities.people.role")
+    - @current_community.roles.each do |role|
+      = check_box_tag "person[role_attributes][][role_id]", "#{role.id}", @person.roles.include?(role), :id => "#{role.id}_checkbox", :class => "custom-field-category-checkbox"
+      = label_tag "#{role.id}_checkbox", role.name, :class => "custom-field-category-checkbox-label"
+    = form.button t("settings.save_information"), :class => "send_button"

@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
   def show
     @selected_left_navi_link = "profile"
     add_location_to_person
-    @custom_field_questions = @person.role.custom_fields
+    @custom_field_questions = CustomField.for_roles(@person.roles)
     render :action => :profile
   end
 
@@ -20,7 +20,7 @@ class SettingsController < ApplicationController
     # This is needed if person doesn't yet have a location
     # Build a new one based on old street address or then empty one.
     add_location_to_person
-    @custom_field_questions = @person.role.custom_fields
+    @custom_field_questions = CustomField.for_roles(@person.roles)
   end
 
   def account

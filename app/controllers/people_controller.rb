@@ -325,12 +325,12 @@ class PeopleController < Devise::RegistrationsController
   end
 
   def role
-    redirect_to profile_person_settings_path(@person) if @person.role_id
+    redirect_to profile_person_settings_path(@person) if @person.roles.any?
   end
 
   def update_role
-    @person.role_id = params[:person][:role_id]
-    @person.save!
+    role = Role.find(params[:person][:role_id])
+    @person.roles << role
     redirect_to profile_person_settings_path(@person)
   end
 

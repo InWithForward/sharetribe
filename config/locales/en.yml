@@ -1726,7 +1726,7 @@ en:
       guest:
         heading: "Become a Kudoer"
         description: "If you've applied and been accepted to be a Kudoer, you can create your profile to book experiences and badges."
-        button: "I wan to be a Kudoer"
+        button: "I want to be a Kudoer"
         learn_more: "Learn more about what it means to be a Kudoer."
     edit_links:
       activate: Activate

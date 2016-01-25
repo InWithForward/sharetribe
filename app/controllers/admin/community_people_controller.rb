@@ -4,11 +4,13 @@ class Admin::CommunityPeopleController < ApplicationController
   before_filter :fetch_person
 
   def edit
-    @custom_field_questions = @person.role.custom_fields
+    @custom_field_questions = CustomField.for_roles(@person.roles)
   end
 
   def update
-    @person.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+    if params[:custom_fields]
+      @person.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+    end
 
     if @person.update_attributes(params[:person])
       Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id))
@@ -18,6 +20,11 @@ class Admin::CommunityPeopleController < ApplicationController
     end
 
     redirect_to :back
+  end
+
+  # Edit the role
+  def roles
+    @roles = @current_community.roles
   end
 
   private

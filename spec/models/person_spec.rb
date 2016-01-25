@@ -46,7 +46,6 @@
 #  shape_content_type                 :string(255)
 #  shape_file_size                    :integer
 #  shape_updated_at                   :datetime
-#  role_id                            :integer
 #
 # Indexes
 #

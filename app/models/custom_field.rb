@@ -61,6 +61,12 @@ class CustomField < ActiveRecord::Base
   validates_length_of :category_custom_fields, :minimum => 1, if: :for_listing?
   validates_presence_of :community
 
+  def self.for_roles(roles)
+      includes(:role_custom_fields).
+      where(role_custom_fields: { role_id: roles.map(&:id) }).
+      all
+  end
+
   def name_attributes=(attributes)
     build_attrs = attributes.map { |locale, value| {locale: locale, value: value[:value], hint: value[:hint] } }
     build_attrs.each do |name|
