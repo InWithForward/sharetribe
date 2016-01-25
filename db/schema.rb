@@ -857,20 +857,6 @@ ActiveRecord::Schema.define(:version => 20160118223823) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "role_custom_fields", :force => true do |t|
-    t.integer  "role_id",         :null => false
-    t.integer  "custom_field_id", :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string   "name",         :null => false
-    t.integer  "community_id", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
