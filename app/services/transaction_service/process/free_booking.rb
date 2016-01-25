@@ -15,11 +15,30 @@ module TransactionService::Process
                                      transaction_id: tx[:id],
                                      person_id: tx[:listing_author_id])
 
+      starter =  Person.where(id: tx[:starter_id]).first
+      author = Person.where(id: tx[:listing_author_id]).first
+
+      Delayed::Job.enqueue(
+        MixpanelTrackerJob.new(starter.id, tx[:community_id], 'Experience Attended', {
+          title: tx[:listing_title],
+          host: author.username 
+        })
+      )
+
+      Delayed::Job.enqueue(
+        MixpanelTrackerJob.new(author.id, tx[:community_id], 'Experience Hosted', {
+          title: tx[:listing_title],
+          attendee: starter.username
+        })
+      )
+
       Result::Success.new({result: true})
     end
 
     def confirm(booking:)
       tx = booking.transaction
+
+      Delayed::Job.enqueue(CreateTrelloCardJob.new(booking.id, tx[:community_id]))
 
       ActiveRecord::Base.transaction do
         booking.confirmed = true
@@ -31,15 +50,15 @@ module TransactionService::Process
                                       person_id: tx[:listing_author_id])
       end
 
-      Delayed::Job.enqueue(BookingReminderToRequesterJob.new(booking.id, tx[:community_id]))
-
       [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
-        job = klass.new(booking.id, tx[:community_id])
-        if APP_CONFIG.immediate_booking_reminder
-          job.perform
-        else
-          Delayed::Job.enqueue(job, run_at: booking.start_at - 48.hours)
-        end
+        Delayed::Job.enqueue(
+          klass.new(booking.id, tx[:community_id], :confirmation),
+          run_at: Time.now + 10.seconds
+        )
+        Delayed::Job.enqueue(
+          klass.new(booking.id, tx[:community_id], :reminder),
+          run_at: booking.start_at - 48.hours
+        )
       end
       Result::Success.new({result: true})
     end

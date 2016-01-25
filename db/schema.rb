@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151208174127) do
+ActiveRecord::Schema.define(:version => 20160118223823) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -34,9 +34,13 @@ ActiveRecord::Schema.define(:version => 20151208174127) do
     t.integer  "end_at_minute"
     t.integer  "dow"
     t.date     "date"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "recurring",       :default => false
   end
+
+  add_index "availabilities", ["date"], :name => "index_availabilities_on_date"
+  add_index "availabilities", ["listing_id"], :name => "index_availabilities_on_listing_id"
 
   create_table "billing_agreements", :force => true do |t|
     t.integer  "paypal_account_id",    :null => false
@@ -373,16 +377,17 @@ ActiveRecord::Schema.define(:version => 20151208174127) do
   create_table "custom_fields", :force => true do |t|
     t.string   "type"
     t.integer  "sort_priority"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
     t.integer  "community_id"
-    t.boolean  "required",       :default => true
+    t.boolean  "required",               :default => true
     t.float    "min"
     t.float    "max"
-    t.boolean  "allow_decimals", :default => false
-    t.string   "for",            :default => "Listing", :null => false
-    t.boolean  "visible",        :default => true,      :null => false
+    t.boolean  "allow_decimals",         :default => false
+    t.string   "for",                    :default => "Listing", :null => false
+    t.boolean  "visible",                :default => true,      :null => false
     t.string   "key"
+    t.boolean  "display_on_transaction", :default => false
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"

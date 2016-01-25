@@ -70,9 +70,11 @@
           %input{:type => "checkbox", :id => "person_terms", :name => "person[terms]"}
           = form.label :terms, t('.i_accept_the'), :class => "checkbox"
           = link_to t(".terms"), "#", :tabindex => "-1", :id => "terms_link", :class => "form"
+          = " and "
+          = link_to t(".privacy"), "#", :tabindex => "-2", :id => "privacy_link", :class => "form"
 
     = form.hidden_field :consent, :value => @current_community.consent
 
     = button_tag t('.create_new_account')
 
-= render :partial => "help_texts", :collection => ["terms", "help_invitation_code"], :as => :field
+= render :partial => "help_texts", :collection => ["terms", "privacy", "help_invitation_code"], :as => :field

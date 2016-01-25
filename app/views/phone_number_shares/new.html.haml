@@ -1,0 +1,8 @@
+.centered-section
+  %h2= t('phone_number_shares.new.heading')
+
+  = form_for phone_number_share_form, url: person_phone_number_shares_path(:person => @recipient) do |form|
+    = form.label :phone_number, t(".phone_number")
+    = form.text_field :phone_number, :class => "text_field", :maxlength => "25"
+
+    = form.button t('phone_number_shares.new.button'), :class => "send_button"

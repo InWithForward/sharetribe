@@ -32,7 +32,7 @@
         %li.availability(class=hidden_class)
           = form.label identifier, class: 'buttonish checkbox' do
             = check_box(:free_booking, identifier)
-            = "#{start_at.to_formatted_s(:time)} - #{end_at.to_formatted_s(:time)},  #{start_at.to_date.to_formatted_s(:short)}"
+            = formatted_range start_at, end_at
 
     %a#show-more{href:"#"}
       More Times

@@ -2,19 +2,20 @@
 #
 # Table name: custom_fields
 #
-#  id             :integer          not null, primary key
-#  type           :string(255)
-#  sort_priority  :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  community_id   :integer
-#  required       :boolean          default(TRUE)
-#  min            :float
-#  max            :float
-#  allow_decimals :boolean          default(FALSE)
-#  for            :string(255)      default("Listing"), not null
-#  visible        :boolean          default(TRUE), not null
-#  key            :string(255)
+#  id                     :integer          not null, primary key
+#  type                   :string(255)
+#  sort_priority          :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  community_id           :integer
+#  required               :boolean          default(TRUE)
+#  min                    :float
+#  max                    :float
+#  allow_decimals         :boolean          default(FALSE)
+#  for                    :string(255)      default("Listing"), not null
+#  visible                :boolean          default(TRUE), not null
+#  key                    :string(255)
+#  display_on_transaction :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -36,7 +37,8 @@ class CustomField < ActiveRecord::Base
     :max,
     :for,
     :visible,
-    :key
+    :key,
+    :display_on_transaction
   )
 
   has_many :names, :class_name => "CustomFieldName", :dependent => :destroy

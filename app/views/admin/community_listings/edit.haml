@@ -9,4 +9,10 @@
     = form.label :invisible, t("admin.communities.listings.invisible")
     = form.text_field :invisible, :class => "text_field"
 
+    = form.label :sort_date, t("admin.communities.listings.sort_date")
+    = form.date_select :sort_date
+
+    = form.label :category, t("admin.communities.listings.category")
+    = form.select :category_id, options_for_select(@current_community.categories.map { |c| [c.display_name(I18n.locale), c.id] }, @listing.category_id)
+
     = form.button t("settings.save_information"), :class => "send_button"

@@ -63,6 +63,11 @@ class Admin::CommunityTransactionsController < ApplicationController
     )
   end
 
+  def update
+    TransactionService::Process::Transition.transition_to(params[:id], :confirmed)
+    redirect_to :back
+  end
+
   private
 
   def simple_sort_column(sort_column)

@@ -56,4 +56,32 @@ namespace :data do
     Role.create(community: community, name: 'Host')
     Role.create(community: community, name: 'Guest')
   end
+
+  task create_availabilities_from_recurring: :environment do
+    weeks = 52 * 2
+
+    ActiveRecord::Base.transaction do
+      Availability.where('dow IS NOT NULL AND dow != 0').each do |availability|
+        p availability
+
+        weeks.times do |i|
+          t = Date.today
+          d = Date.commercial(t.cwyear, t.cweek, availability.dow)
+          d += i.week
+
+          p d
+          availability.listing.availabilities.create(
+            date: d,
+            start_at_hour: availability.start_at_hour,
+            start_at_minute: availability.start_at_minute,
+            end_at_hour: availability.end_at_hour,
+            end_at_minute: availability.end_at_minute,
+            recurring: true
+          )
+        end
+
+        availability.delete
+      end
+    end
+  end
 end

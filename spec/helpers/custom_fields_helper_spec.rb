@@ -30,12 +30,13 @@ describe CustomFieldsHelper do
     end
 
     context 'when DateField' do
+      let(:time) { Time.now }
       let!(:question) { FactoryGirl.create(:custom_date_field, key: key) }
-      let!(:custom_field_value) { FactoryGirl.create(:date_field_value, question: question) }
-      let(:value) { I18n.l(Time.now, format: :short_date) }
-
+      let!(:custom_field_value) { FactoryGirl.create(:date_field_value, question: question, date_value: time) }
+        
       it 'has the custom field' do
-        expect(subject).to eql({key.to_sym => value})
+        value = I18n.l(custom_field_value.date_value, format: :short_date)
+        expect(subject).to eql({ key.to_sym => value })
       end
     end
 

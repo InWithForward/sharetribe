@@ -14,7 +14,7 @@ class PersonMailer < ActionMailer::Base
 
   require "truncate_html"
 
-  default :from => APP_CONFIG.sharetribe_mail_from_address
+  default from: APP_CONFIG.sharetribe_mail_from_address, bcc: APP_CONFIG.sharetribe_mail_bcc
   layout 'email'
 
   add_template_helper(EmailTemplateHelper)
@@ -147,12 +147,11 @@ class PersonMailer < ActionMailer::Base
   end
 
   # Remind users before the booking
-  def booking_reminder_to_author(booking, community)
+  def booking_reminder_to_author(booking, community, type=:reminder)
     @booking = booking
     @transaction = booking.transaction
     @listing = @transaction.listing
     @recipient = @listing.author
-    @location = @listing.location
     @requester = @transaction.starter
 
     @email_type = "email_about_accept_reminders"
@@ -173,19 +172,34 @@ class PersonMailer < ActionMailer::Base
       conversation_url: person_message_url(@recipient, @url_params.merge({:id => @transaction.id.to_s}))
     }.merge(custom_fields)
 
+    subject = if type == :reminder
+                t("emails.booking_reminder_to_author.subject",
+                  time: time,
+                  date: date)
+              else
+                t("emails.booking_reminder_to_author.confirmation_subject",
+                  time: time,
+                  date: date,
+                  title: @listing.title)
+              end
+
     premailer_mail(
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder_to_author.subject", time: time, date: date)
+      :subject => subject
     )
   end
 
-  def booking_reminder_to_requester(booking, community)
+  def booking_reminder_to_requester(booking, community, type=:reminder)
     @booking = booking
     @transaction = booking.transaction
     @recipient = @transaction.starter
     @listing = @transaction.listing
-    @location = @listing.location
+    if @location = @listing.location
+      address = @location.address
+      google_address = @location.google_address
+      latitude_longitude = [@location.latitude, @location.longitude].join(',')
+    end
     @author = @transaction.author
 
     @email_type = "email_about_accept_reminders"
@@ -200,18 +214,29 @@ class PersonMailer < ActionMailer::Base
       title: @listing.title,
       date: date,
       time: time,
-      address: @location.address,
-      google_address: @location.google_address,
+      address: address,
+      google_address: google_address,
       author_name: @author.name,
       profile_image_url: @author.image.url(:thumb),
-      latitude_longitude: [@location.latitude, @location.longitude].join(','),
+      latitude_longitude: latitude_longitude,
       profile_url: person_url(@author, @url_params)
     }.merge(custom_fields)
+
+    subject = if type == :reminder
+                t("emails.booking_reminder_to_author.subject",
+                  time: time,
+                  date: date)
+              else
+                t("emails.booking_reminder_to_author.confirmation_subject",
+                  time: time,
+                  date: date,
+                  title: @listing.title)
+              end
 
     premailer_mail(
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
-      :subject => t( "emails.booking_reminder_to_requester.subject", time: time, date: date)
+      :subject => subject 
     )
   end
 
@@ -396,6 +421,18 @@ class PersonMailer < ActionMailer::Base
           listing_url: listing_url(@url_params.merge({:id => listing.id}))
         }
       }
+    end
+  end
+
+  def share_phone_number(community, person, recipient)
+    premailer_mail(
+      :to => recipient.confirmed_notification_email_addresses,
+      :from => community_specific_sender(community),
+      :subject => t('emails.share_phone_number.subject', username: person.username)
+    ) do |format|
+      format.html do
+        render locals: { person: person }
+      end
     end
   end
 

@@ -63,7 +63,7 @@ class ConfirmationsController < Devise::ConfirmationsController
       if @current_user && @current_user.has_admin_rights_in?(@current_community) #admins
         redirect_to getting_started_admin_community_path(:id => @current_community.id) and return
       elsif @current_user # normal logged in user
-        redirect_to role_person_path(@current_user) and return
+        redirect_to profile_person_settings_path(@current_user) and return
       else # no logged in session
         redirect_to login_path and return
       end

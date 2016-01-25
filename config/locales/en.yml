@@ -254,9 +254,10 @@ en:
         title: 'Title'
         author: 'Author'
         invisible: 'Invisible & Searchable'
+        sort_date: "Sort Date"
         edit: 'Edit'
       transactions:
-        transactions: "View transactions"
+        transactions: "View experiences"
         headers:
           conversation: "Conversation thread"
           listing: Listing
@@ -264,8 +265,8 @@ en:
           sum: Sum
           started: Started
           last_activity: "Latest activity"
-          initiated_by: Starter
-          other_party: "Other party"
+          initiated_by: "Kudoer - Feedback?"
+          other_party: "Author - Feedback?"
           booking_at: "Booked for"
         status:
           free: Conversation
@@ -274,7 +275,7 @@ en:
           accepted: Accepted
           rejected: Rejected
           paid: Paid
-          confirmed: Confirmed
+          confirmed: Completed
           canceled: Canceled
           initiated: "Waiting PayPal payment"
           pending_ext: "Waiting PayPal payment"
@@ -306,6 +307,8 @@ en:
         edit_location_field: "Edit location field"
         this_field_is_required: "This field is required"
       form:
+        field_display_on_transaction:
+          display_on_transaction: "Show this field on the Kudoer's booked experience page"
         field_required:
           this_field_is_required: "This field is required"
           this_field_is_required_checkbox: "This field is required (user has to select at least one option)"
@@ -716,23 +719,34 @@ en:
       account_ready: "You are ready to receive payments"
       message: "Your payment information has been confirmed and you are now ready to receive payments in %{service_name}."
     booking_reminder_to_author:
+      confirmation_subject: "Confirmed: %{title} %{date} %{time}"
       subject: "Reminder - you’re hosting a Kudoz experience on - %{date}, %{time}"
+      share_number_heading: "Exchange Details"
+      share_number_paragraph: "Are you comfortable sharing your cell phone number with this person? It’s helpful to have each other's numbers when meeting up."
+      button: "yes, I'll share my phone #"
       body: "
         <h3>Just a friendly reminder that you’re hosting %{title}</h3>
         <ul>
           <li>on %{date}</li>
           <li>at %{time} <small>Experiences usually only last an hour but we’ve booked you for 1.5 hrs in case the kudoer arrives late or the experience goes a bit over</small></li>
         </ul>
+        <p><b>Location details & meeting up:</b> %{location_details}</p>
         <h3>Get to know the Kudoer you’ll be meeting:</h3>
         <p>
           <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{requester_name}</a>
         </p>
+      "
+      end: "
         <p><a href='%{conversation_url}'>Send %{requester_name} a note</a> if you have any questions or special instructions for them.</p>
         <p>If you need some help preparing your learning experience, <a href=''>check out our tips</a> or <a href=''>get in touch</a>. We would love to help.</p>
         <p>Thanks, <br /> Team Kudoz</p>
-    "
+      "
     booking_reminder_to_requester: 
+      confirmation_subject: "Confirmed: %{title} %{date} %{time}"
       subject: "Reminder - Kudoz experience coming up - %{date}, %{time}"
+      share_number_heading: "Exchange Details"
+      share_number_paragraph: "Are you comfortable sharing your cell phone number with this person? It’s helpful to have each other's numbers when meeting up."
+      button: "yes, I'll share my phone #"
       body: "
         <p>So exciting! You’re going on the %{title} experience</p>
         <ul>
@@ -746,14 +760,17 @@ en:
           <li>%{what_else}</li>
         </ul>
         <p><b>Location:</b> <a href='http://maps.google.com/?q=%{latitude_longitude}'>%{address}</a></p>
+        <p><b>Location details & meeting up:</b> %{location_details}</p>
         <p><b>Closest skytrain station</b>: %{nearest_skytrain_station}</p>
         <p>
           <b>You'll meet...</b>: <br />
           <img src='%{profile_image_url}'> <a href='%{profile_url}'>%{author_name}</a>
         </p>
+        "
+      end: "
         <p>Can’t wait to hear how it goes!</p>
         <p>Cheers, <br /> Team Kudoz</p>
-    "
+      "
     confirm_reminder:
       you_have_not_yet_confirmed_or_canceled_request: "You have not yet confirmed or canceled the request %{request_link}. If the request has been completed, you should confirm that. After that you can give feedback to %{other_party_given_name}."
       you_have_not_yet_confirmed_or_canceled_request_escrow_automatic_confirmation: "You have not yet confirmed or canceled the request %{request_link}. We will transfer the money to %{other_party_given_name} only when a) you have marked the request completed or b) %{days_to_automatic_confirmation} days have passed since you paid. After marking the request as completed you can give feedback to %{other_party_given_name}."
@@ -958,6 +975,9 @@ en:
         Kudoers would love to book your listing but there aren’t many times for them to choose from.<br /><br />
         Please login to your Kudoz account and go to your profile > listing.<br /> <br />
         Edit listing to see the availability calendar and add some time slots!"
+    share_phone_number:
+      body: "Fellow Kudoz member, %{username}, has shared their phone # with you: %{phone_number}. Don’t forget to add to your contacts!"
+      subject: "Fellow Kudoz member, %{username}, has shared their phone number"
   error_messages:
     listings:
       departure_time: "Departure time must be between current time and one year from now."
@@ -979,6 +999,7 @@ en:
     booking_request: "Congrats! %{requester} wants to go on your Kudoz experience! Can you do...? %{first_time} text back '%{transaction_id}-%{first_id}', %{second_time} text back '%{transaction_id}-%{second_id}'. Can't do either, text back '%{transaction_id}-0'."
     booking_confirmed: "Thanks - you're a star! We'll send you a reminder 48 hrs before you host with more info. Text back anytime for coaching or visit http://kudoz.ca/hostips"
     booking_canceled: "Howdy, Kudoz again. Please go to kudoz.ca to upate your host calendar today. Then, we'll ask the Kudoer to try again."
+    share_phone_number: "Fellow Kudoz member, %{username}, has shared their phone # with you: %{phone_number}. Don’t forget to add to your contacts!"
   error_pages:
     back_to_kassi_front_page: "Back to the front page"
     error_404:
@@ -1478,8 +1499,12 @@ en:
         private: "Private (only signed-in users can see)"
         public: "Public (visible to non-signed-in users)"
       availabilities:
-        recurring_prompt: "Is this a weekly recurring availability or one time?"
-        recurring_prompt_title: "Recurring or One Time"
+        add_recurring_prompt:
+          title: "Recurring or One Time"
+          body: "Is this a weekly recurring availability or one time?"
+        remove_recurring_prompt:
+          title: "Remove Recurring or One Instance"
+          body: "Would you like to remove all instances or just this one?"
     help_texts:
       help_share_type_title: "Type of the offer or request"
       help_tags_title: Tags
@@ -1739,6 +1764,7 @@ en:
       show_my_name_to_others: "Show my real name to other %{service_name} users"
       sign_up: "Create a new %{service_name} account"
       terms: "terms of use"
+      privacy: "privacy policy"
       username_is_in_use: "This username is already in use."
       username_is_invalid: "Username is invalid. Allowed characters are letters, numbers and underscore."
       visible_only_to_you: "visible only to you and the marketplace admin"
@@ -1810,6 +1836,11 @@ en:
       following: Following
       follow: Follow
       unfollow: Unfollow
+  phone_number_shares:
+    new:
+      heading: "Share your phone number"
+      button: "Share"
+      phone_number: "Cell Phone Number"
   search:
     show:
       all_results: "All results"
@@ -1919,15 +1950,15 @@ en:
       given_name: "First name"
       first_name_with_initial: "(only first letter shown to other users)"
       first_name_only: "(not shown to other users)"
-      location_description: "You can give either your exact location or, for example, only your zip code. Please add at least your zip code. You can also select a location from the map below."
-      phone_number: "Phone number"
+      location_description: "This location shows on your profile so we suggest sharing only your postal code unless your location is a business and you're comfortable sharing the exact address. You can also select a location from the map below by dragging the marker."
+      phone_number: "Primary phone number (we send your SMS notifications to this number)"
       profile_picture: "Profile picture"
       profile_video: "Some other Kudoz folks don’t read much & would love to watch a video about you if you can make one on your phone. Upload and share the URL below (this is optional)"
       postal_code: "Postal code"
-      profile_page: "in your profile"
+      profile_page: "in your public profile"
       profilemap: Mapview
       street_address: Location
-      these_fields_are_shown_in_your: "Some of this information is visible to all %{service_name} users"
+      these_fields_are_shown_in_your: "Some of this information is visible to other %{service_name} users"
       visible_to_everybody: "visible to everybody"
       visible_to_registered_users: "(visible to users that have signed in)"
       default_in_listing: "(used only as a default when creating a new listing)"

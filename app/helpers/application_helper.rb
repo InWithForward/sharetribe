@@ -886,4 +886,8 @@ module ApplicationHelper
     end
   end
 
+  def formatted_range(start_at, end_at)
+    "#{start_at.strftime('%a, %b %d')}, #{start_at.strftime('%l:%M')} - #{end_at.strftime('%l:%M %p')}"
+  end
+
 end

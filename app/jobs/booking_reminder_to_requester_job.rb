@@ -1,4 +1,4 @@
-class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id)
+class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id, :type)
 
   include DelayedAirbrakeNotification
 
@@ -13,7 +13,7 @@ class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id)
     community = Community.find(community_id)
     booking = Booking.find(booking_id)
 
-    PersonMailer.send("booking_reminder_to_requester", booking, community).deliver
+    PersonMailer.send("booking_reminder_to_requester", booking, community, type).deliver
   end
 
 end

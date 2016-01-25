@@ -228,9 +228,18 @@ default: &default_settings
   minutes_to_cancel_in: 2880 # 60 * 24 * 2
   immediate_booking_reminder: false
 
-  twilio_account_sid: ABC1234567890
-  twilio_auth_token: ABC1234567890
-  twilio_from: "+17782001710"
+  twilio_account_sid: AC5fc5cd5f706d8b6f8df2972d0c8445cb
+  twilio_auth_token: bd99ac8fb7b504aa720259b656cef1f1
+  twilio_from: "+15005550006"
+
+  # BCC all emails to this address
+  sharetribe_mail_bcc:
+
+  trello_api_key: ""
+  trello_api_token: ""
+  trello_board_id: ""
+
+  mixpanel_id: ""
 
 production: &production_settings
   <<: *default_settings

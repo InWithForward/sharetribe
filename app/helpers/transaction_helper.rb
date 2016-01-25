@@ -549,6 +549,22 @@ module TransactionHelper
   end
 
   def waiting_for_buyer_to_confirm(conversation)
+    experience_details_status_infos(conversation) + custom_fields_status_infos(conversation)
+  end
+
+  def custom_fields_status_infos(conversation)
+    custom_field_values = conversation.listing.custom_field_values.
+      where(custom_fields: { display_on_transaction: true })
+
+    custom_fields_status_infos = custom_field_values.map do |value|
+      heading = content_tag(:h3) { value.question.name(I18n.locale) }
+      body = content_tag(:p) { value.text_value }
+
+      status_info(heading + body, icon_classes: icon_class('check'))
+    end
+  end
+
+  def experience_details_status_infos(conversation)
     if conversation.booking
       start_at = conversation.booking.start_at
       time = start_at.to_formatted_s(:time)
@@ -563,7 +579,7 @@ module TransactionHelper
       time: time, date: date
     ).html_safe
 
-    status_info(link, icon_classes: icon_class('clock'))
+    [ status_info(link, icon_classes: icon_class('clock')) ]
   end
 
   def waiting_for_author_to_accept_preauthorized(conversation)

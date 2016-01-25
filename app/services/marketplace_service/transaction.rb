@@ -23,7 +23,9 @@ module MarketplaceService
         :conversation,
         :booking,
         :created_at,
-        :__model
+        :__model,
+        :testimonial_from_starter,
+        :testimonial_from_author
       )
 
       Transition = EntityUtils.define_entity(
@@ -120,7 +122,9 @@ module MarketplaceService
           discussion_type: Maybe(listing_model).discussion_type.to_sym.or_else(:not_available),
           payment_total: payment_total,
           booking: transaction_model.booking,
-          __model: transaction_model
+          __model: transaction_model,
+          testimonial_from_starter: transaction_model.testimonial_from_starter,
+          testimonial_from_author: transaction_model.testimonial_from_author
         })]
       end
 

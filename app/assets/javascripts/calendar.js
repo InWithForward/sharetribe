@@ -20,10 +20,7 @@ function initCalendar() {
     end.hour(e.end_at_hour);
     end.second(0);
 
-    if(e.dow)
-      var dow = [e.dow];
-
-    return { dow: dow, start: start, end: end };
+    return { recurring: e.recurring, start: start, end: end };
   });
 
   var cal = $('#calendar').fullCalendar({
@@ -41,18 +38,43 @@ function initCalendar() {
     eventRender: writeJSON,
     eventDrop: writeJSON,
     eventClick: function(calEvent) {
-      if(confirm("Delete Time Slot"))
-        $('#calendar').fullCalendar('removeEvents', calEvent._id);
+      if(calEvent.recurring) {
+        var dialog = $('#remove_availability_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
+
+        $('#remove-recurring').click(function() {
+          $('#remove-recurring').unbind("click");
+          $('#remove-once').unbind("click");
+          removeRecurringEvent(calEvent);
+          writeJSON();
+          dialog.trigger('close');
+          return false;
+        });
+
+        $('#remove-once').click(function() {
+          $('#remove-recurring').unbind("click");
+          $('#remove-once').unbind("click");
+          removeSingleEvent(calEvent);
+          writeJSON();
+          dialog.trigger('close');
+          return false;
+        });
+      } else {
+        removeSingleEvent(calEvent);
+        writeJSON();
+      }
+
+      return false;
     },
     dayClick: function(startDate, jsEvent, view) {
       var dialog = $('#add_availability_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
+
       if(!startDate.hasTime())
         startDate.hour(13);
 
       $('#add-recurring').click(function() {
         $('#add-recurring').unbind("click");
         $('#add-once').unbind("click");
-        addEvent(true, startDate);
+        addRecurringEvent(startDate);
         dialog.trigger('close');
         return false;
       });
@@ -60,7 +82,7 @@ function initCalendar() {
       $('#add-once').click(function() {
         $('#add-recurring').unbind("click");
         $('#add-once').unbind("click");
-        addEvent(false, startDate);
+        addSingleEvent(startDate);
         dialog.trigger('close');
         return false;
       });
@@ -72,57 +94,64 @@ function initCalendar() {
   function writeJSON() {
     var indexedEvents = {};
     var events = $.map($('#calendar').fullCalendar('clientEvents'), function(e, i) {
-      var dow, startDate;
-
-      // Only write the first recurring event (events with a dow)
-      if(e.dow) {
-        dow = e.dow[0];
-        
-        var key = [
-          e.start.format('hh:mm'),
-          e.end.format('hh:mm'),
-          dow
-        ].join();
-
-        if(indexedEvents[key] !== undefined)
-          return
-
-        indexedEvents[key] = e;
-      } else {
-        startDate = e.start.format("DD/MM/YYYY");
-      }
-
       return {
         start_at_hour: e.start.hour(),
         start_at_minute: e.start.minute(),
         end_at_hour: e.end.hour(),
         end_at_minute: e.end.minute(),
-        dow: dow,
-        date: startDate
+        date: e.start.format("DD/MM/YYYY"),
+        recurring: e.recurring
       };
     });
 
     $('#listing_availabilities_json').val(JSON.stringify(events));
   };
 
-  function addEvent(recurring, start) {
+  function addSingleEvent(start) {
     var end = start.clone();
     end.add(1.5, 'hour');
 
-    var calEvent;
-    if(recurring) {
-      calEvent = {
-        start: start.format('HH:mm'),
-        end: end.format('HH:mm'),
-        dow: [start.day()]
-      };
-    } else {
-      calEvent = {
-        start: start,
-        end: end
-      };
-    }
+    calEvent = {
+      start: start,
+      end: end
+    };
 
     $('#calendar').fullCalendar( 'renderEvent', calEvent, true);
+  }
+
+  function addRecurringEvent(start) {
+    var numberOfEvents = 52 * 2; // 2 years
+    var newStart = start.clone().isoWeek(moment().isoWeek());
+    var events = [];
+
+    for(i=0; i < numberOfEvents; i++) {
+      calEvent = {
+        start: newStart,
+        end: newStart.clone().add(1.5, 'hour'),
+        recurring: true
+      };
+
+      events.push(calEvent);
+
+      newStart = newStart.clone();
+      newStart.add(1, 'week');
+    }
+    $('#calendar').fullCalendar( 'addEventSource', { events: events });
+  }
+
+  function removeSingleEvent(calEvent) {
+    $('#calendar').fullCalendar('removeEvents', calEvent._id);
+  }
+
+  function removeRecurringEvent(calEvent) {
+    $('#calendar').fullCalendar('removeEvents', function(toBeDeletedCalEvent) {
+      return equalMoments(toBeDeletedCalEvent.start, calEvent.start);
+    });
+  }
+
+  function equalMoments(moment, otherMoment) {
+    return moment.day() == otherMoment.day() &&
+            moment.hour() == otherMoment.hour() &&
+            moment.minute() == otherMoment.minute();
   }
 }

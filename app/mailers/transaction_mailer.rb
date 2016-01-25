@@ -8,7 +8,7 @@
 class TransactionMailer < ActionMailer::Base
   include MailUtils
 
-  default :from => APP_CONFIG.sharetribe_mail_from_address
+  default from: APP_CONFIG.sharetribe_mail_from_address, bcc: APP_CONFIG.sharetribe_mail_bcc
   layout 'email'
 
   include ApplicationHelper
