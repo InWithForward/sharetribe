@@ -83,7 +83,7 @@ class Person < ActiveRecord::Base
 
   # Setup accessible attributes for your model (the rest are protected)
   attr_accessible :username, :password, :password2, :password_confirmation,
-                  :remember_me, :consent, :login
+                  :remember_me, :consent, :login, :roles
 
   attr_accessor :guid, :password2, :form_login,
                 :form_given_name, :form_family_name, :form_password,
@@ -121,6 +121,8 @@ class Person < ActiveRecord::Base
   has_many :followed_people, :through => :inverse_follower_relationships, :source => "person"
   has_many :experiences, dependent: :destroy
   has_many :custom_field_values, as: :customizable, dependent: :destroy
+
+  has_and_belongs_to_many :roles
 
   has_and_belongs_to_many :followed_listings, :class_name => "Listing", :join_table => "listing_followers"
 
@@ -748,10 +750,22 @@ class Person < ActiveRecord::Base
 
   def visible_custom_field_values(user, community)
     if user && (id == user.id || user.is_admin_of?(community))
-      custom_field_values
+      custom_field_values_for_roles
     else 
-      custom_field_values.where(custom_fields: { visible: true })
+      custom_field_values_for_roles.where(custom_fields: { visible: true })
     end
+  end
+
+  def custom_field_values_for_roles
+    custom_field_values.
+      includes(question: :role_custom_fields).
+      where(role_custom_fields: { role_id: roles.map(&:id) })
+  end
+
+  def role_attributes=(attributes)
+    roles.clear
+    roles = Role.where(id: attributes.map { |role| role[:role_id] })
+    self.roles << roles
   end
 
   private

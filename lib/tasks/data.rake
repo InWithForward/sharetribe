@@ -51,6 +51,12 @@ namespace :data do
     end
   end
 
+  task add_roles: :environment do
+    community = Community.first
+    Role.create(community: community, name: 'Host')
+    Role.create(community: community, name: 'Guest')
+  end
+
   task create_availabilities_from_recurring: :environment do
     weeks = 52 * 2
 

@@ -260,7 +260,7 @@ development:
   always_use_ssl: false
 
   # Skip email confirmation
-  skip_email_confirmation: true
+  skip_email_confirmation: false
 
 test:
   <<: *default_settings

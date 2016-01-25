@@ -1716,6 +1716,18 @@ en:
     wait_while_loading: "Please wait."
     chatting_with_paypal: "We are chatting with PayPal."
   people:
+    role:
+      title: "Choose your Kudoz profile type"
+      host:
+        heading: "Become a Host"
+        description: "It's free & open to all! You'll create your host profile and then our curators will help you design a learning experience based on your passion."
+        button: "I want to host an experience"
+        learn_more: "New to Kudoz? Learn more about what it means to be a host."
+      guest:
+        heading: "Become a Kudoer"
+        description: "If you've applied and been accepted to be a Kudoer, you can create your profile to book experiences and badges."
+        button: "I want to be a Kudoer"
+        learn_more: "Learn more about what it means to be a Kudoer."
     edit_links:
       activate: Activate
       deactivate: Deactivate

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160118223823) do
+ActiveRecord::Schema.define(:version => 20160105211949) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -377,17 +377,16 @@ ActiveRecord::Schema.define(:version => 20160118223823) do
   create_table "custom_fields", :force => true do |t|
     t.string   "type"
     t.integer  "sort_priority"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "community_id"
-    t.boolean  "required",               :default => true
+    t.boolean  "required",       :default => true
     t.float    "min"
     t.float    "max"
-    t.boolean  "allow_decimals",         :default => false
-    t.string   "for",                    :default => "Listing", :null => false
-    t.boolean  "visible",                :default => true,      :null => false
+    t.boolean  "allow_decimals", :default => false
+    t.string   "for",            :default => "Listing", :null => false
+    t.boolean  "visible",        :default => true,      :null => false
     t.string   "key"
-    t.boolean  "display_on_transaction", :default => false
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"
@@ -850,6 +849,11 @@ ActiveRecord::Schema.define(:version => 20160118223823) do
   add_index "people", ["id"], :name => "index_people_on_id"
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
   add_index "people", ["username"], :name => "index_people_on_username", :unique => true
+
+  create_table "people_roles", :force => true do |t|
+    t.integer "role_id",   :null => false
+    t.integer "person_id", :null => false
+  end
 
   create_table "prospect_emails", :force => true do |t|
     t.string   "email"

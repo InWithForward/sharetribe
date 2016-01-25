@@ -29,6 +29,7 @@ class CustomField < ActiveRecord::Base
     :type,
     :name_attributes,
     :category_attributes,
+    :role_attributes,
     :option_attributes,
     :sort_priority,
     :required,
@@ -45,6 +46,9 @@ class CustomField < ActiveRecord::Base
   has_many :category_custom_fields, :dependent => :destroy
   has_many :categories, :through => :category_custom_fields
 
+  has_many :role_custom_fields, :dependent => :destroy
+  has_many :roles, :through => :role_custom_fields
+
   has_many :answers, :class_name => "CustomFieldValue", :dependent => :destroy
 
   has_many :options, :class_name => "CustomFieldOption"
@@ -56,6 +60,12 @@ class CustomField < ActiveRecord::Base
   validates_length_of :names, :minimum => 1
   validates_length_of :category_custom_fields, :minimum => 1, if: :for_listing?
   validates_presence_of :community
+
+  def self.for_roles(roles)
+      includes(:role_custom_fields).
+      where(role_custom_fields: { role_id: roles.map(&:id) }).
+      all
+  end
 
   def name_attributes=(attributes)
     build_attrs = attributes.map { |locale, value| {locale: locale, value: value[:value], hint: value[:hint] } }
@@ -72,6 +82,11 @@ class CustomField < ActiveRecord::Base
   def category_attributes=(attributes)
     category_custom_fields.clear
     attributes.each { |category| category_custom_fields.build(category) }
+  end
+
+  def role_attributes=(attributes)
+    role_custom_fields.clear
+    attributes.each { |role| role_custom_fields.build(role) }
   end
 
   def name(locale="en")

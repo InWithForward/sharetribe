@@ -137,7 +137,11 @@ Kassi::Application.routes.draw do
         resources :transactions, controller: :community_transactions, only: [:index, :update]
         resources :listings, controller: :community_listings, only: [:index, :edit, :update]
         resources :emails
-        resources :people, controller: :community_people, only: [:edit, :update]
+        resources :people, controller: :community_people, only: [:edit, :update] do
+          member do
+            get :roles
+          end
+        end
         resources :community_memberships do
           member do
             put :ban
@@ -294,6 +298,8 @@ Kassi::Application.routes.draw do
         member do
           put :activate
           put :deactivate
+          get :role
+          put :update_role
         end
         resources :listings do
           member do

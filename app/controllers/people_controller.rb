@@ -6,11 +6,13 @@ class PeopleController < Devise::RegistrationsController
   skip_before_filter :verify_authenticity_token, :only => [:creates]
   skip_before_filter :require_no_authentication, :only => [:new]
 
-  before_filter :only => [ :update, :destroy ] do |controller|
+  before_filter :only => [ :update, :destroy, :update_role, :role ] do |controller|
     controller.ensure_authorized t("layouts.notifications.you_are_not_authorized_to_view_this_content")
   end
 
   before_filter :ensure_is_admin, :only => [ :activate, :deactivate ]
+
+  skip_filter :check_role, :only => [ :update, :update_role, :role ]
 
   skip_filter :check_email_confirmation, :only => [ :update]
   skip_filter :cannot_access_without_joining, :only => [ :check_email_availability_and_validity, :check_invitation_code ]
@@ -320,6 +322,16 @@ class PeopleController < Devise::RegistrationsController
 
   def deactivate
     change_active_status("deactivated")
+  end
+
+  def role
+    redirect_to profile_person_settings_path(@person) if @person.roles.any?
+  end
+
+  def update_role
+    role = Role.find(params[:person][:role_id])
+    @person.roles << role
+    redirect_to profile_person_settings_path(@person)
   end
 
   private
