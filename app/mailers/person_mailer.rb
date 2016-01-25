@@ -223,11 +223,11 @@ class PersonMailer < ActionMailer::Base
     }.merge(custom_fields)
 
     subject = if type == :reminder
-                t("emails.booking_reminder_to_author.subject",
+                t("emails.booking_reminder_to_requester.subject",
                   time: time,
                   date: date)
               else
-                t("emails.booking_reminder_to_author.confirmation_subject",
+                t("emails.booking_reminder_to_requester.confirmation_subject",
                   time: time,
                   date: date,
                   title: @listing.title)
