@@ -53,8 +53,12 @@ namespace :data do
 
   task add_roles: :environment do
     community = Community.first
-    Role.create(community: community, name: 'Host')
-    Role.create(community: community, name: 'Guest')
+    host  = Role.create(community: community, name: 'Host')
+    guest = Role.create(community: community, name: 'Guest')
+
+    Person.all.each do |person|
+      person.roles << host
+    end
   end
 
   task create_availabilities_from_recurring: :environment do

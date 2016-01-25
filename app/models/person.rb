@@ -763,9 +763,7 @@ class Person < ActiveRecord::Base
   end
 
   def role_attributes=(attributes)
-    roles.clear
-    roles = Role.where(id: attributes.map { |role| role[:role_id] })
-    self.roles << roles
+    self.role_ids = attributes.map { |role| role[:role_id] }
   end
 
   private

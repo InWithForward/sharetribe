@@ -22,11 +22,6 @@ class Admin::CommunityPeopleController < ApplicationController
     redirect_to :back
   end
 
-  # Edit the role
-  def roles
-    @roles = @current_community.roles
-  end
-
   private
 
   def fetch_person
