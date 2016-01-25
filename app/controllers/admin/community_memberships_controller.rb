@@ -6,7 +6,7 @@ class Admin::CommunityMembershipsController < ApplicationController
     @community = @current_community
     @memberships = CommunityMembership.where(:community_id => @current_community.id, :status => "accepted")
                                        .includes(:person => :emails)
-                                       .paginate(:page => params[:page], :per_page => 50)
+                                       .paginate(:page => params[:page], :per_page => 500)
                                        .order("#{sort_column} #{sort_direction}")
   end
 
