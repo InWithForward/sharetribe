@@ -19,7 +19,8 @@ module PeopleHelper
         where(transactions: { starter_id: person.id, current_state: :confirmed })
 
       badge_type.listings.preload(:sub_listings).select do |listing|
-        (listing.sub_listings.map(&:id) - completed_listings.map(&:id)).empty?
+        listing.sub_listings.any? &&
+          (listing.sub_listings.map(&:id) - completed_listings.map(&:id)).empty?
       end
     end
   end
