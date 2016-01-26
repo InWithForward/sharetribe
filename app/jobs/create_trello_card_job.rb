@@ -22,11 +22,9 @@ class CreateTrelloCardJob < Struct.new(:booking_id, :community_id)
       where(custom_fields: { key: :transport_needed }).
       first
 
-    selected_option = Maybe(transport_needed).
-      selected_options.
-      first
+    selected_option = Maybe(transport_needed).selected_options.first
 
-    return unless selected_option.is_some? && selected_option.get.title == "Yes"
+    return unless selected_option && selected_option.get.title == "Yes"
 
     card = Trello.post('/cards', {
       name: destination,

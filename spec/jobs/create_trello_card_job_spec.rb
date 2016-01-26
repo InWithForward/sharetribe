@@ -6,13 +6,11 @@ describe CreateTrelloCardJob do
   let!(:person) { FactoryGirl.create(:person) }
 
   let!(:custom_field_value) do
-    question = FactoryGirl.create(:question, key: :pickup_address, community: community)
-    FactoryGirl.create(
-      :custom_field_value,
-      text_value: '1234 Fake st, Vancouver, BC',
-      question: question,
-      customizable: transaction.starter
-    )
+    question = FactoryGirl.create(:question, key: :transport_needed, community: community)
+    dropdown = FactoryGirl.create(:dropdown_field_value, question: question, customizable: transaction.starter)
+    option = dropdown.selected_options.first
+    option.title_attributes = { en: "Yes" }
+    option.save
   end
 
   let!(:location) { FactoryGirl.create(:location) }
