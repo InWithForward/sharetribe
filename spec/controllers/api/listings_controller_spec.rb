@@ -21,7 +21,7 @@ describe Api::ListingsController do
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
     it 'returns json' do
-      get :show, id: listing.id
+      get :show, id: listing.id, format: :json
       expect(body).to eql({
         data: {
           id: listing.id,
