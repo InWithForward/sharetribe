@@ -337,6 +337,10 @@ FactoryGirl.define do
 
     factory :checkbox_field_value, class: 'CheckboxFieldValue' do
       build_association(:custom_checkbox_field, as: :question)
+
+      has_many :custom_field_option_selections do |dropdown_field_value|
+        FactoryGirl.build(:custom_field_option_selection, custom_field_value: dropdown_field_value)
+      end
     end
 
     factory :custom_numeric_field_value, class: 'NumericFieldValue' do
@@ -346,6 +350,10 @@ FactoryGirl.define do
 
     factory :date_field_value, class: 'DateFieldValue' do
       date_value Time.now
+    end
+
+    factory :text_field_value, class: 'TextFieldValue' do
+      text_value "answer"
     end
   end
 

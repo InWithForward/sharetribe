@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160105211949) do
+ActiveRecord::Schema.define(:version => 20160124174127) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -377,16 +377,17 @@ ActiveRecord::Schema.define(:version => 20160105211949) do
   create_table "custom_fields", :force => true do |t|
     t.string   "type"
     t.integer  "sort_priority"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
     t.integer  "community_id"
-    t.boolean  "required",       :default => true
+    t.boolean  "required",               :default => true
     t.float    "min"
     t.float    "max"
-    t.boolean  "allow_decimals", :default => false
-    t.string   "for",            :default => "Listing", :null => false
-    t.boolean  "visible",        :default => true,      :null => false
+    t.boolean  "allow_decimals",         :default => false
+    t.string   "for",                    :default => "Listing", :null => false
+    t.boolean  "visible",                :default => true,      :null => false
     t.string   "key"
+    t.boolean  "display_on_transaction", :default => false
   end
 
   add_index "custom_fields", ["community_id"], :name => "index_custom_fields_on_community_id"
@@ -852,14 +853,36 @@ ActiveRecord::Schema.define(:version => 20160105211949) do
 
   create_table "people_roles", :force => true do |t|
     t.integer "role_id",   :null => false
-    t.integer "person_id", :null => false
+    t.string  "person_id", :null => false
   end
+
+  add_index "people_roles", ["person_id"], :name => "index_people_roles_on_person_id"
+  add_index "people_roles", ["role_id"], :name => "index_people_roles_on_role_id"
 
   create_table "prospect_emails", :force => true do |t|
     t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "role_custom_fields", :force => true do |t|
+    t.integer  "role_id",         :null => false
+    t.integer  "custom_field_id", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "role_custom_fields", ["custom_field_id"], :name => "index_role_custom_fields_on_custom_field_id"
+  add_index "role_custom_fields", ["role_id"], :name => "index_role_custom_fields_on_role_id"
+
+  create_table "roles", :force => true do |t|
+    t.string   "name",         :null => false
+    t.integer  "community_id", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "roles", ["community_id"], :name => "index_roles_on_community_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
