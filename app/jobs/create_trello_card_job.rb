@@ -17,25 +17,28 @@ class CreateTrelloCardJob < Struct.new(:booking_id, :community_id)
     destination = booking.transaction.listing.location.address
     guest = booking.transaction.starter
 
-    pickup_address = guest.
+    transport_needed = guest.
       custom_field_values.
-      where(custom_fields: { key: :pickup_address }).
-      first.
-      try(:text_value)
+      where(custom_fields: { key: :transport_needed }).
+      first
 
-    return unless pickup_address
+    selected_option = Maybe(transport_needed).
+      selected_options.
+      first
+
+    return unless selected_option.is_some? && selected_option.get.title == "Yes"
 
     card = Trello.post('/cards', {
-      name: "#{pickup_address} > #{destination}",
+      name: destination,
       desc: "#{guest.full_name}\n #{guest.phone_number}",
       pos: "top",
       due: booking.start_at,
       idList: Trello::BOARD_ID
     })
 
-    Trello.post("/cards/#{card['id']}/attachments", {
-      url: "https://www.google.com/maps/dir/#{pickup_address}/#{destination}"
-    })
+    # Trello.post("/cards/#{card['id']}/attachments", {
+    #   url: "https://www.google.com/maps/dir/#{pickup_address}/#{destination}"
+    # })
 
     Trello.post("/cards/#{card['id']}/attachments", {
       url: Rails.application.routes.url_helpers.person_url(
