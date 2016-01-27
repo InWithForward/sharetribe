@@ -10,10 +10,17 @@ describe Api::PeopleController do
 
     let!(:text_field_value) { FactoryGirl.create(:text_field_value, customizable: person) }
 
+    let!(:auth_token) { FactoryGirl.create(:auth_token, token_type: 'login') }
+
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
+    it 'returns 401 if unauthorized' do
+      get :show, id: listing.id, format: :json
+      expect(response.status).to eql(401)
+    end
+
     it 'returns json' do
-      get :show, id: person.id, format: :json
+      get :show, id: person.id, auth: auth_token.token, format: :json
       expect(body).to eql({
         data: {
           type: 'Person',

@@ -45,6 +45,7 @@ Kassi::Application.routes.draw do
   namespace :api do
     resources :listings, only: [:show]
     resources :people, only: [:show]
+    resources :sessions, only: [:create]
   end
 
   locale_matcher = Regexp.new(Rails.application.config.AVAILABLE_LOCALES.map(&:last).join("|"))

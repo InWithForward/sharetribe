@@ -12,6 +12,8 @@ describe Api::ListingsController do
 
     let!(:author_text_field_value) { FactoryGirl.create(:text_field_value, customizable: listing.author) }
 
+    let!(:auth_token) { FactoryGirl.create(:auth_token, token_type: 'login') }
+
     before do
       listing.custom_field_values.each do |value|
         listing.category.custom_fields << value.question
@@ -20,8 +22,13 @@ describe Api::ListingsController do
 
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
-    it 'returns json' do
+    it 'returns 401 if unauthorized' do
       get :show, id: listing.id, format: :json
+      expect(response.status).to eql(401)
+    end
+
+    it 'returns json' do
+      get :show, id: listing.id, auth: auth_token.token, format: :json
       expect(body).to eql({
         data: {
           id: listing.id,

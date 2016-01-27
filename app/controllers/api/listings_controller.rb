@@ -1,12 +1,16 @@
 require_relative './../../serializers/listing'
+require_relative './../concerns/auth_token_authenticatable'
 
 module Api
-  class ListingsController < ApplicationController
-    skip_filter :fetch_community, :redirect_to_marketplace_domain
+  class ListingsController < ActionController::Base
+    include AuthTokenAuthenticatable
+
     respond_to :json
 
     # GET /api/listing/:id
     def show
+      return unless authenticate!
+
       respond_with({
         data: Serializers::Listing.hash(listing)
       })

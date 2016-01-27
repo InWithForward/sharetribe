@@ -1,12 +1,16 @@
 require_relative './../../serializers/person'
+require_relative './../concerns/auth_token_authenticatable'
 
 module Api
-  class PeopleController < ApplicationController
-    skip_filter :fetch_community, :redirect_to_marketplace_domain
+  class PeopleController < ActionController::Base
+    include AuthTokenAuthenticatable
+
     respond_to :json
 
     # GET /api/people/:id
     def show
+      return unless authenticate!
+
       respond_with({
         data: Serializers::Person.hash(person, include: [:booked_listings])
       })
