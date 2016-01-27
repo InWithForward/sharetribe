@@ -7,6 +7,8 @@ module Serializers
     module_function
 
     def hash(value)
+      return if value.nil?
+
       text = case value.try(:type)
       when "DropdownFieldValue"
         value.selected_options.first.title(I18n.locale)

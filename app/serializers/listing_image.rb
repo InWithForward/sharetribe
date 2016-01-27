@@ -7,6 +7,8 @@ module Serializers
     module_function
 
     def hash(image)
+      return if image.nil?
+
       {
         type: image.class.to_s,
         id: image.id,

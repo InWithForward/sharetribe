@@ -7,6 +7,8 @@ module Serializers
     module_function
 
     def hash(location)
+      return if location.nil?
+
       {
         type: location.class.to_s,
         id: location.id,

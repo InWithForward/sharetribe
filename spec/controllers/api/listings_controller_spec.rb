@@ -74,6 +74,7 @@ describe Api::ListingsController do
                 id: listing.author.id,
                 attributes: {
                   name: listing.author.name,
+                  username: listing.author.username,
                   image_urls: {
                     thumb: listing.author.image.url(:thumb),
                     big: listing.author.image.url(:big)

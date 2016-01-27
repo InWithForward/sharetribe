@@ -4,19 +4,23 @@ describe Api::PeopleController do
 
   describe 'show' do
     let!(:person) { FactoryGirl.create(:person) }
+    let!(:listing) { FactoryGirl.create(:listing) }
+    let!(:transaction) { FactoryGirl.create(:transaction, starter: person, listing: listing, current_state: :booked) }
+    let!(:booking) { FactoryGirl.create(:free_booking, transaction: transaction) }
 
     let!(:text_field_value) { FactoryGirl.create(:text_field_value, customizable: person) }
 
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
     it 'returns json' do
-      get :show, id: person.username, format: :json
+      get :show, id: person.id, format: :json
       expect(body).to eql({
         data: {
           type: 'Person',
           id: person.id,
           attributes: {
             name: person.name,
+            username: person.username,
             image_urls: {
               thumb: person.image.url(:thumb),
               big: person.image.url(:big)
@@ -32,6 +36,41 @@ describe Api::PeopleController do
                     title: text_field_value.question.name,
                     value: text_field_value.text_value,
                     key: text_field_value.question.key
+                  }
+                }
+              ]
+            },
+            booked_listings: {
+              data: [
+                {
+                  id: listing.id,
+                  type: 'Listing',
+                  attributes: {
+                    title: listing.title,
+                    description: listing.description,
+                    created_at: listing.created_at.iso8601
+                  },
+                  relationships: {
+                    listing_images: { data: [] },
+                    custom_field_values: { data: [] },
+                    author: {
+                      data: {
+                        type: 'Person',
+                        id: listing.author.id,
+                        attributes: {
+                          name: listing.author.name,
+                          username: listing.author.username,
+                          image_urls: {
+                            thumb: listing.author.image.url(:thumb),
+                            big: listing.author.image.url(:big)
+                          }
+                        },
+                        relationships: {
+                          custom_field_values: { data: [] }
+                        }
+                      }
+                    },
+                    location: { data: nil }
                   }
                 }
               ]

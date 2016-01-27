@@ -8,14 +8,14 @@ module Api
     # GET /api/people/:id
     def show
       respond_with({
-        data: Serializers::Person.hash(person)
+        data: Serializers::Person.hash(person, include: [:booked_listings])
       })
     end
 
     private
 
     def person
-      @person ||= Person.find_by_username(params[:id])
+      @person ||= Person.find(params[:id])
     end
   end
 end
