@@ -2,6 +2,6 @@
   %td{:align => "left"}
     %font{body_font}
 
-      = t("emails.new_message.has_sent_you_a_message_in_kassi", :sender => sender_name)
+      = t("emails.transaction_created.body", sender_name: sender_name, listing_title: transaction.listing.title)
 
-= render :partial => "person_mailer/action_button", :locals => { :text => t("emails.new_message.view_message"), :url => reply_url}
+= render :partial => "person_mailer/action_button", :locals => { :text => t("emails.transaction_created.action"), :url => reply_url}

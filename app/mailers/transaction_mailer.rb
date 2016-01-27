@@ -28,10 +28,13 @@ class TransactionMailer < ActionMailer::Base
 
     prepare_template(community, recipient)
 
-    # TODO Now that we have splitted "new message", we could be more specific here, and say that this message
-    # is about a new transaction!
+    subject = t(
+      "emails.transaction_created.subject",
+      sender_name: sender_name,
+      listing_title: transaction.listing.title
+    )
     premailer_mail(
-      mail_params(recipient, community, t("emails.new_message.you_have_a_new_message", :sender_name => sender_name))) do |format|
+      mail_params(recipient, community, subject)) do |format|
         format.html {
           render locals: {
             recipient: recipient,

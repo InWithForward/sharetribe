@@ -871,6 +871,10 @@ en:
       view_message: "View Message"
       has_sent_you_a_message_in_kassi: "%{sender} has sent you a message."
       you_have_a_new_message: "A new message in %{service_name} from %{sender_name}"
+    transaction_created: 
+      subject: "%{sender_name} has requested %{listing_title}"
+      body: "%{sender_name} has requested %{listing_title} - please confirm a time that works for you. If you have already confirmed a time via SMS, you can ignore this message."
+      action: "See Request Details"
     new_payment:
       new_payment: "You have received a new payment"
       you_have_received_new_payment: "You have been paid <b>%{payment_sum}</b> for <b>%{listing_title}</b> by %{payer_full_name}. Here is your receipt."
