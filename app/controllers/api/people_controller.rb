@@ -15,7 +15,7 @@ module Api
     private
 
     def person
-      @person ||= Person.find(params[:id])
+      @person ||= Person.find_by_username(params[:id])
     end
   end
 end

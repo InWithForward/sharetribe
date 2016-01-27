@@ -10,7 +10,7 @@ describe Api::PeopleController do
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
     it 'returns json' do
-      get :show, id: person.id, format: :json
+      get :show, id: person.username, format: :json
       expect(body).to eql({
         data: {
           type: 'Person',
