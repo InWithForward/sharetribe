@@ -5,9 +5,11 @@ module Api
     skip_filter :fetch_community, :redirect_to_marketplace_domain
     respond_to :json
 
-    # GET /listing/:id
+    # GET /api/listing/:id
     def show
-      respond_with Serializers::Listing.hash(listing)
+      respond_with({
+        data: Serializers::Listing.hash(listing)
+      })
     end
 
     private

@@ -1,3 +1,4 @@
+require_relative './custom_field'
 require_relative './concerns/arrayable'
 
 module Serializers
@@ -6,22 +7,22 @@ module Serializers
 
     module_function
 
-    def hash(author)
-      author_custom_field_values = Serializers::CustomField.array(author.custom_field_values)
+    def hash(person)
+      person_custom_field_values = Serializers::CustomField.array(person.custom_field_values)
 
       {
-        type: author.class.to_s,
-        id: author.id,
+        type: person.class.to_s,
+        id: person.id,
         attributes: {
-          name: author.name,
+          name: person.name,
           image_urls: {
-            thumb: author.image.url(:thumb),
-            big: author.image.url(:big)
+            thumb: person.image.url(:thumb),
+            big: person.image.url(:big)
           }
         },
         relationships: {
           custom_field_values: {
-            data: author_custom_field_values
+            data: person_custom_field_values
           }
         }
       }

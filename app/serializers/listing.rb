@@ -9,27 +9,25 @@ module Serializers
 
     def hash(listing)
       {
-        data: {
-          id: listing.id,
-          type: listing.class.to_s,
-          attributes: { 
-            title: listing.title,
-            description: listing.description,
-            created_at: listing.created_at
+        id: listing.id,
+        type: listing.class.to_s,
+        attributes: { 
+          title: listing.title,
+          description: listing.description,
+          created_at: listing.created_at
+        },
+        relationships: {
+          listing_images: {
+            data: Serializers::ListingImage.array(listing.listing_images)
           },
-          relationships: {
-            listing_images: {
-              data: Serializers::ListingImage.array(listing.listing_images)
-            },
-            custom_field_values: {
-              data: Serializers::CustomField.array(listing.custom_field_values)
-            },
-            author: {
-              data: Serializers::Person.hash(listing.author)
-            },
-            location: {
-              data: Serializers::Location.hash(listing.location)
-            }
+          custom_field_values: {
+            data: Serializers::CustomField.array(listing.custom_field_values)
+          },
+          author: {
+            data: Serializers::Person.hash(listing.author)
+          },
+          location: {
+            data: Serializers::Location.hash(listing.location)
           }
         }
       }
