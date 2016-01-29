@@ -54,13 +54,23 @@ class Admin::CommunityTransactionsController < ApplicationController
       pager.replace(conversations)
     end
 
-    render("index",
-      { locals: {
-        show_status_and_sum: @current_community.payments_in_use?,
-        community: @current_community,
-        conversations: conversations
-      }}
-    )
+    respond_to do |format|
+      format.html do
+        render("index",
+          locals: {
+            show_status_and_sum: @current_community.payments_in_use?,
+            community: @current_community,
+            conversations: conversations
+          }
+        )
+      end
+      format.csv do
+        render(
+          csv: TransactionCSV.to_s(conversations),
+          filename: "#{Time.now.to_formatted_s(:number)}_transactions" 
+        )
+      end
+    end
   end
 
   def update

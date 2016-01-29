@@ -617,4 +617,14 @@ module TransactionHelper
       hash
     end
   end
+
+  def last_activity_at(conversation)
+    if conversation[:conversation][:last_message_at].nil?
+      conversation[:last_transition_at]
+    elsif conversation[:last_transition_at].nil?
+      conversation[:conversation][:last_message_at]
+    else
+      [conversation[:last_transition_at], conversation[:conversation][:last_message_at]].max
+    end
+  end
 end
