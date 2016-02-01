@@ -448,4 +448,16 @@ class Listing < ActiveRecord::Base
       custom_field_values.where(custom_fields: { visible: true })
     end
   end
+
+  def missing_prerequisites
+    key = APP_CONFIG.prerequisites_custom_field_key
+    question = category.custom_fields.where(key: key).first
+    return [] unless question
+
+    value = custom_field_values.
+      where(custom_fields: { key: key }).
+      first
+
+    question.options - Maybe(value).selected_options.or_else([])
+  end
 end

@@ -241,6 +241,8 @@ default: &default_settings
 
   mixpanel_id: ""
 
+  prerequisites_custom_field_key: 'prerequisites'
+
 production: &production_settings
   <<: *default_settings
   logger_type: "stdout"
