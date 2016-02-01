@@ -103,6 +103,13 @@ function initCalendar() {
       $('#add-once').click(function() {
         addSingleEvent(startDate);
         dialog.trigger('close');
+
+        var warningDialog = $('#add_once_warning_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
+        $('#add_once_warning_dialog button').click(function() {
+          warningDialog.trigger('close');
+          return false;
+        });
+
         return false;
       });
 

@@ -1525,6 +1525,8 @@ en:
         remove_recurring_prompt:
           title: "Remove Recurring or One Instance"
           body: "Would you like to remove all instances or just this one?"
+        add_once_warning_prompt:
+          body: "Please also select at least one recurring availability. We don’t expect you to host weekly, but it’ll make our booking system work so much better. Thanks so much! Kudoz"
     help_texts:
       help_share_type_title: "Type of the offer or request"
       help_tags_title: Tags

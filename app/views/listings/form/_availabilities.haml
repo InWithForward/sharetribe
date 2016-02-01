@@ -5,17 +5,27 @@
   = render layout: "layouts/lightbox", locals: { id: "add_availability_dialog"} do
     %h2=t('listings.form.availabilities.add_recurring_prompt.title')
     %p= t('listings.form.availabilities.add_recurring_prompt.body')
-    %button#add-recurring
-      .content="Recurring"
-    %button#add-once
-      .content="Once"
+    .inline-button-container
+      %button#add-recurring
+        .content="Recurring"
+    .inline-button-container
+      %button#add-once
+        .content="Once"
 
   = render layout: "layouts/lightbox", locals: { id: "remove_availability_dialog"} do
     %h2=t('listings.form.availabilities.remove_recurring_prompt.title')
     %p= t('listings.form.availabilities.remove_recurring_prompt.body')
-    %button#remove-recurring
-      .content="Recurring"
-    %button#remove-once
-      .content="Once"
+    .inline-button-container
+      %button#remove-recurring
+        .content="Recurring"
+    .inline-button-container
+      %button#remove-once
+        .content="Once"
+
+  = render layout: "layouts/lightbox", locals: { id: "add_once_warning_dialog"} do
+    %p= t('listings.form.availabilities.add_once_warning_prompt.body')
+    .inline-button-container
+      %button
+        .content="Okay"
 
 = form.hidden_field(:availabilities_json)
