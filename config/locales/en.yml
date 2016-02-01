@@ -1513,6 +1513,7 @@ en:
         private: "Private (only signed-in users can see)"
         public: "Public (visible to non-signed-in users)"
       availabilities:
+        label: "What's your Availability?"
         add_recurring_prompt:
           title: "Recurring or One Time"
           body: "Is this a weekly recurring availability or one time?"

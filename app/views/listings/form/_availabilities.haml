@@ -1,4 +1,5 @@
 - if !@listing.transaction_type.is_badge?
+  = form.label :availabilities_json, t('listings.form.availabilities.label'), :class => "input"
   #calendar
 
   = render layout: "layouts/lightbox", locals: { id: "add_availability_dialog"} do

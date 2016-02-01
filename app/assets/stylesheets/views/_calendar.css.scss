@@ -1,0 +1,20 @@
+
+.fc-view-container tbody tr:nth-child(odd) {
+  background-color: rgba(1,1,1,0.02);
+}
+
+.fc-agendaWeek-view .fc-widget-content {
+  cursor: copy;
+}
+
+.fc-agendaWeek-view .fc-event {
+  cursor: not-allowed;
+}
+
+.fc-agendaWeek-view .fc-widget-content.fc-axis {
+  cursor: default;
+}
+
+.fc-month-view .fc-event {
+  cursor: default;
+}

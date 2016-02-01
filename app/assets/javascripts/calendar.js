@@ -29,17 +29,30 @@ function initCalendar() {
       center: 'title',
       right: 'month,agendaWeek'
     },
+    height: 675,
     defaultView: 'agendaWeek',
+    minTime: '10:00:00',
+    maxTime: '22:00:00',
     allDaySlot: false,
-    editable: true,
+    editable: false,
     slotEventOverlap: false,
     eventDurationEditable: false,
     events: (events || []),
     eventRender: writeJSON,
     eventDrop: writeJSON,
-    eventClick: function(calEvent) {
+    eventClick: function(calEvent, jsEvent, view) {
+      if(view.type == "month") return false;
+
       if(calEvent.recurring) {
-        var dialog = $('#remove_availability_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
+        var dialog = $('#remove_availability_dialog').lightbox_me({
+          centered: true,
+          zIndex: 1000000,
+          onClose: function() {
+            $('#add-recurring').unbind("click");
+            $('#add-once').unbind("click");
+            return false;
+          }
+        });
 
         $('#remove-recurring').click(function() {
           $('#remove-recurring').unbind("click");
@@ -66,22 +79,28 @@ function initCalendar() {
       return false;
     },
     dayClick: function(startDate, jsEvent, view) {
-      var dialog = $('#add_availability_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
+      if(view.type == "month") return false;
+
+      var dialog = $('#add_availability_dialog').lightbox_me({
+        centered: true,
+        zIndex: 1000000,
+        onClose: function() {
+          $('#add-recurring').unbind("click");
+          $('#add-once').unbind("click");
+          return false;
+        }
+      });
 
       if(!startDate.hasTime())
         startDate.hour(13);
 
       $('#add-recurring').click(function() {
-        $('#add-recurring').unbind("click");
-        $('#add-once').unbind("click");
         addRecurringEvent(startDate);
         dialog.trigger('close');
         return false;
       });
 
       $('#add-once').click(function() {
-        $('#add-recurring').unbind("click");
-        $('#add-once').unbind("click");
         addSingleEvent(startDate);
         dialog.trigger('close');
         return false;
@@ -120,8 +139,12 @@ function initCalendar() {
   }
 
   function addRecurringEvent(start) {
-    var numberOfEvents = 52 * 2; // 2 years
-    var newStart = start.clone().isoWeek(moment().isoWeek());
+    var numberOfEvents = 52 * 2 + 5; // 2 years & 5 weeks in the past
+    var newStart = start
+      .clone()
+      .isoWeek(moment().isoWeek())
+      .subtract(5, 'week');
+
     var events = [];
 
     for(i=0; i < numberOfEvents; i++) {
