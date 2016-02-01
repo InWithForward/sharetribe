@@ -16,6 +16,7 @@
 #  visible                :boolean          default(TRUE), not null
 #  key                    :string(255)
 #  display_on_transaction :boolean          default(FALSE)
+#  editable               :boolean          default(TRUE), not null
 #
 # Indexes
 #
@@ -38,7 +39,8 @@ class CustomField < ActiveRecord::Base
     :for,
     :visible,
     :key,
-    :display_on_transaction
+    :display_on_transaction,
+    :editable
   )
 
   has_many :names, :class_name => "CustomFieldName", :dependent => :destroy
@@ -62,9 +64,8 @@ class CustomField < ActiveRecord::Base
   validates_presence_of :community
 
   def self.for_roles(roles)
-      includes(:role_custom_fields).
-      where(role_custom_fields: { role_id: roles.map(&:id) }).
-      all
+    includes(:role_custom_fields).
+      where(role_custom_fields: { role_id: roles.map(&:id) })
   end
 
   def name_attributes=(attributes)

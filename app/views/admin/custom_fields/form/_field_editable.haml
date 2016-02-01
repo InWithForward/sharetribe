@@ -1,0 +1,6 @@
+.row
+  .col-12
+    .checkbox-container
+      = form.check_box :editable
+      - custom_field.with_type do |type|
+        = form.label :editable, t(".this_field_is_editable")

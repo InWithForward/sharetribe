@@ -8,6 +8,10 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+# Indexes
+#
+#  index_roles_on_community_id  (community_id)
+#
 
 class Role < ActiveRecord::Base
   # attr_accessible :title, :body

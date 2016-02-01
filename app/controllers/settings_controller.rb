@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
   def show
     @selected_left_navi_link = "profile"
     add_location_to_person
-    @custom_field_questions = CustomField.for_roles(@person.roles)
+    set_custom_field_questions
     render :action => :profile
   end
 
@@ -20,7 +20,7 @@ class SettingsController < ApplicationController
     # This is needed if person doesn't yet have a location
     # Build a new one based on old street address or then empty one.
     add_location_to_person
-    @custom_field_questions = CustomField.for_roles(@person.roles)
+    set_custom_field_questions
   end
 
   def account
@@ -74,6 +74,14 @@ class SettingsController < ApplicationController
 
   def find_person_to_unsubscribe(current_user, auth_token)
     current_user || Maybe(AuthToken.find_by_token(auth_token)).person.or_else { nil }
+  end
+
+  def set_custom_field_questions
+    @custom_field_questions = CustomField.for_roles(@person.roles)
+
+    unless @current_user.is_admin_of?(@current_community)
+      @custom_field_questions = @custom_field_questions.where(editable: true)
+    end
   end
 
 end

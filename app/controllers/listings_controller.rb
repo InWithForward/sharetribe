@@ -518,11 +518,15 @@ class ListingsController < ApplicationController
   end
 
   def set_custom_field_questions
-    if !@listing.transaction_type.is_badge?
-      @custom_field_questions = @listing.category.custom_fields
-      @numeric_field_ids = numeric_field_ids(@custom_field_questions)
-    else
-      @numeric_field_ids = []
+    return if @listing.transaction_type.is_badge?
+
+    @custom_field_questions = @listing.category.custom_fields
+
+    # If non admin, can only edit 'editable' fields
+    unless @current_user.is_admin_of?(@current_community)
+      @custom_field_questions = @custom_field_questions.where(editable: true)
     end
+
+    @numeric_field_ids = numeric_field_ids(@custom_field_questions)
   end
 end

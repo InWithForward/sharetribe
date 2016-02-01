@@ -16,6 +16,7 @@
 #  visible                :boolean          default(TRUE), not null
 #  key                    :string(255)
 #  display_on_transaction :boolean          default(FALSE)
+#  editable               :boolean          default(TRUE), not null
 #
 # Indexes
 #

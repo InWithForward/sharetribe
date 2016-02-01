@@ -322,6 +322,10 @@ en:
         field_required:
           this_field_is_required: "This field is required"
           this_field_is_required_checkbox: "This field is required (user has to select at least one option)"
+        field_visible:
+          this_field_is_visible: "This field is visible by everyone (if unchecked, it's visible by admin & the user who adds data)"
+        field_editable:
+          this_field_is_editable: "This field is editable by everyone (if unchecked, it's visible by admin only)"
       index:
         listing_fields: "Listing fields & filters"
         listing_fields_help: "Here you can edit the fields that users have to fill in when they create a new listing. Please note that some fields are predefined and can not be edited."
