@@ -40,6 +40,7 @@ class TransactionMailer < ActionMailer::Base
             recipient: recipient,
             reply_url: reply_url,
             sender_name: sender_name,
+            transaction: transaction
           }
         }
     end
