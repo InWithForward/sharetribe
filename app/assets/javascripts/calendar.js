@@ -31,7 +31,7 @@ function initCalendar() {
     },
     contentHeight: "auto",
     defaultView: 'agendaWeek',
-    minTime: '08:00:00',
+    minTime: '09:00:00',
     maxTime: '22:00:00',
     allDaySlot: false,
     editable: false,
