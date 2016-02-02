@@ -1,8 +1,8 @@
 class AvailabilityChecker
 
   def self.call
-    # Send on the 1, 6, 11, 16, 21, 26,
-    return unless (Date.today.day - 1) % 5 == 0
+    # Only send every other tuesday
+    # return unless Date.today.tuesday? && (Date.today.cweek % 2 == 1)
 
     Community.all.each do |community|
       community.listings.non_badge.currently_open.each do |listing|

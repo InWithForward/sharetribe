@@ -991,9 +991,24 @@ en:
       subject: "Please update your Kudoz calendar!"
       view_listing: "View listing"
       body: "
-        Kudoers would love to book your listing but there aren’t many times for them to choose from.<br /><br />
-        Please login to your Kudoz account and go to your profile > listing.<br /> <br />
-        Edit listing to see the availability calendar and add some time slots!"
+        Good morning %{recipient_username}! <br /><br />
+        Kudoers are excited to check out your experience.<br />
+        But, there aren’t a lot of times to choose right now.< br /><br />
+
+        Can you please add moments you’d be available to host?<br />
+        Please click this link, to surf straight to your listing:< br />
+        <a href=\"%{listing_url}\"> %{listing_url} </a> <br /> <br />
+
+        Top tip: Many of our hosts set up weekly time slots. <br />
+        One less thing for you to think about, and it makes Kudoz run so much smoother.<br />
+        (We really don’t expect you to host weekly; if you get a request, you choose if it works or not!) <br /><br />
+
+        Any problems? Do give me a call at 604.862.5836 <br />
+        Thanks for growing Kudoz with us. <br /><br />
+
+        Have a great Tuesday,<br />
+        Andie
+        "
     share_phone_number:
       body: "Fellow Kudoz member, %{username}, has shared their phone # with you: %{phone_number}. Don’t forget to add to your contacts!"
       subject: "Fellow Kudoz member, %{username}, has shared their phone number"
