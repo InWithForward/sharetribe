@@ -29,9 +29,9 @@ function initCalendar() {
       center: 'title',
       right: 'month,agendaWeek'
     },
-    height: 675,
+    contentHeight: "auto",
     defaultView: 'agendaWeek',
-    minTime: '10:00:00',
+    minTime: '08:00:00',
     maxTime: '22:00:00',
     allDaySlot: false,
     editable: false,
