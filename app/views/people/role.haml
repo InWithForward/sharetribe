@@ -2,10 +2,10 @@
   %h1
     %span#listing-title.listing-title= t(".title")
 
-= form_for @person, url: update_role_person_path(@person) do |form|
-  .row
-    - @current_community.roles.each do |role|
-      - key = role.name.downcase
+.row
+  - @current_community.roles.each do |role|
+    - key = role.name.downcase
+    = form_for @person, url: update_role_person_path(@person) do |form|
       .col-6
         %h1= t(".#{key}.heading").html_safe
         %p= t(".#{key}.description").html_safe
