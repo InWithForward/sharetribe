@@ -92,9 +92,17 @@ FactoryGirl.define do
     password "testi"
     is_organization false
 
+    has_many :roles do |person|
+      FactoryGirl.build(:role)
+    end
     has_many :emails do |person|
       FactoryGirl.build(:email, person: person)
     end
+  end
+
+  factory :role do
+    name 'Host'
+    build_association(:community)
   end
 
   factory :listing do

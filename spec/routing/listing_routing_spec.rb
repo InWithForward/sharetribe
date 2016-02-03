@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Routing for listings" do
+describe "Routing for listings", type: :routing do
   
   it "routes /en/listing_bubble/1 to listings" do
     expect(get "/en/listing_bubble/1").to(

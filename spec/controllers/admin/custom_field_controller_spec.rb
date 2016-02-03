@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::CustomFieldsController do
+describe Admin::CustomFieldsController, type: :controller do
   describe "#destroy" do
     def create_custom_field_for(community)
       custom_field_count = community.custom_fields.count

@@ -51,12 +51,13 @@ describe TransactionService::Process::FreeBooking do
     it 'sends out reminders' do
       described_class.new.confirm(booking: bookings.first)
       Timecop.freeze(48.hours.from_now)
-      successes, failures = Delayed::Worker.new(quiet: false).work_off
-      expect(ActionMailer::Base.deliveries.count).to eql(4)
+      expect{ 
+        successes, failures = Delayed::Worker.new(quiet: false).work_off
+      }.to change { ActionMailer::Base.deliveries.count }.by(4)
     end
 
     it 'creates a Trello card' do
-      expect(CreateTrelloCardJob).to receive(:new).and_return(mock(perform: true))
+      expect(CreateTrelloCardJob).to receive(:new).and_return(double(perform: true))
       described_class.new.confirm(booking: bookings.first)
     end
 

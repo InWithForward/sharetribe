@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HomepageController do
+describe HomepageController, type: :controller do
 
   describe "selected view type" do
 

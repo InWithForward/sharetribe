@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Amazon Bounces" do
+describe "Amazon Bounces", type: :request do
   before(:each) do
     @community = FactoryGirl.create(:community, :domain => "market.custom.org")
   end

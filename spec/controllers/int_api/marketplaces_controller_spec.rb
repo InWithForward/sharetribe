@@ -5,7 +5,7 @@ require 'spec_helper'
 
 class TransactionMailer; end
 
-describe IntApi::MarketplacesController do
+describe IntApi::MarketplacesController, type: :controller do
   describe "#create" do
     it "should create a marketplace and an admin user" do
       post :create, {admin_email: "eddie.admin@example.com",

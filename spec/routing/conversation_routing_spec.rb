@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "routing for conversations" do
+describe "routing for conversations", type: :routing do
   
   it "routes /en/kassi_testperson1/messages/25/accept to conversations controller" do
     expect(get("/en/kassi_testperson1/messages/25/accept")).to(

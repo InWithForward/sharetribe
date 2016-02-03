@@ -10,7 +10,7 @@ module CustomFieldsHelper
       when "DateFieldValue"
         I18n.l(value.date_value, format: :short_date)
       when "CheckboxFieldValue", "DropdownFieldValue"
-        value.selected_options.join(", ")
+        value.selected_options.map { |option| option.title(I18n.locale) }.join(", ")
       when 'NumericFieldValue'
         value.display_value
       else

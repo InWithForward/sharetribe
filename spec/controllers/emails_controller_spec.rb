@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EmailsController do
+describe EmailsController, type: :controller do
   describe "#destroy" do
     before(:each) do
       @community = FactoryGirl.create(:community)

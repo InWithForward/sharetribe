@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BraintreeWebhooksController do
+describe BraintreeWebhooksController, type: :controller do
   before(:each) do
     @community = FactoryGirl.create(:community, :domain => "market.custom.org")
     FactoryGirl.create(:braintree_payment_gateway, :community => @community, :type => "BraintreePaymentGateway")

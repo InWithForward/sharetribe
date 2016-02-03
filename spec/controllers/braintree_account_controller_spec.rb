@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BraintreeAccountsController do
+describe BraintreeAccountsController, type: :controller do
   describe "#create" do
     before(:each) do
       @community = FactoryGirl.create(:community)

@@ -44,7 +44,7 @@ describe CustomFieldsHelper do
       let!(:custom_field_value) { FactoryGirl.create(:checkbox_field_value, question: question) }
 
       it 'has the custom field' do
-        expect(subject).to eql({key.to_sym => ''})
+        expect(subject).to eql({key.to_sym => 'Test option'})
       end
     end
 

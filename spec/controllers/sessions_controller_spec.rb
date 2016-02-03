@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController, "POST create" do
+describe SessionsController, type: :controller do
 
   it "redirects back to original community's domain" do
     @request.host = "test.lvh.me"

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::CommunitiesController do
+describe Admin::CommunitiesController, type: :controller do
 
   before(:each) do
     @community = FactoryGirl.create(:community)

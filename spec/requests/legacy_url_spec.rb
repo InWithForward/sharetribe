@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "legacy URL redirection" do
+describe "legacy URL redirection", type: :request do
   
   before(:each) do
     @person = FactoryGirl.create(:person)

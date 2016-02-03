@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SmsController do
+describe SmsController, type: :controller do
   describe "#accept" do
     let(:community) { FactoryGirl.create(:community) }
 

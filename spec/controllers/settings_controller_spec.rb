@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SettingsController do
+describe SettingsController, type: :controller do
 
   before(:each) do
     @community = FactoryGirl.create(:community)

@@ -8,7 +8,7 @@ require 'spec_helper'
 # to braintree webhook URL is working ok.
 #
 
-describe "braintree webhooks" do
+describe "braintree webhooks", type: :request do
   before(:each) do
     @community = FactoryGirl.create(:community, :domain => "market.custom.org")
     FactoryGirl.create(:braintree_payment_gateway, :community => @community, :type => "BraintreePaymentGateway")

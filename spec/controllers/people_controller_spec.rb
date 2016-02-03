@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PeopleController do
+describe PeopleController, type: :controller do
 
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:person]

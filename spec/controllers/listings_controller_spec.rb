@@ -4,7 +4,7 @@
 
 require 'spec_helper'
 
-describe ListingsController do
+describe ListingsController, type: :controller do
   render_views
 
   before (:each) do
