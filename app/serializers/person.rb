@@ -1,5 +1,6 @@
 require_relative './custom_field'
 require_relative './listing'
+require_relative './transaction'
 require_relative './concerns/arrayable'
 
 module Serializers
@@ -11,13 +12,12 @@ module Serializers
     def hash(person, options = {})
       return if person.nil?
 
-      if (options[:include] || []).include? :booked_listings
-        booked_listings = ::Listing.joins(:transactions).
-          where(transactions: { starter_id: person.id, current_state: :booked })
+      if (options[:include] || []).include? :booked_transactions
+        booked_transactions = ::Transaction.where(starter_id: person.id, current_state: :booked)
 
-        booked_listings_hash = {
-          booked_listings: {
-            data: Serializers::Listing.array(booked_listings)
+        transactions_hash = {
+          booked_transactions: {
+            data: Serializers::Transaction.array(booked_transactions)
           }
         }
       end
@@ -37,7 +37,7 @@ module Serializers
           custom_field_values: {
             data: Serializers::CustomField.array(person.custom_field_values)
           }
-        }.merge(booked_listings_hash || {})
+        }.merge(transactions_hash || {})
       }
     end
   end

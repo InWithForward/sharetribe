@@ -203,9 +203,6 @@ GEM
       em-websocket (>= 0.5.0)
       guard (>= 1.8.0)
       multi_json (~> 1.7)
-    guard-rspec (4.3.1)
-      guard (~> 2.1)
-      rspec (>= 2.14, < 4.0)
     haml (4.0.5)
       tilt
     hashdiff (0.2.3)
@@ -376,25 +373,23 @@ GEM
     rest-client (1.6.7)
       mime-types (>= 1.16)
     riddle (1.5.11)
-    rspec (2.99.0)
-      rspec-core (~> 2.99.0)
-      rspec-expectations (~> 2.99.0)
-      rspec-mocks (~> 2.99.0)
-    rspec-collection_matchers (1.0.0)
-      rspec-expectations (>= 2.99.0.beta1)
-    rspec-core (2.99.1)
-    rspec-expectations (2.99.2)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.99.2)
-    rspec-rails (2.99.0)
-      actionpack (>= 3.0)
-      activemodel (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-collection_matchers
-      rspec-core (~> 2.99.0)
-      rspec-expectations (~> 2.99.0)
-      rspec-mocks (~> 2.99.0)
+    rspec-core (3.4.2)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-rails (3.4.2)
+      actionpack (>= 3.0, < 4.3)
+      activesupport (>= 3.0, < 4.3)
+      railties (>= 3.0, < 4.3)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     rubocop (0.21.0)
       json (>= 1.7.7, < 2)
       parser (~> 2.1.9)
@@ -528,7 +523,6 @@ DEPENDENCIES
   fb-channel-file
   flying-sphinx (~> 1.2.0)
   guard-livereload
-  guard-rspec
   haml
   i18n-tasks (~> 0.6.2)
   jquery-rails (= 2.1.4)
@@ -567,7 +561,7 @@ DEPENDENCIES
   rb-fsevent
   recaptcha
   rest-client (>= 1.6.0)
-  rspec-rails (~> 2.99.0)
+  rspec-rails (~> 3.4)
   rubocop
   ruby-prof
   russian

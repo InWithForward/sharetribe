@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Api::PeopleController do
+describe Api::PeopleController, type: :controller do
 
   describe 'show' do
     let!(:person) { FactoryGirl.create(:person) }
     let!(:listing) { FactoryGirl.create(:listing) }
     let!(:transaction) { FactoryGirl.create(:transaction, starter: person, listing: listing, current_state: :booked) }
-    let!(:booking) { FactoryGirl.create(:free_booking, transaction: transaction) }
+    let!(:booking) { FactoryGirl.create(:free_booking, transaction: transaction, start_at: Time.now + 1.day, end_at: Time.now + 2.day, confirmed: true) }
 
     let!(:text_field_value) { FactoryGirl.create(:text_field_value, customizable: person) }
 
@@ -47,37 +47,51 @@ describe Api::PeopleController do
                 }
               ]
             },
-            booked_listings: {
+            booked_transactions: {
               data: [
                 {
-                  id: listing.id,
-                  type: 'Listing',
+                  id: transaction.id,
+                  type: transaction.class.to_s,
                   attributes: {
-                    title: listing.title,
-                    description: listing.description,
-                    created_at: listing.created_at.iso8601
+                    status: transaction.status.to_s,
+                    created_at: transaction.created_at.iso8601,
+                    start_at: transaction.booking.start_at.iso8601,
+                    end_at: transaction.booking.end_at.iso8601
                   },
                   relationships: {
-                    listing_images: { data: [] },
-                    custom_field_values: { data: [] },
-                    author: {
+                    listing: {
                       data: {
-                        type: 'Person',
-                        id: listing.author.id,
+                        id: listing.id,
+                        type: 'Listing',
                         attributes: {
-                          name: listing.author.name,
-                          username: listing.author.username,
-                          image_urls: {
-                            thumb: listing.author.image.url(:thumb),
-                            big: listing.author.image.url(:big)
-                          }
+                          title: listing.title,
+                          description: listing.description,
+                          created_at: listing.created_at.iso8601
                         },
                         relationships: {
-                          custom_field_values: { data: [] }
+                          listing_images: { data: [] },
+                          custom_field_values: { data: [] },
+                          author: {
+                            data: {
+                              type: 'Person',
+                              id: listing.author.id,
+                              attributes: {
+                                name: listing.author.name,
+                                username: listing.author.username,
+                                image_urls: {
+                                  thumb: listing.author.image.url(:thumb),
+                                  big: listing.author.image.url(:big)
+                                }
+                              },
+                              relationships: {
+                                custom_field_values: { data: [] }
+                              }
+                            }
+                          },
+                          location: { data: nil }
                         }
                       }
-                    },
-                    location: { data: nil }
+                    }
                   }
                 }
               ]

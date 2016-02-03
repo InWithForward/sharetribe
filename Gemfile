@@ -100,7 +100,6 @@ group :development do
   gem 'guard-livereload', require: false
   gem 'rack-livereload'
   gem 'rb-fsevent',       require: false
-  gem 'guard-rspec',      require: false
   gem 'annotate'
   gem 'zeus', '0.15.1'
   gem 'i18n-tasks', '~> 0.6.2'
@@ -108,7 +107,7 @@ group :development do
 end
 
 group :test do
-  gem "rspec-rails", "~>2.99.0"
+  gem "rspec-rails", "~>3.4"
   gem 'capybara'
   gem 'cucumber-rails', :require => false
   gem 'cucumber'

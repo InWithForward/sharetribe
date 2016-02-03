@@ -1,7 +1,7 @@
 
 require 'spec_helper'
 
-describe Api::SessionsController do
+describe Api::SessionsController, type: :controller do
 
   describe 'create' do
     let!(:person) { FactoryGirl.create(:person) }

@@ -12,7 +12,7 @@ module Api
       return unless authenticate!
 
       respond_with({
-        data: Serializers::Person.hash(person, include: [:booked_listings])
+        data: Serializers::Person.hash(person, include: [:booked_transactions])
       })
     end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::ListingsController do
+describe Api::ListingsController, type: :controller do
 
   describe 'show' do
     let!(:location) { FactoryGirl.create(:location) }
