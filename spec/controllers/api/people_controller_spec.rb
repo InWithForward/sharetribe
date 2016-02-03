@@ -51,18 +51,6 @@ describe Api::PeopleController, type: :controller do
                 }
               ]
             },
-            badges: {
-              data: [
-                {
-                  id: badge.id,
-                  type: 'Badge',
-                  attributes: {
-                    title: badge.title,
-                    description: badge.description
-                  }
-                }
-              ]
-            },
             booked_transactions: {
               data: [
                 {
