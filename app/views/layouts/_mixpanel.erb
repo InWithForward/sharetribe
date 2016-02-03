@@ -6,6 +6,8 @@
 
   <% if @current_user %>
     <script type="text/javascript">
+      // This triggers an identify so it actually tracks the user's location properly
+      mixpanel.people.set({_: ''});
       mixpanel.identify('<%= @current_user.id %>');
     </script>
   <% end %>

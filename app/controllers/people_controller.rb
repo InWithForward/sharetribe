@@ -226,7 +226,7 @@ class PeopleController < Devise::RegistrationsController
           )
         end
 
-        Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id))
+        Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id, request.remote_ip))
       else
         flash[:error] = t("layouts.notifications.#{@person.errors.first}")
       end

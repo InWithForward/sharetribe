@@ -13,7 +13,7 @@ class Admin::CommunityPeopleController < ApplicationController
     end
 
     if @person.update_attributes(params[:person])
-      Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id))
+      Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id, request.remote_ip))
       flash[:notice] = t("layouts.notifications.person_updated_successfully")
     else
       flash[:error] = t("layouts.notifications.#{@person.errors.first}")

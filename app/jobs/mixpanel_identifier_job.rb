@@ -1,4 +1,4 @@
-class MixpanelIdentifierJob < Struct.new(:person_id, :community_id)
+class MixpanelIdentifierJob < Struct.new(:person_id, :community_id, :ip)
 
   include DelayedAirbrakeNotification
 
@@ -19,7 +19,8 @@ class MixpanelIdentifierJob < Struct.new(:person_id, :community_id)
       '$first_name' => person.given_name,
       '$last_name' => person.family_name,
       '$phone' => person.phone_number,
-      '$created' => person.created_at
+      '$created' => person.created_at,
+      '$ip' => ip
     }
 
     custom_fields = person.custom_field_values.map do |custom_value|
