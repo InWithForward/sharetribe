@@ -1,6 +1,7 @@
 require_relative './custom_field'
 require_relative './listing'
 require_relative './transaction'
+require_relative './badge'
 require_relative './concerns/arrayable'
 
 module Serializers
@@ -22,6 +23,20 @@ module Serializers
         }
       end
 
+      if(options[:include] || []).include? :badges
+        badges_hash = {
+          badges: {
+            data: Serializers::Badge.array(person.badges)
+          }
+        }
+      end
+
+      relationships = {
+        custom_field_values: {
+          data: Serializers::CustomField.array(person.custom_field_values)
+        },
+      }.merge(transactions_hash || {}).merge(badges_hash || {})
+
       {
         type: person.class.to_s,
         id: person.id,
@@ -33,11 +48,7 @@ module Serializers
             big: person.image.url(:big)
           }
         },
-        relationships: {
-          custom_field_values: {
-            data: Serializers::CustomField.array(person.custom_field_values)
-          }
-        }.merge(transactions_hash || {})
+        relationships: relationships
       }
     end
   end

@@ -114,6 +114,21 @@ FactoryGirl.define do
     end
   end
 
+  factory :badge, class: 'Listing'  do
+    title "Language"
+    description "For the polyglot"
+    build_association(:author)
+    build_association(:transaction_type_badge, as: :transaction_type)
+    category { TestHelpers::find_or_build_category("item") }
+
+    has_many :sub_listings do |listing|
+      FactoryGirl.build(:listing)
+    end
+    has_many :communities do |listing|
+      FactoryGirl.build(:community)
+    end
+  end
+
   factory :transaction do
     build_association(:person, as: :starter)
     build_association(:community)

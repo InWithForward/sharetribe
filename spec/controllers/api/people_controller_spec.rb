@@ -8,6 +8,10 @@ describe Api::PeopleController, type: :controller do
     let!(:transaction) { FactoryGirl.create(:transaction, starter: person, listing: listing, current_state: :booked) }
     let!(:booking) { FactoryGirl.create(:free_booking, transaction: transaction, start_at: Time.now + 1.day, end_at: Time.now + 2.day, confirmed: true) }
 
+    let!(:completed_listing) { FactoryGirl.create(:listing) }
+    let!(:completed_transaction) { FactoryGirl.create(:transaction, starter: person, listing: completed_listing, current_state: :confirmed) }
+    let!(:badge) { FactoryGirl.create(:badge, sub_listings: [completed_listing]) }
+
     let!(:text_field_value) { FactoryGirl.create(:text_field_value, customizable: person) }
 
     let!(:auth_token) { FactoryGirl.create(:auth_token, token_type: 'login') }
@@ -43,6 +47,18 @@ describe Api::PeopleController, type: :controller do
                     title: text_field_value.question.name,
                     value: text_field_value.text_value,
                     key: text_field_value.question.key
+                  }
+                }
+              ]
+            },
+            badges: {
+              data: [
+                {
+                  id: badge.id,
+                  type: 'Badge',
+                  attributes: {
+                    title: badge.title,
+                    description: badge.description
                   }
                 }
               ]

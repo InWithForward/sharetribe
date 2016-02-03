@@ -766,6 +766,18 @@ class Person < ActiveRecord::Base
     self.role_ids = attributes.map { |role| role[:role_id] }
   end
 
+  def badges
+    if badge_type = TransactionType.where(type: "Badge").first
+      completed_listings = Listing.joins(:transactions).
+        where(transactions: { starter_id: id, current_state: :confirmed })
+
+      badge_type.listings.preload(:sub_listings).select do |listing|
+        listing.sub_listings.any? &&
+          (listing.sub_listings.map(&:id) - completed_listings.map(&:id)).empty?
+      end
+    end
+  end
+
   private
 
   # This method constructs a key to be used in caching.

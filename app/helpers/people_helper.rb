@@ -14,15 +14,7 @@ module PeopleHelper
   end
 
   def persons_badges(person, per_page=6)
-    if badge_type = @current_community.transaction_types.where(type: "Badge").first
-      completed_listings = Listing.joins(:transactions).
-        where(transactions: { starter_id: person.id, current_state: :confirmed })
-
-      badge_type.listings.preload(:sub_listings).select do |listing|
-        listing.sub_listings.any? &&
-          (listing.sub_listings.map(&:id) - completed_listings.map(&:id)).empty?
-      end
-    end
+    person.badges
   end
 
   def grade_image_class(grade)
