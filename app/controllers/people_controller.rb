@@ -108,6 +108,7 @@ class PeopleController < Devise::RegistrationsController
     invitation.use_once! if invitation.present?
 
     Delayed::Job.enqueue(CommunityJoinedJob.new(@person.id, @current_community.id)) if @current_community
+    Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, request.remote_ip))
 
     # send email confirmation
     # (unless disabled for testing environment)
@@ -159,6 +160,8 @@ class PeopleController < Devise::RegistrationsController
     session[:person_id] = @person.id
     sign_in(resource_name, @person)
     flash[:notice] = t("layouts.notifications.login_successful", :person_name => view_context.link_to(@person.given_name_or_username, person_path(@person))).html_safe
+
+    Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, request.remote_ip))
 
     # We can create a membership for the user if there are no restrictions
     # - not an Invite only community
@@ -226,7 +229,7 @@ class PeopleController < Devise::RegistrationsController
           )
         end
 
-        Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, @current_community.id, request.remote_ip))
+        Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, request.remote_ip))
       else
         flash[:error] = t("layouts.notifications.#{@person.errors.first}")
       end
