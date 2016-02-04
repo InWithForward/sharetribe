@@ -13,6 +13,7 @@
       %thead
         %tr
           %th= t("admin.communities.listings.title")
+          %th= t("admin.communities.listings.whats_missing")
           %th= t("admin.communities.listings.author")
           %th= t("admin.communities.listings.invisible")
           %th= t("admin.communities.listings.edit")
@@ -21,6 +22,8 @@
           %tr
             %td
               = link_to listing.title, listing
+            %td
+              = listing.missing_prerequisites.map { |option| option.title(I18n.locale) }.join(", ")
             %td.admin-members-full-name
               = link_to listing.author.full_name, listing.author
             %td

@@ -256,6 +256,7 @@ en:
         invisible: 'Invisible & Searchable'
         sort_date: "Sort Date"
         edit: 'Edit'
+        whats_missing: "What's missing"
       transactions:
         transactions: "View experiences"
         headers:
