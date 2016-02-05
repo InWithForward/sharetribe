@@ -15,6 +15,7 @@ class TransactionProcessStateMachine
   state :paid
   state :confirmed
   state :canceled
+  state :expired
 
   transition from: :not_started,               to: [:free, :pending, :preauthorized, :initiated, :paid, :requested]
   transition from: :initiated,                 to: [:preauthorized]
@@ -23,7 +24,7 @@ class TransactionProcessStateMachine
   transition from: :pending_ext,               to: [:paid, :rejected]
   transition from: :accepted,                  to: [:paid, :canceled]
   transition from: :paid,                      to: [:confirmed, :canceled]
-  transition from: :requested,                 to: [:booked, :canceled]
+  transition from: :requested,                 to: [:booked, :canceled, :expired]
   transition from: :booked,                    to: [:confirmed, :canceled]
 
   guard_transition(to: :pending) do |conversation|

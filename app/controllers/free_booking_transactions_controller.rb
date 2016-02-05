@@ -84,10 +84,12 @@ class FreeBookingTransactionsController < ApplicationController
       run_at: APP_CONFIG.minutes_to_remind_in.to_i.minutes.from_now
     )
 
+    latest_booking = booking_fields.max_by { |field| field[:start_at] }
+
     Delayed::Job.enqueue(
-      AutomaticCancellationJob.new(transaction_id),
+      AutomaticExpirationJob.new(transaction_id),
       priority: 10,
-      run_at: APP_CONFIG.minutes_to_cancel_in.to_i.minutes.from_now
+      run_at: latest_booking[:start_at]
     )
 
     redirect_to person_transaction_path(:person_id => @current_user.id, :id => transaction_id)
