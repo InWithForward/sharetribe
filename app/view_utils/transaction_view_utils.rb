@@ -122,11 +122,6 @@ module TransactionViewUtils
         sender: starter,
         mood: :positive
       }
-    when "expired"
-      {
-        sender: author,
-        mood: :negative
-      }
     else
       raise("Unknown transition to state: #{transition[:to_state]}")
     end
@@ -164,8 +159,6 @@ module TransactionViewUtils
       t("conversations.message.canceled_#{discussion_type}")
     when "confirmed"
       t("conversations.message.confirmed_#{discussion_type}")
-    when "expired"
-      t("conversations.message.expired_#{discussion_type}")
     else
       raise("Unknown transition to state: #{state}")
     end

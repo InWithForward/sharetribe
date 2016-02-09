@@ -293,7 +293,6 @@ en:
           pending_ext: "Waiting PayPal payment"
           booked: Booked
           requested: Requested
-          expired: Expired
       braintree_payment_gateway:
         braintree_payment_gateway: "Braintree Payment API keys"
         environment: Environment
@@ -521,7 +520,6 @@ en:
       confirmed_request: "Request completed."
       confirmed_offer: "Offer completed."
       canceled_request: "Request canceled."
-      expired_request: "Request expired."
       canceled_offer: "Offer canceled."
       message_from: "Message from %{person}"
       about_listing: "About listing %{listing_title}"
@@ -534,7 +532,6 @@ en:
       confirmed_request: "marked the request as completed"
       confirmed_offer: "marked the offer as completed"
       canceled_request: "canceled the experience"
-      expired_request: "didn't respond in time"
       canceled_offer: "canceled the offer"
       paid: "paid %{sum}"
       requested_request: "requested an experience"
@@ -624,7 +621,6 @@ en:
       request_rejected: Rejected
       request_confirmed: Completed
       request_canceled: Canceled
-      request_expired: Expired
       request_paid: "Payment successful"
       request_preauthorized: "Payment successful"
       skip_feedback: "Skip feedback"
@@ -1366,7 +1362,6 @@ en:
       request_closed: "Request closed"
       request_rejected: "Request rejected"
       request_canceled: "Request canceled"
-      request_expired: "Request expired"
       message_sent: "Message sent"
       this_content_is_not_available_in_this_community: "This content is not available."
       unknown_error: "Unknown error. Please use the Contact us link to send details about what happened."
