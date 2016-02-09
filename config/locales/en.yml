@@ -537,6 +537,16 @@ en:
       paid: "paid %{sum}"
       requested_request: "requested an experience"
       booked_request: "booked the experience"
+    reason:
+      label: "I choose this experience, because I want to:"
+      options:
+        explore: "explore an interest in %{category}"
+        challenge: challenge myself
+        jobs: find out about jobs in %{category}
+        connect: connect with the host, %{host}
+        fun: have fun
+        other: something else? write your answer here
+      submit: "Confirm"
     new:
       offer_message_form_title: "Offer %{listing} to %{person}"
       request_message_form_title: "Request %{listing} from %{person}"
@@ -576,7 +586,7 @@ en:
       about_listing: "About listing %{listing_title}"
       author_has_to_accept_request: "%{author_name} needs to accept the request before you can pay"
       select_availabilities: "Please select two availabilities"
-      submit: 'Confirm'
+      submit: 'Continue'
     show:
       in_response_to_listing: "about listing"
       message_sent_by: "Message sent by"

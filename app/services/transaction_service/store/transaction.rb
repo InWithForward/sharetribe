@@ -19,6 +19,7 @@ module TransactionService::Store::Transaction
     [:automatic_confirmation_after_days, :fixnum, :mandatory],
     [:minimum_commission, :money, :mandatory],
     [:content, :string],
+    [:reason, :string],
     [:booking_fields, :enumerable])
 
   Transaction = EntityUtils.define_builder(

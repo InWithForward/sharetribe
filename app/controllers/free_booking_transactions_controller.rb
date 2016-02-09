@@ -8,13 +8,9 @@ class FreeBookingTransactionsController < ApplicationController
   before_filter :ensure_listing_author_is_not_current_user
   before_filter :ensure_authorized_to_reply
 
-  ContactForm = FormUtils.define_form("ListingConversation", :content, :sender_id, :listing_id, :community_id)
-    .with_validations { validates_presence_of :content, :listing_id }
-
-  MessageForm = FormUtils.define_form("ListingConversation",
-    :content,
+  FreeBookingForm = FormUtils.define_form("FreeBooking",
+    :reason,
     :sender_id,
-    :contract_agreed,
     :listing_id,
     :booking_fields
    ).with_validations {
@@ -22,7 +18,9 @@ class FreeBookingTransactionsController < ApplicationController
     validates_length_of :booking_fields, is: 2, message: "must have two selections"
   }
 
-  FreeBookingForm = FormUtils.merge("FreeBooking", MessageForm)
+  FreeBookingWithReasonForm = FormUtils.
+    merge("FreeBooking", FreeBookingForm).
+    with_validations { validates_presence_of :reason }
 
   ListingQuery = MarketplaceService::Listing::Query
 
@@ -40,21 +38,60 @@ class FreeBookingTransactionsController < ApplicationController
       free_booking_form: FreeBookingForm.new(),
       author: query_person_entity(vprms[:listing][:author_id]),
       action_button_label: vprms[:action_button_label],
-      form_action: free_booking_path(person_id: @current_user.id, listing_id: vprms[:listing][:id])
+      form_action: free_booking_reason_path(person_id: @current_user.id, listing_id: vprms[:listing][:id])
     }
   end
 
-  def create
-    booking_fields = params[:free_booking]
+  def reasons(listing)
+    key_base = "conversations.reason.options"
+    I18n.t(key_base).map do |key, value|
+      interpolations = {
+        category: listing.category.display_name(I18n.locale),
+        host: listing.author.name
+      }
+
+      {
+        key: key,
+        value: I18n.t("#{key_base}.#{key}", interpolations)
+      }
+    end
+  end
+
+  def booking_fields
+    params[:free_booking]
       .select { |k,v| v.to_i == 1 }
       .map do |k, v|
         start_at, end_at = k.split("_").map { |t| Time.at(t.to_i) }
         { start_at: start_at, end_at: end_at }
       end
+  end
 
-    form = MessageForm.new({
+  def reason
+    form = FreeBookingForm.new({
       listing_id: @listing.id,
       booking_fields: booking_fields
+    })
+    unless form.valid?
+      flash[:error] = form.errors.full_messages.join(", ")
+      return redirect_to :back, params
+    end
+
+    render 'free_booking_transactions/reason', locals: {
+      free_booking_form: form,
+      form_action: free_booking_path(person_id: @current_user.id, listing_id: @listing.id),
+      reasons: reasons(@listing)
+    }
+  end
+
+  def create
+    reason = reasons(@listing).find do |r|
+      r[:key].to_sym == params[:free_booking][:reason].to_sym
+    end
+
+    form = FreeBookingWithReasonForm.new({
+      listing_id: @listing.id,
+      booking_fields: booking_fields,
+      reason: reason.try(:fetch, :value) || params[:free_booking][:reason]
     })
     unless form.valid?
       flash[:error] = form.errors.full_messages.join(", ")
@@ -71,7 +108,8 @@ class FreeBookingTransactionsController < ApplicationController
         content: "",
         payment_gateway: :none,
         payment_process: :free_booking,
-        booking_fields: booking_fields
+        booking_fields: booking_fields,
+        reason: form.reason
       }
     )
     transaction_id = transaction_response[:data][:transaction][:id]

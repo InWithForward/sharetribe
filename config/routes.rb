@@ -89,6 +89,7 @@ Kassi::Application.routes.draw do
 
     # free book flow
     get "/listings/:listing_id/free_booking" => "free_booking_transactions#new", :as => :free_booking
+    get "/listings/:listing_id/free_booking/reason" => "free_booking_transactions#reason", :as => :free_booking_reason
     post "/listings/:listing_id/free_booking" => "free_booking_transactions#create", :as => :free_booking
 
     match "/listings/new/:type/:category" => "listings#new", :as => :new_request_category

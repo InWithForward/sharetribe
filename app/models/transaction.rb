@@ -26,6 +26,7 @@
 #  payment_process                   :string(31)       default("none")
 #  delivery_method                   :string(31)       default("none")
 #  shipping_price_cents              :integer
+#  reason                            :string(255)
 #
 # Indexes
 #
@@ -53,7 +54,8 @@ class Transaction < ActiveRecord::Base
     :listing_author_id,
     :unit_price,
     :shipping_price,
-    :delivery_method
+    :delivery_method,
+    :reason
   )
 
   attr_accessor :contract_agreed

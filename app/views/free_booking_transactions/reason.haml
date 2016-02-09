@@ -1,0 +1,33 @@
+- content_for :extra_javascript do
+  :javascript
+    $('#free_booking_reason').change(function(event) {
+      var key = $('#free_booking_reason option:selected').val();
+      if(key == 'other') {
+        $('#free_booking_reason_free_form').show();
+        $("#free_booking_reason_free_form").prop('disabled', false);
+      }
+      else {
+        $('#free_booking_reason_free_form').hide();
+        $("#free_booking_reason_free_form").prop('disabled', true);
+      }
+      return false;
+    });
+
+.centered-section
+  = form_for free_booking_form, :url => form_action, :method => "post" do |form|
+
+    - params[:free_booking].each_pair do |key, value|
+      = hidden_field(:free_booking, key, :value => value)
+
+    .row
+      .col-12
+        = form.label :reason, t('conversations.reason.label'), class: :input
+        = form.select :reason, options_for_select(reasons.map { |r| [r[:value], r[:key]] })
+
+    .row
+      .col-12
+        = form.text_area :reason, class: 'text_area hidden', id: 'free_booking_reason_free_form', disabled: true
+
+    .row
+      .col-12
+        = form.button t('conversations.reason.submit'), :class => "send_button"

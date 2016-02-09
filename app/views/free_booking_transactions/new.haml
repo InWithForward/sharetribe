@@ -22,7 +22,7 @@
   .preauthorize-section
     %h2= t('conversations.new.select_availabilities')
 
-  = form_for free_booking_form, :url => form_action, :method => "post" do |form|
+  = form_for free_booking_form, :url => form_action, :method => "get" do |form|
 
     %ul.no-bullets
       - @availabilities.each_with_index do |availability, i|
