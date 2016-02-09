@@ -63,7 +63,7 @@ module TransactionService::Process
       Result::Success.new({result: true})
     end
 
-    def cancel(tx:)
+    def cancel(tx:, message: nil, sender_id: nil, gateway_adapter: nil)
       ActiveRecord::Base.transaction do
         tx.bookings.delete_all
         Transition.transition_to(tx[:id], :canceled)
