@@ -165,7 +165,6 @@ class Listing < ActiveRecord::Base
 
   def self.currently_open(status="open")
     status = "open" if status.blank?
-    p status
     case status
     when "all"
       where([])
