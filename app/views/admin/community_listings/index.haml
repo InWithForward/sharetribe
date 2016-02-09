@@ -16,6 +16,7 @@
           %th= t("admin.communities.listings.whats_missing")
           %th= t("admin.communities.listings.author")
           %th= t("admin.communities.listings.invisible")
+          %th= t("admin.communities.listings.open")
           %th= t("admin.communities.listings.edit")
       %tbody
         - @listings.each do |listing|
@@ -28,6 +29,8 @@
               = link_to listing.author.full_name, listing.author
             %td
               = listing.invisible
+            %td
+              = listing.open
             %td
               = link_to t("admin.communities.listings.edit"), edit_admin_community_listing_path(@current_community.id, listing.id)
 

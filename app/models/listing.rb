@@ -165,6 +165,7 @@ class Listing < ActiveRecord::Base
 
   def self.currently_open(status="open")
     status = "open" if status.blank?
+    p status
     case status
     when "all"
       where([])
@@ -210,7 +211,7 @@ class Listing < ActiveRecord::Base
 
     params[:include] ||= [:listing_images, :category, :transaction_type]
 
-    params.reject!{ |key,value| (value == "all" || value == ["all"]) && key != "status"} # all means the fliter doesn't need to be included (except with "status")
+    params.reject!{ |key,value| (value == "all" || value == ["all"]) && key != :status } # all means the fliter doesn't need to be included (except with "status")
 
     # If no Share Type specified, use listing_type param if that is specified.
     # :listing_type and :share_type are deprecated and they should not be used.

@@ -5,7 +5,7 @@ class Admin::CommunityListingsController < ApplicationController
 
   def index
     @community = @current_community
-    @listings = Listing.find_with(nil, nil, @current_community, 50, params[:page])
+    @listings = Listing.find_with({ status: 'all' }, nil, @current_community, 50, params[:page])
   end
 
   def update
