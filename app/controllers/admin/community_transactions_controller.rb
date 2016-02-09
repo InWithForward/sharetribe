@@ -36,6 +36,10 @@ class Admin::CommunityTransactionsController < ApplicationController
         p[:display_name] = PersonViewUtils.person_entity_display_name(p, "fullname")
       }
 
+      if transaction[:status] == 'requested' && (transaction[:last_transition_at] + 48.hours) < Time.now
+        transaction[:status] = "expiring"
+      end
+
       if transaction[:listing].present?
         # This if was added to tolerate cases where listing has been deleted
         # due the author deleting his/her account completely

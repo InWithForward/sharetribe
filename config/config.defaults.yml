@@ -224,8 +224,8 @@ default: &default_settings
   knowledge_base_url: http://www.example.com/knowledgebase
   display_knowledge_base_articles: false
 
-  minutes_to_remind_in: 1440 # 60 * 24 * 1
-  minutes_to_cancel_in: 2880 # 60 * 24 * 2
+  minutes_to_remind_in: 2880 # 60 * 24 * 2
+  minutes_to_cancel_in: 5760 # 60 * 24 * 4
   immediate_booking_reminder: false
 
   twilio_account_sid: AC5fc5cd5f706d8b6f8df2972d0c8445cb

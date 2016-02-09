@@ -293,6 +293,7 @@ en:
           pending_ext: "Waiting PayPal payment"
           booked: Booked
           requested: Requested
+          expiring: Expiring
       braintree_payment_gateway:
         braintree_payment_gateway: "Braintree Payment API keys"
         environment: Environment
