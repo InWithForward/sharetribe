@@ -65,7 +65,7 @@ module TransactionService::Process
 
     def cancel(tx:, message: nil, sender_id: nil, gateway_adapter: nil)
       ActiveRecord::Base.transaction do
-        tx.bookings.delete_all
+        Booking.where(transaction_id: tx[:id]).delete_all
         Transition.transition_to(tx[:id], :canceled)
         TxStore.mark_as_unseen_by_other(community_id: tx[:community_id],
                                       transaction_id: tx[:id],
