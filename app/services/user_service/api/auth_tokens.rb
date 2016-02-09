@@ -16,15 +16,15 @@ module UserService::API
     end
 
     def use_token_for_login(token_string)
-      return nil if token_string.blank?
-      if t = AuthToken.where(token: token_string).first
-        t.last_use_attempt = Time.now # record the usage attempt
-        if t.expires_at > Time.now && t.usages_left > 0 && t.token_type == "login"
-          # Token is valid for login
-          t.usages_left = t.usages_left - 1
-          t.save
-          return UserService::API::Users::from_model(t.person)
-        end
+      return if token_string.blank?
+      return unless t = AuthToken.where(token: token_string).first
+
+      t.last_use_attempt = Time.now # record the usage attempt
+
+      if t.expires_at > Time.now && t.token_type == "login"
+        # Token is valid for login
+        t.save
+        return UserService::API::Users::from_model(t.person)
       end
     end
 
