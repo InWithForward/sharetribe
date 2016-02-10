@@ -17,7 +17,7 @@ class Booking < ActiveRecord::Base
 
   belongs_to :transaction
 
-  attr_accessible :transaction_id, :end_on, :start_on, :start_at, :end_at
+  attr_accessible :transaction_id, :end_on, :start_on, :start_at, :end_at, :confirmed
 
   validates_date :end_on, on_or_after: :start_on, allow_blank: true
 

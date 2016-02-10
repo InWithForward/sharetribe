@@ -1,0 +1,13 @@
+.centered-section
+  = form_for(:transaction, url:admin_community_transactions_path(community_id: params[:community_id], listing_id: params[:listing_id])) do |form|
+    .row
+      .col-12
+        = form.label :starter_id, 'Kudoer'
+        = form.select :starter_id, @memberships.map { |m| [m.person.full_name, m.person.id] }
+    .row
+      .col-12
+        = form.label :start_at, 'Start Time'
+        = form.datetime_select :start_at, ampm: true, minute_step: 15
+    .row
+      .col-12
+        = form.button t('conversations.new.submit'), :class => "send_button"

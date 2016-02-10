@@ -82,6 +82,42 @@ class Admin::CommunityTransactionsController < ApplicationController
     redirect_to :back
   end
 
+  def new
+    @memberships = CommunityMembership.
+      where(community_id: @current_community.id, status: "accepted").
+      includes(:person)
+  end
+
+  def create
+    listing = Listing.find(params[:listing_id])
+    transaction_params = params[:transaction]
+    start_at = DateTime.new(transaction_params["start_at(1i)"].to_i,
+                            transaction_params["start_at(2i)"].to_i,
+                            transaction_params["start_at(3i)"].to_i,
+                            transaction_params["start_at(4i)"].to_i,
+                            transaction_params["start_at(5i)"].to_i)
+    end_at = start_at + 90.minutes
+
+    transaction_response = TransactionService::Transaction.create(
+      transaction: {
+        community_id: @current_community.id,
+        listing_id: listing.id,
+        listing_title: listing.title,
+        starter_id: params[:transaction][:starter_id],
+        listing_author_id: listing.author.id,
+        content: "",
+        payment_gateway: :none,
+        payment_process: :free_booking,
+        booking_fields: [{ start_at: start_at, end_at: end_at }]
+      }
+    )
+    transaction = Transaction.find(transaction_response.data[:transaction][:id])
+    booking = transaction.bookings.first
+    TransactionService::Process::FreeBooking.new.confirm(booking: booking)
+
+    redirect_to admin_community_transactions_path(community_id: @current_community.id)
+  end
+
   private
 
   def simple_sort_column(sort_column)

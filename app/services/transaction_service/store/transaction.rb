@@ -180,12 +180,7 @@ module TransactionService::Store::Transaction
   def build_bookings(tx_model, tx_data)
     if is_booking?(tx_data)
       tx_data[:booking_fields].each do |fields|
-        tx_model.bookings.build({
-          start_on: fields[:start_on],
-          end_on: fields[:end_on],
-          start_at: fields[:start_at],
-          end_at: fields[:end_at]
-        })
+        tx_model.bookings.build(fields)
       end
     end
   end

@@ -122,6 +122,12 @@
               .text-part= t("listings.edit_links.move_to_top")
 
         .listing-view-admin-link
+          = link_to new_admin_community_transaction_path(community_id: @current_community.id, listing_id: @listing.id) do
+            .icon-with-text-container
+              = icon_tag("calendar", ["icon-part"])
+              .text-part= t("listings.edit_links.request_as_admin")
+
+        .listing-view-admin-link
           = link_to show_in_updates_email_person_listing_path(@current_user, @listing), data: { method: "put", remote: "true" }, :id => "add-to-updates-email"  do
             .icon-with-text-container
               = icon_tag("mail", ["icon-part"])

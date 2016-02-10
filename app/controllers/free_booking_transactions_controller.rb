@@ -47,7 +47,7 @@ class FreeBookingTransactionsController < ApplicationController
     I18n.t(key_base).map do |key, value|
       interpolations = {
         category: listing.category.display_name(I18n.locale),
-        host: listing.author.name
+        host: listing.author.full_name
       }
 
       {
