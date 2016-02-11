@@ -37,11 +37,14 @@ module Serializers
         },
       }.merge(transactions_hash || {}).merge(badges_hash || {})
 
+      name = PersonViewUtils.full_name(person.given_name, person.family_name)
+
       {
         type: person.class.to_s,
         id: person.id,
         attributes: {
-          name: person.name,
+          name: name,
+          phone_number: person.phone_number,
           username: person.username,
           image_urls: {
             thumb: person.image.url(:thumb),
