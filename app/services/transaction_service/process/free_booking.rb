@@ -13,7 +13,7 @@ module TransactionService::Process
       Transition.transition_to(tx[:id], :confirmed)
       TxStore.mark_as_unseen_by_other(community_id: tx[:community_id],
                                      transaction_id: tx[:id],
-                                     person_id: tx[:listing_author_id])
+                                     person_id: sender_id)
 
       starter =  Person.where(id: tx[:starter_id]).first
       author = Person.where(id: tx[:listing_author_id]).first
@@ -46,8 +46,8 @@ module TransactionService::Process
 
         Transition.transition_to(tx[:id], :booked)
         TxStore.mark_as_unseen_by_other(community_id: tx[:community_id],
-                                      transaction_id: tx[:id],
-                                      person_id: tx[:listing_author_id])
+                                        transaction_id: tx[:id],
+                                        person_id: tx[:listing_author_id])
       end
 
       [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
@@ -68,8 +68,8 @@ module TransactionService::Process
         Booking.where(transaction_id: tx[:id]).delete_all
         Transition.transition_to(tx[:id], :canceled)
         TxStore.mark_as_unseen_by_other(community_id: tx[:community_id],
-                                      transaction_id: tx[:id],
-                                      person_id: tx[:listing_author_id])
+                                        transaction_id: tx[:id],
+                                        person_id: sender_id)
       end
       Result::Success.new({result: true})
     end

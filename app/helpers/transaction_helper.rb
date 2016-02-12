@@ -349,11 +349,11 @@ module TransactionHelper
   def paid_status(conversation, show_testimonial_status)
     return nil unless show_testimonial_status
 
-    if conversation.listing.offerer?(@current_user)
-      waiting_for_buyer_to_confirm(conversation)
-    else
-      waiting_for_current_user_to_confirm(conversation)
-    end
+    [
+      waiting_for_current_user_to_confirm(conversation),
+      experience_details_status_infos(conversation),
+      custom_fields_status_infos(conversation)
+    ]
   end
 
   def requested_status(conversation)
@@ -548,10 +548,6 @@ module TransactionHelper
     status_info(link, icon_classes: icon_class('clock'))
   end
 
-  def waiting_for_buyer_to_confirm(conversation)
-    experience_details_status_infos(conversation) + custom_fields_status_infos(conversation)
-  end
-
   def custom_fields_status_infos(conversation)
     custom_field_values = conversation.listing.custom_field_values.
       where(custom_fields: { display_on_transaction: true })
@@ -579,7 +575,7 @@ module TransactionHelper
       time: time, date: date
     ).html_safe
 
-    [ status_info(link, icon_classes: icon_class('clock')) ]
+    status_info(link, icon_classes: icon_class('clock'))
   end
 
   def waiting_for_author_to_accept_preauthorized(conversation)

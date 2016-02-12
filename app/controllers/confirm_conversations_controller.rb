@@ -7,8 +7,6 @@ class ConfirmConversationsController < ApplicationController
   before_filter :fetch_conversation
   before_filter :fetch_listing
 
-  before_filter :ensure_is_starter
-
   MessageForm = Form::Message
 
   def confirm
