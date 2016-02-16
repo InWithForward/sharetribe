@@ -241,22 +241,24 @@ class PeopleController < Devise::RegistrationsController
   end
 
   def destroy
-    has_unfinished = TransactionService::Transaction.has_unfinished_transactions(@current_user.id)
+    has_unfinished = TransactionService::Transaction.has_unfinished_transactions(@person.id)
     return redirect_to root if has_unfinished
 
-    communities = @current_user.community_memberships.map(&:community_id)
+    communities = @person.community_memberships.map(&:community_id)
 
     # Do all delete operations in transaction. Rollback if any of them fails
     ActiveRecord::Base.transaction do
-      UserService::API::Users.delete_user(@current_user.id)
-      MarketplaceService::Listing::Command.delete_listings(@current_user.id)
+      UserService::API::Users.delete_user(@person.id)
+      MarketplaceService::Listing::Command.delete_listings(@person.id)
 
       communities.each { |community_id|
-        PaypalService::API::Api.accounts.delete(community_id: @current_community.id, person_id: @current_user.id)
+        PaypalService::API::Api.accounts.delete(community_id: @current_community.id, person_id: @person.id)
       }
     end
 
-    sign_out @current_user
+    if @current_user.id == @person.id
+      sign_out @current_user
+    end
     report_analytics_event(['user', "deleted", "by user"]);
     flash[:notice] = t("layouts.notifications.account_deleted")
     redirect_to root
