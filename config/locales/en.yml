@@ -1862,7 +1862,7 @@ en:
       slightly_less_than_expected: "Worse than expected"
       what_are_these: "What are these?"
       review: "received review"
-      reviews: "received reviews"
+      reviews: "What other people say about me"
       listing: listing
       listings: listings
       open_listing: "open listing"
@@ -2055,7 +2055,7 @@ en:
       negative: Negative
       default_textual_feedback: "What was fun and surprizing? What was challenging?"
     testimonial:
-      about_listing: "about listing"
+      about_listing: "about"
   date:
     formats:
       long_with_abbr_day_name: "%a, %b %d, %Y"

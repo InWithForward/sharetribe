@@ -14,8 +14,3 @@
       - else
         = link_to listing.title, listing
       = time_ago(testimonial.created_at) + "."
-  .testimonial-icon{:class => testimonial.grade > 0.25 ? 'positive' : 'negative'}
-    - if testimonial.grade > 0.25
-      = icon_tag("like", ["positive"])
-    - else
-      = icon_tag("dislike", ["negative"])
