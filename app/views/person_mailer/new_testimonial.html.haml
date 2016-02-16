@@ -1,12 +1,25 @@
-- view_url = person_url(@recipient, @url_params) + "#testimonial#{@testimonial.id.to_s}"
+- accept_url = accept_person_message_feedback_url(@recipient, @url_params.merge({:message_id => @testimonial.transaction.id, id: @testimonial.id}))
+- reject_url = reject_person_message_feedback_url(@recipient, @url_params.merge({:message_id => @testimonial.transaction.id, id: @testimonial.id}))
 - give_url = new_person_message_feedback_url(@recipient, @url_params.merge({:message_id => @testimonial.transaction.id}))
+
+%tr
+  %td{:align => "left", style: 'padding-bottom: 10px;'}
+    %font{body_font}
+      = t("emails.new_testimonial.has_given_you_feedback_in_kassi", :name => @testimonial.author.name(@current_community)) + ":"
+
+= render :partial => "quote", :locals => { :quote => @testimonial.text }
 
 %tr
   %td{:align => "left"}
     %font{body_font}
-      = t("emails.new_testimonial.has_given_you_feedback_in_kassi", :name => @testimonial.author.name(@current_community)) + "."
+      = t("emails.new_testimonial.prompt")
 
-= render :partial => "action_button", :locals => { :text => t("emails.new_testimonial.view_feedback"), :url => view_url}
+%tr
+  %td{:align => "left", :style => "padding-top: 25px; padding-bottom: 25px;"}
+    = render :partial => "green_action_button", :locals => { :text => t("emails.new_testimonial.accept"), :url => accept_url}
+%tr
+  %td{:align => "left", :style => "padding-top: 10px; padding-bottom: 25px;"}
+    = render :partial => "red_action_button", :locals => { :text => t("emails.new_testimonial.reject"), :url => reject_url}
 
 -# TODO Move to Mailer, and pass as locals
 - if MarketplaceService::Transaction::Entity.waiting_testimonial_from?(MarketplaceService::Transaction::Entity.transaction(@testimonial.transaction), @testimonial.receiver.id)

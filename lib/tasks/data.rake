@@ -88,4 +88,8 @@ namespace :data do
       end
     end
   end
+
+  task chagne_testimonial_states_to_accepted: :environment do
+    Testimonial.update_all state: 'accepted'
+  end
 end

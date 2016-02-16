@@ -925,7 +925,9 @@ en:
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name} has given you feedback in %{service_name}"
       you_can_give_feedback_to: "You haven't yet given feedback to %{name}."
-      view_feedback: "View feedback"
+      accept: "Add to my profile"
+      reject: "Don't add to my profile"
+      prompt: "What do you think?"
     new_update_to_listing:
       listing_you_follow_has_been_updated: "Listing you follow has been updated"
       has_updated_listing_you_follow_in_kassi: "%{author} has updated the listing '%{listing}' you are following in %{service_name}."
@@ -1415,6 +1417,8 @@ en:
       payment_details_add_error: "Could not add payment details"
       listing_author_payment_details_missing: "The listing author has not added their payment details so they cannot receive payments right now. Please contact the author."
       stylesheet_needs_recompiling: "Stylesheet is recompiling. Please, reload the page after a while."
+      feedback_accepted: "Feedback accepted"
+      feedback_rejected: "Feedback rejected"
     settings:
       account: Account
       notifications: Notifications
@@ -2055,7 +2059,7 @@ en:
       negative: Negative
       default_textual_feedback: "What was fun and surprizing? What was challenging?"
     testimonial:
-      about_listing: "about"
+      about_listing: "about %{title} experience, %{ago}."
   date:
     formats:
       long_with_abbr_day_name: "%a, %b %d, %Y"

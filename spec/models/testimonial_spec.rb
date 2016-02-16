@@ -11,6 +11,7 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  receiver_id      :string(255)
+#  state            :string(255)      default("pending")
 #
 # Indexes
 #

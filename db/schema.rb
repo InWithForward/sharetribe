@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160209212428) do
+ActiveRecord::Schema.define(:version => 20160216214848) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -919,6 +919,7 @@ ActiveRecord::Schema.define(:version => 20160209212428) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "receiver_id"
+    t.string   "state",            :default => "pending"
   end
 
   add_index "testimonials", ["author_id"], :name => "index_testimonials_on_author_id"

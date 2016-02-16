@@ -67,17 +67,19 @@
       = render :partial => "followed_people", :locals => { :person => @person, :limit => 6 }
       
     - if @current_community.testimonials_in_use
+      - testimonials = received_testimonials_for_person(@person, @current_user, @current_community)
+
       #people-testimonials.listing-main
         .row
           %h2.people-header
-            - if @person.received_testimonials.any?
+            - if testimonials.any?
               = t(".reviews")
             - else
               = t(".no_reviews")
 
-          - if @person.received_testimonials.any?
+          - if testimonials.any?
             #profile-testimonials-list
-              = render :partial => "testimonials", :locals => {:received_testimonials => @person.received_testimonials, :limit => 100}
+              = render :partial => "testimonials", :locals => {:received_testimonials => testimonials, :limit => 100}
 
   .col-4
     .row

@@ -11,6 +11,7 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  receiver_id      :string(255)
+#  state            :string(255)      default("pending")
 #
 # Indexes
 #
@@ -30,13 +31,19 @@ class Testimonial < ActiveRecord::Base
   belongs_to :receiver, :class_name => "Person"
   belongs_to :transaction
 
-  validates_inclusion_of :grade, :in => 0..1, :allow_nil => false
+  validates_inclusion_of :grade, :in => 0..1, :allow_nil => true
+
+  validates_inclusion_of :state, :in => ['pending', 'accepted', 'rejected']
 
   scope :positive, where("grade >= 0.5")
 
   # Formats grade so that it can be displayed in the UI
   def displayed_grade
     (grade * 4 + 1).to_i
+  end
+
+  def accepted?
+    state == 'accepted'
   end
 
 end

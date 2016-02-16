@@ -5,7 +5,7 @@ class TestimonialsController < ApplicationController
   end
 
   before_filter :ensure_authorized_to_give_feedback, :except => :index
-  before_filter :ensure_feedback_not_given, :except => :index
+  before_filter :ensure_feedback_not_given, :except => [:index, :accept, :reject]
 
   # Skip auth token check as current jQuery doesn't provide it automatically
   skip_before_filter :verify_authenticity_token, :only => [:skip]
@@ -37,8 +37,22 @@ class TestimonialsController < ApplicationController
       flash[:notice] = t("layouts.notifications.feedback_sent_to", :target_person => view_context.link_to(@transaction.other_party(@current_user).given_name_or_username, @transaction.other_party(@current_user))).html_safe
       redirect_to person_transaction_path(:person_id => @current_user.id, :id => @transaction.id)
     else
-      render :action => new
+      render :new, locals: { transaction: @transaction, testimonial: @testimonial}
     end
+  end
+
+  def accept
+    @testimonial = @transaction.testimonials.find(params[:id])
+    @testimonial.update_attributes!(state: 'accepted')
+    flash[:notice] = t("layouts.notifications.feedback_accepted")
+    redirect_to person_transaction_path(:person_id => @current_user.id, :id => @testimonial.transaction.id)
+  end
+
+  def reject
+    @testimonial = @transaction.testimonials.find(params[:id])
+    @testimonial.update_attributes!(state: :rejected)
+    flash[:notice] = t("layouts.notifications.feedback_rejected")
+    redirect_to person_transaction_path(:person_id => @current_user.id, :id => @testimonial.transaction.id)
   end
 
   def skip

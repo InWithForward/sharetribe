@@ -348,6 +348,10 @@ Kassi::Application.routes.draw do
           end
           resources :messages
           resources :feedbacks, :controller => :testimonials do
+            member do
+              get :accept
+              get :reject
+            end
             collection do
               put :skip
             end
