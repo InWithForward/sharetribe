@@ -388,35 +388,17 @@ class PersonMailer < ActionMailer::Base
   end
 
   def insufficient_availabilities_to_author(community, listing)
-    recipient = community.admins.first
+    recipient = listing.author
     @url_params = build_url_params(community, recipient)
 
     email = premailer_mail(
-      :to => recipient.confirmed_notification_email_addresses,
+      :to => recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
       :subject => t('emails.insufficient_availabilities_to_author.subject')
     ) do |format|
       format.html {
         render locals: {
           recipient: recipient,
-          listing: listing,
-          listing_url: listing_url(@url_params.merge({:id => listing.id}))
-        }
-      }
-    end
-  end
-
-  def insufficient_availabilities_to_admin(community, listing)
-    recipient = community.admins.first
-    @url_params = build_url_params(community, recipient)
-
-    email = premailer_mail(
-      :to => recipient.confirmed_notification_email_addresses,
-      :from => community_specific_sender(community),
-      :subject => t('emails.insufficient_availabilities_to_admin.subject', listing_title: listing.title)
-    ) do |format|
-      format.html {
-        render locals: {
           listing: listing,
           listing_url: listing_url(@url_params.merge({:id => listing.id}))
         }
