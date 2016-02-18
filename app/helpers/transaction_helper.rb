@@ -466,7 +466,7 @@ module TransactionHelper
       end
     end
 
-    status_links(bookings + [
+    status_links((bookings || []) + [
       {
         link_href: rebook_free_booking_person_message_path(@current_user, :id => conversation.id),
         link_classes: "cancel",

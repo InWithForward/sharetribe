@@ -2047,17 +2047,17 @@ en:
     new:
       as_expected: "As expected"
       exceeded_expectations: "Much better than expected"
-      give_feedback_to: "Give feedback to %{person}"
+      give_feedback_to: "Endorse %{person}"
       grade: "What is your overall feeling?"
       less_than_expected: "Worse than expected"
-      send_feedback: "Send feedback"
+      send_feedback: "Send endorsement"
       slightly_better_than_expected: "Slightly better than expected"
       slightly_less_than_expected: "Slightly worse than expected"
-      textual_feedback: "How did the experience go?"
-      this_will_be_shown_in_profile: "The feedback you give will be visible to others on %{person}'s profile. When other Kudoers are booking their experience, or a host is confirming a Kudoer, they can decide if %{person} will be a good match."
+      textual_feedback: "What do you want to share with %{person}?"
+      this_will_be_shown_in_profile: "This endorsement will be visible to others on %{person}'s profile. %{person} can accept or reject your feedback − in this way %{person} and others get to see new sides of themselves!"
       positive: Positive
       negative: Negative
-      default_textual_feedback: "What was fun and surprizing? What was challenging?"
+      default_textual_feedback: "What did %{person} say or do that you noticed? (Please write one or two sentences)"
     testimonial:
       about_listing: "about %{title} experience, %{ago}."
   date:
