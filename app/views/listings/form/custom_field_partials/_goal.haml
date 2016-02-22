@@ -1,0 +1,20 @@
+- values = custom_field_value ? custom_field_value.values : {}
+- required_class = (custom_field.required? ? "required" : "")
+
+= t('.part_one')
+
+- options = options_for_select([:week, :month, :summer, :winter, :year], values[:time])
+= select "custom_fields[#{custom_field.id}]", "time", options, {}, class: required_class
+
+= t('.part_two')
+
+- options = options_for_select([:try, :learn, :improve, :build, :practice], values[:action])
+= select "custom_fields[#{custom_field.id}]", "action", options, {}, class: required_class
+
+- text_field_class = [required_class, 'inline-text-form'].join(" ")
+= text_field_tag "custom_fields[#{custom_field.id}][activity]", values[:activity], class: text_field_class , :placeholder => "activity"
+
+%div.inline-block-container
+  = t('.part_three')
+  = text_field_tag "custom_fields[#{custom_field.id}][reason]", values[:reason], class: text_field_class, :placeholder => "reason"
+%span.hint= (hint || "").html_safe

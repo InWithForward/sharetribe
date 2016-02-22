@@ -1459,6 +1459,10 @@ en:
       custom_field_partials:
         dropdown:
           select_one___: "Select one..."
+        goal:
+          part_one: "This"
+          part_two: "I want to"
+          part_three: "so I can"
       departure_time:
         at: At
         departure_time: "Departure time"

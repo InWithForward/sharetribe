@@ -23,6 +23,10 @@ module FieldValueCreator
         answer = DropdownFieldValue.new
         answer.custom_field_option_selections = [CustomFieldOptionSelection.new(:custom_field_value => answer, :custom_field_option_id => answer_value)]
         answer
+      when :goal
+        answer = GoalFieldValue.new
+        answer.values = answer_value
+        answer
       when :text
         answer = TextFieldValue.new
         answer.text_value = answer_value
@@ -62,7 +66,7 @@ module FieldValueCreator
 
   def is_answer_value_blank(value)
     if value.kind_of?(Hash)
-      value["(3i)"].blank? || value["(2i)"].blank? || value["(1i)"].blank?  # DateFieldValue check
+      value.map { |k, v| v.blank? }.include?(true)
     else
       value.blank?
     end

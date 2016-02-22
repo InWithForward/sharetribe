@@ -79,3 +79,13 @@ input.auto_width {
   font-size: .9em;
   font-style: italic;
 }
+
+.inline-block-container {
+  display: inline-block;
+}
+
+input.inline-text-form {
+  width: em(400);
+  margin-bottom: lines(0.3);
+}
+

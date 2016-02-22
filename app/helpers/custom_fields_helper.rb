@@ -30,7 +30,8 @@ module CustomFieldsHelper
       "CheckboxField" => "admin.custom_fields.field_types.checkbox_group",
       "DateField" => "admin.custom_fields.field_types.date",
       "TextAreaField" => "admin.custom_fields.field_types.text_area",
-      "VideoField" => "admin.custom_fields.field_types.video"
+      "VideoField" => "admin.custom_fields.field_types.video",
+      "GoalField" => "admin.custom_fields.field_types.goal"
     }
 
     t(tranlation_map[type])
@@ -38,6 +39,16 @@ module CustomFieldsHelper
 
   def custom_field_dropdown_options(options)
     options.collect { |option| [field_type_translation(option), option] }.insert(0, [t("admin.custom_fields.index.select_one"), nil])
+  end
+
+  def goal_value_to_s(value)
+    prefix = "listings.form.custom_field_partials.goal"
+
+    part_one = t("#{prefix}.part_one")
+    part_two = t("#{prefix}.part_two")
+    part_three = t("#{prefix}.part_three")
+
+    "#{part_one} #{value.time} #{part_two} #{value.action} #{value.activity} #{part_three} #{value.reason}"
   end
 
 end
