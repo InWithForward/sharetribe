@@ -1,5 +1,3 @@
-require 'csv'
-
 module TransactionCSV
   extend TransactionHelper
 
@@ -29,15 +27,5 @@ module TransactionCSV
       transaction[:author][:display_name],
       Maybe(transaction[:booking]).map { |b| I18n.l(b.start_at) }.or_else(nil)
     ]
-  end
-
-  def to_s(transactions)
-    CSV.generate do |csv|
-      csv << header
-
-      transactions.each do |transaction|
-        csv << row(transaction)
-      end
-    end
   end
 end

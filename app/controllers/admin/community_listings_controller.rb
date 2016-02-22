@@ -6,6 +6,18 @@ class Admin::CommunityListingsController < ApplicationController
   def index
     @community = @current_community
     @listings = Listing.find_with({ status: 'all' }, nil, @current_community, 50, params[:page])
+
+    respond_to do |format|
+      format.html do
+        render :index
+      end
+      format.csv do
+        render(
+          csv: ArrayToCSV.to_s(ListingCSV, @listings),
+          filename: "#{Time.now.to_formatted_s(:number)}_listings" 
+        )
+      end
+    end
   end
 
   def update

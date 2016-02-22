@@ -70,7 +70,7 @@ class Admin::CommunityTransactionsController < ApplicationController
       end
       format.csv do
         render(
-          csv: TransactionCSV.to_s(conversations),
+          csv: ArrayToCSV.to_s(TransactionCSV, conversations),
           filename: "#{Time.now.to_formatted_s(:number)}_transactions" 
         )
       end
