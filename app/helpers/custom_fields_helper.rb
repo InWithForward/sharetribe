@@ -31,7 +31,8 @@ module CustomFieldsHelper
       "DateField" => "admin.custom_fields.field_types.date",
       "TextAreaField" => "admin.custom_fields.field_types.text_area",
       "VideoField" => "admin.custom_fields.field_types.video",
-      "GoalField" => "admin.custom_fields.field_types.goal"
+      "GoalField" => "admin.custom_fields.field_types.goal",
+      "TagField" => "admin.custom_fields.field_types.tag"
     }
 
     t(tranlation_map[type])

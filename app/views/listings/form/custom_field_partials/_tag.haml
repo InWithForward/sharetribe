@@ -1,0 +1,11 @@
+- value = custom_field_value ? custom_field_value.text_value : ""
+= text_field_tag "custom_fields[#{custom_field.id}]", value, :class => (custom_field.required? ? "required" : ""), :placeholder => hint
+
+- content_for :tag_js do
+  :javascript
+    $(document).ready(function() {
+      $('#custom_fields_#{custom_field.id}').tagsInput();
+    });
+
+- content_for :extra_javascript do
+  = yield :tag_js

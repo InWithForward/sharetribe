@@ -21,7 +21,9 @@
 //= require jquery.fileupload-process
 //= require jquery.fileupload-validate
 //= require jquery.fileupload-image
+//= require jquery.tagsinput.min
 //= require cocoon
+//= require moment
 //= require moment
 
 //= require datepicker/bootstrap-datepicker.js
