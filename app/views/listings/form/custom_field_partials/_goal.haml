@@ -12,9 +12,9 @@
 = select "custom_fields[#{custom_field.id}]", "action", options, {}, class: required_class
 
 - text_field_class = [required_class, 'inline-text-form'].join(" ")
-= text_field_tag "custom_fields[#{custom_field.id}][activity]", values[:activity], class: text_field_class , :placeholder => "activity"
+= text_field_tag "custom_fields[#{custom_field.id}][activity]", values[:activity], class: text_field_class , placeholder: t('.activity_placeholder')
 
 %div.inline-block-container
   = t('.part_three')
-  = text_field_tag "custom_fields[#{custom_field.id}][reason]", values[:reason], class: text_field_class, :placeholder => "reason"
+  = text_field_tag "custom_fields[#{custom_field.id}][reason]", values[:reason], class: text_field_class, placeholder: t('.reason_placeholder')
 %span.hint= (hint || "").html_safe

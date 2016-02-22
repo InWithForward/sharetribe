@@ -1463,6 +1463,8 @@ en:
           part_one: "This"
           part_two: "I want to"
           part_three: "so I can"
+          activity_placeholder: "activity"
+          reason_placeholder: "reason"
       departure_time:
         at: At
         departure_time: "Departure time"
