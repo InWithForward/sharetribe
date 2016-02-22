@@ -1,5 +1,9 @@
 class PhoneNumberSharesController < ApplicationController
 
+  before_filter do |controller|
+    controller.ensure_logged_in t("layouts.notifications.you_must_log_in_to_view_this_page")
+  end
+
   PhoneNumberShare = FormUtils.define_form("PhoneNumberShare",
     :phone_number,
   ).with_validations {
@@ -7,7 +11,7 @@ class PhoneNumberSharesController < ApplicationController
   }
 
   def new
-    return send_and_redirect if @current_user.phone_number.present?
+    return send_and_redirect if @current_user && @current_user.phone_number.present?
 
     render :new, locals: { phone_number_share_form: PhoneNumberShare.new }
   end
