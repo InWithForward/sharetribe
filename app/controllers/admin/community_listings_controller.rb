@@ -4,8 +4,10 @@ class Admin::CommunityListingsController < ApplicationController
   before_filter :fetch_listing, only: [:edit, :update]
 
   def index
+    pagination_opts = PaginationViewUtils.parse_pagination_opts(params)
+
     @community = @current_community
-    @listings = Listing.find_with({ status: 'all' }, nil, @current_community, 50, params[:page])
+    @listings = Listing.find_with({ status: 'all' }, nil, @current_community, pagination_opts[:per_page], pagination_opts[:page])
 
     respond_to do |format|
       format.html do
