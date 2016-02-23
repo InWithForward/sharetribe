@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160216214848) do
+ActiveRecord::Schema.define(:version => 20160222231522) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -1006,5 +1006,18 @@ ActiveRecord::Schema.define(:version => 20160216214848) do
   add_index "transactions", ["conversation_id"], :name => "index_transactions_on_conversation_id"
   add_index "transactions", ["last_transition_at"], :name => "index_transactions_on_last_transition_at"
   add_index "transactions", ["listing_id"], :name => "index_transactions_on_listing_id"
+
+  create_table "versions", :force => true do |t|
+    t.string   "item_type",                               :null => false
+    t.integer  "item_id",                                 :null => false
+    t.string   "event",                                   :null => false
+    t.string   "whodunnit"
+    t.text     "object",            :limit => 2147483647
+    t.string   "customizable_type"
+    t.string   "customizable_id"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
 end

@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout 'application'
 
+  attr_accessor :current_user
+
   before_filter :force_ssl,
     :check_auth_token,
     :fetch_logged_in_user,
@@ -25,7 +27,8 @@ class ApplicationController < ActionController::Base
     :fetch_chargebee_plan_data,
     :fetch_community_admin_status,
     :fetch_community_plan_expiration_status,
-    :warn_about_missing_payment_info
+    :warn_about_missing_payment_info,
+    :set_paper_trail_whodunnit
   before_filter :cannot_access_without_joining, :except => [ :confirmation_pending, :check_email_availability]
   before_filter :can_access_only_organizations_communities
   before_filter :check_email_confirmation, :except => [ :confirmation_pending, :check_email_availability_and_validity]

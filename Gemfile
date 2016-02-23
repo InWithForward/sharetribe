@@ -86,6 +86,7 @@ gem 'cocoon', '~> 1.2.6'
 gem 'twilio-ruby', '~> 4.2.0'
 gem 'faraday'
 gem 'mixpanel-ruby'
+gem 'paper_trail'
 
 group :staging, :production do
   gem 'newrelic_rpm', '~> 3.9.1.236'

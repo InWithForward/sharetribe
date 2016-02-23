@@ -16,6 +16,12 @@
 #
 
 class CustomFieldValue < ActiveRecord::Base
+  has_paper_trail(
+    meta: { customizable_id: :customizable_id, customizable_type: :customizable_type },
+    on: [:destroy],
+    if: Proc.new { |t| t.customizable_type == 'Person' }
+  )
+
   attr_accessible :type
 
   belongs_to :customizable, polymorphic: true 
