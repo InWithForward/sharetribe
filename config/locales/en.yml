@@ -1006,8 +1006,9 @@ en:
       view_listing: "View listing"
       body: "
         Good morning %{recipient_username}! <br /><br />
-        Kudoers are excited to check out your experience.<br />
-        But, there aren’t a lot of times to choose right now.< br /><br />
+
+        <a href=\"https://catalogue.kudoz.ca/zach\">Zach</a> and <a href=\"https://catalogue.kudoz.ca/jordana \">Jordana</a> checked out your experience, <br />
+        but there aren’t a lot of times to choose right now. <br /> <br />
 
         Can you please add moments you’d be available to host?<br />
         Please click this link, to surf straight to your listing:< br />
