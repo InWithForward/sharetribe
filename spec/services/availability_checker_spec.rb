@@ -15,7 +15,7 @@ describe AvailabilityChecker do
 
   let!(:listing) { FactoryGirl.create(:listing) }
 
-  let(:time) { Time.new(2014, 3, 12, 0, 0, 0, 0) }
+  let(:time) { Time.new(2014, 3, 19, 0, 0, 0, 0) }
 
   before do
     Timecop.freeze(time)
@@ -24,12 +24,10 @@ describe AvailabilityChecker do
   let(:delivery_stub) { double(deliver: true) }
 
   def expect_emails
-    expect(PersonMailer).to receive(:insufficient_availabilities_to_admin) { delivery_stub }
     expect(PersonMailer).to receive(:insufficient_availabilities_to_author) { delivery_stub }
   end
 
   def dont_expect_emails
-    expect(PersonMailer).not_to receive(:insufficient_availabilities_to_admin)
     expect(PersonMailer).not_to receive(:insufficient_availabilities_to_author)
   end
 
