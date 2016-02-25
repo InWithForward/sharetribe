@@ -18,6 +18,17 @@ describe Api::PeopleController, type: :controller do
 
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
+    let(:url) {
+      Rails.application.routes.url_helpers.listing_url(
+        host: listing.communities.first.full_domain,
+        id: listing.id
+      )
+    }
+
+    def name(p)
+      PersonViewUtils.full_name(p.given_name, p.family_name)
+    end
+
     it 'returns 401 if unauthorized' do
       get :show, id: listing.id, format: :json
       expect(response.status).to eql(401)
@@ -30,7 +41,8 @@ describe Api::PeopleController, type: :controller do
           type: 'Person',
           id: person.id,
           attributes: {
-            name: person.name,
+            name: name(person),
+            phone_number: person.phone_number,
             username: person.username,
             image_urls: {
               thumb: person.image.url(:thumb),
@@ -60,7 +72,8 @@ describe Api::PeopleController, type: :controller do
                     status: transaction.status.to_s,
                     created_at: transaction.created_at.iso8601,
                     start_at: transaction.booking.start_at.iso8601,
-                    end_at: transaction.booking.end_at.iso8601
+                    end_at: transaction.booking.end_at.iso8601,
+                    reason: transaction.reason
                   },
                   relationships: {
                     listing: {
@@ -70,7 +83,8 @@ describe Api::PeopleController, type: :controller do
                         attributes: {
                           title: listing.title,
                           description: listing.description,
-                          created_at: listing.created_at.iso8601
+                          created_at: listing.created_at.iso8601,
+                          url: url
                         },
                         relationships: {
                           listing_images: { data: [] },
@@ -80,7 +94,8 @@ describe Api::PeopleController, type: :controller do
                               type: 'Person',
                               id: listing.author.id,
                               attributes: {
-                                name: listing.author.name,
+                                name: name(listing.author),
+                                phone_number: listing.author.phone_number,
                                 username: listing.author.username,
                                 image_urls: {
                                   thumb: listing.author.image.url(:thumb),

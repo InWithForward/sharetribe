@@ -22,6 +22,13 @@ describe Api::ListingsController, type: :controller do
 
     let(:body) { HashUtils.deep_symbolize_keys(JSON.parse(response.body)) }
 
+    let(:url) {
+      Rails.application.routes.url_helpers.listing_url(
+        host: listing.communities.first.full_domain,
+        id: listing.id
+      )
+    }
+
     it 'returns 401 if unauthorized' do
       get :show, id: listing.id, format: :json
       expect(response.status).to eql(401)
@@ -36,7 +43,8 @@ describe Api::ListingsController, type: :controller do
           attributes: {
             title: listing.title,
             description: listing.description,
-            created_at: listing.created_at.iso8601
+            created_at: listing.created_at.iso8601,
+            url: url
           },
           relationships: {
             listing_images: {
@@ -80,7 +88,8 @@ describe Api::ListingsController, type: :controller do
                 type: 'Person',
                 id: listing.author.id,
                 attributes: {
-                  name: listing.author.name,
+                  name: PersonViewUtils.full_name(listing.author.given_name, listing.author.family_name),
+                  phone_number: listing.author.phone_number,
                   username: listing.author.username,
                   image_urls: {
                     thumb: listing.author.image.url(:thumb),

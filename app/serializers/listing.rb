@@ -12,6 +12,10 @@ module Serializers
 
     def hash(listing)
       return if listing.nil?
+      url = Rails.application.routes.url_helpers.listing_url(
+        host: listing.communities.first.full_domain,
+        id: listing.id
+      )
 
       {
         id: listing.id,
@@ -19,7 +23,8 @@ module Serializers
         attributes: { 
           title: listing.title,
           description: listing.description,
-          created_at: listing.created_at
+          created_at: listing.created_at,
+          url: url
         },
         relationships: {
           listing_images: {
