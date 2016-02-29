@@ -36,7 +36,7 @@ class PhoneNumberSharesController < ApplicationController
     Delayed::Job.enqueue(
       SharePhoneNumberJob.new(@current_user.id, recipient.id, @current_community.id)
     )
-    redirect_to root_path
+    redirect_to root_path, notice: I18n.t('layouts.notifications.phone_number_share_successful')
   end
 
   def recipient

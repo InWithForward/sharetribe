@@ -6,6 +6,6 @@
 
   - accept_url = accept_free_booking_person_message_path(:person_id => @current_user.id, :id => @listing_conversation.id)
   = form_for @listing_conversation, :url => accept_url, :html => { :method => "put" } do |form|
-    = "#{@booking.start_at.to_formatted_s(:time)} - #{@booking.end_at.to_formatted_s(:time)},  #{@booking.start_at.to_date.to_formatted_s(:short)}"
+    = formatted_range @booking.start_at, @booking.end_at
     = form.hidden_field :booking_id, value: @booking.id
     = form.button t('free_bookings.accept_confirm.submit'), :class => "send_button"

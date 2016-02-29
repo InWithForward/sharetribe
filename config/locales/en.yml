@@ -1420,6 +1420,7 @@ en:
       stylesheet_needs_recompiling: "Stylesheet is recompiling. Please, reload the page after a while."
       feedback_accepted: "Feedback accepted"
       feedback_rejected: "Feedback rejected"
+      phone_number_share_successful: "Great! We've shared your number"
     settings:
       account: Account
       notifications: Notifications

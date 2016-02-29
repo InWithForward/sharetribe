@@ -461,7 +461,7 @@ module TransactionHelper
           link_href: accept_free_booking_person_message_path(@current_user, :id => conversation.id, booking_id: booking.id),
           link_classes: "confirm",
           link_icon_with_text_classes: icon_for("confirmed"),
-          link_text_with_icon: booking.start_at.to_formatted_s(:short)
+          link_text_with_icon: booking.start_at.strftime('%a, %b %d %l:%M')
         }
       end
     end
