@@ -30,7 +30,7 @@
       - conversations.each do |conversation|
         %tr
           %td=Maybe(conversation[:listing]).map { |listing| link_to_unless(listing[:deleted], listing[:title], conversation[:listing_url]) }.or_else("")
-          %td=conversation[:__model].listing.missing_prerequisites.map { |option| option.title(I18n.locale) }.join(", ")
+          %td= PrerequisiteService.missing(conversation[:__model].listing).map { |option| option.title(I18n.locale) }.join(", ")
           %td=t("admin.communities.transactions.status.#{conversation[:status]}")
           %td
             - if conversation[:status] == "booked"

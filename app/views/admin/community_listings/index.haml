@@ -27,7 +27,7 @@
             %td
               = link_to listing.title, listing
             %td
-              = listing.missing_prerequisites.map { |option| option.title(I18n.locale) }.join(", ")
+              = PrerequisiteService.missing(listing).map { |option| option.title(I18n.locale) }.join(", ")
             %td.admin-members-full-name
               = link_to listing.author.full_name, listing.author
             %td
