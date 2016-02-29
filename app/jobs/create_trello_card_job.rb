@@ -14,7 +14,8 @@ class CreateTrelloCardJob < Struct.new(:booking_id, :community_id)
     community = Community.where(id: community_id).first
     booking = Booking.where(id: booking_id).first
 
-    destination = booking.transaction.listing.location.address
+    return unless location = booking.transaction.listing.location
+    destination = location.address
     guest = booking.transaction.starter
 
     transport_needed = guest.
