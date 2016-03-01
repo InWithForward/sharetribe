@@ -17,9 +17,6 @@
 
 class CustomFieldValue < ActiveRecord::Base
 
-  after_save :set_customizable_delta_flag
-  after_destroy :set_customizable_delta_flag
-
   has_paper_trail(
     meta: { customizable_id: :customizable_id, customizable_type: :customizable_type },
     on: [:destroy],
@@ -35,12 +32,4 @@ class CustomFieldValue < ActiveRecord::Base
 
   default_scope includes(:question).order("custom_fields.sort_priority")
 
-  private
-
-  def set_customizable_delta_flag
-    return unless customizable
-
-    customizable.delta = true
-    customizable.save
-  end
 end
