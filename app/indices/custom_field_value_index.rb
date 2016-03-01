@@ -1,4 +1,4 @@
-ThinkingSphinx::Index.define :custom_field_value, :with => :active_record, :delta => ThinkingSphinx::Deltas::DelayedDelta do
+ThinkingSphinx::Index.define :custom_field_value, :with => :active_record do
 
   #Thinking Sphinx will automatically add the SQL command SET NAMES utf8 as
   # part of the indexing process if the database connection settings have

@@ -38,7 +38,7 @@ gem "will_paginate"
 gem 'dalli'
 gem "memcachier"
 gem 'kgio', "~>2.8.0"
-gem 'thinking-sphinx', '~> 3.1.1'
+gem 'thinking-sphinx', '~> 3.1.4'
 gem 'flying-sphinx', "~>1.2.0"
 # Use patched v2.0.2
 # Fixes issues: Create a new delayed delta job if there is an existing delta job which has failed

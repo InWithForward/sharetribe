@@ -1,4 +1,4 @@
-ThinkingSphinx::Index.define :listing, :with => :active_record, :delta => ThinkingSphinx::Deltas::DelayedDelta do
+ThinkingSphinx::Index.define :listing, :with => :active_record do
 
   #Thinking Sphinx will automatically add the SQL command SET NAMES utf8 as
   # part of the indexing process if the database connection settings have
@@ -30,6 +30,7 @@ ThinkingSphinx::Index.define :listing, :with => :active_record, :delta => Thinki
   has custom_checkbox_field_values.selected_options.id, :as => :custom_checkbox_field_options, :type => :integer, :multi => true
 
   set_property :enable_star => true
+  set_property group_concat_max_len: 8192
 
   set_property :field_weights => {
     :title       => 10,
