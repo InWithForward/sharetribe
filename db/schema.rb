@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160222231522) do
+ActiveRecord::Schema.define(:version => 20160302171553) do
 
   create_table "auth_tokens", :force => true do |t|
     t.string   "token"
@@ -859,6 +859,20 @@ ActiveRecord::Schema.define(:version => 20160222231522) do
 
   add_index "people_roles", ["person_id"], :name => "index_people_roles_on_person_id"
   add_index "people_roles", ["role_id"], :name => "index_people_roles_on_role_id"
+
+  create_table "person_images", :force => true do |t|
+    t.string   "person_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.boolean  "image_downloaded"
+    t.boolean  "image_processing"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "prospect_emails", :force => true do |t|
     t.string   "email"

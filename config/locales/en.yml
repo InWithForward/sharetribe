@@ -2028,6 +2028,8 @@ en:
       url: "URL"
     experience_fields:
       body: 'Description'
+    image_fields:
+      image: "Images"
     save_information: "Save information"
   shipping_address:
     shipping_address: "Shipping address"

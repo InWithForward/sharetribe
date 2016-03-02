@@ -67,4 +67,6 @@
         = form.fields_for :experiences do |f|
           = render('experience_fields', :f => f)
 
+    = render('image_fields', :form => form)
+
     = form.button t("settings.save_information"), :class => "send_button"

@@ -5,9 +5,19 @@
   %h1
     %span.profile-title= @person.name(@current_community) + (@community_customization && @community_customization.storefront_label ? @community_customization.storefront_label : "")
 
+%script{type: "text/template", class: "template", id: "image-frame-template"}
+  .listing-image-frame
+    #listing-image-link.listing-image-frame-content
+      .listing-image-vertical-centering{:class => "${aspectRatioClass}" }
+        %img{:src => "${url}", :alt => @person.name, :class => "listing-image ${aspectRatioClass}"}
+
+%script{type: "text/template", class: "template", id: "image-thumbnail-template"}
+  .listing-image-thumbnail-container
+    %img.listing-image-thumbnail{src: "${url}"}
+    .fade
+
 .row
   .col-8
-
     .row.relative
       .people-image-mobile
         = huge_avatar_thumb(@person)
@@ -31,6 +41,38 @@
         %h2.people-header
           = t(".experiences")
         = render(partial: "listed_experience", collection: @person.experiences, as: :experience)
+
+    - if @person.person_images.any?
+      - person_images = @person.person_images
+      .row
+        .col-12
+          - if person_images.all? { |image| image.image_ready? }
+            .listing-image-carousel
+              #listing-image-frame
+
+              - if @prev_image_id && @next_image_id
+                = link_to params.merge(image: @prev_image_id), class: "listing-image-navi listing-image-navi-left", id: "listing-image-navi-left" do
+                  .listing-image-navi-arrow-container
+                    .listing-image-arrow-icon-container.left
+                      = icon_tag("directleft", ["navigate-icon-fix", "listing-image-navi-arrow"])
+                = link_to params.merge(image: @next_image_id), class: "listing-image-navi listing-image-navi-right", id: "listing-image-navi-right" do
+                  .listing-image-navi-arrow-container
+                    .listing-image-arrow-icon-container.right
+                      = icon_tag("directright", ["navigate-icon-fix", "listing-image-navi-arrow"])
+            #thumbnail-stripe.listing-image-thumbnail-stripe
+
+            - content_for :extra_javascript do
+              :javascript
+                var personImages = #{person_images.map { |image| PersonImageJSAdapter.new(image) }.to_json }
+                var currentImage = #{params[:image].present? ? params[:image].to_i : person_images.first.id};
+                ST.listingImages(personImages, currentImage);
+          - else
+            .listing-image-text-container
+              .listing-image-frame
+                .listing-image-frame-content
+                  .listing-image-vertical-centering
+                    .listing-no-image
+                      = t("listings.show.processing_uploaded_image")
 
     .row
       %h2.people-header= "Badges"

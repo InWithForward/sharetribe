@@ -1,0 +1,28 @@
+= form.label :image, t('.image'), :class => "input"
+
+.listing-images#image-uploader-container
+  %script{type: "text/template", class: "template", id: "new-image-tmpl"}
+    #fileupload.fileinput-button.upload-image-placeholder
+      .fileupload-text-container
+        .fileupload-centered-text
+          .fileupload-text
+          .fileupload-small-text
+      %input.fileupload{type: "file", multiple: "multiple"}
+      %img.fileupload-preview-image
+      .fileupload-preview-remove-image
+        = icon_tag("cross", ["icon-fix"])
+      %input.person-image-id{type: "hidden", name: "person_images[][id]"}
+
+= js_t ["listings.form.images.processing", "listings.form.images.this_may_take_a_while", "listings.form.images.percentage_loaded", "listings.form.images.uploading_failed", "listings.form.images.file_too_large", "listings.form.images.accepted_formats", "listings.form.images.loading_image", "listings.form.images.select_file", "listings.form.images.removing"], false
+
+- content_for :image_uploader_js do
+  :javascript
+    $(function() {
+      var opts = #{PersonImageS3OptionsJSAdapter.new(@person).to_json}
+      var personsImages = #{ @person.person_images.map { |image| PersonImageJSAdapter.new(image) }.to_json }
+
+      ST.imageUploader(personsImages, opts);
+    });
+
+- content_for :extra_javascript do
+  = yield :image_uploader_js

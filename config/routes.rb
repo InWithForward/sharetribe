@@ -246,6 +246,16 @@ Kassi::Application.routes.draw do
       end
     end
 
+    resources :person_images do
+      member do
+        get :image_status
+      end
+      collection do
+        post :add_from_file
+        put :add_from_url
+      end
+    end
+
     resources :infos do
       collection do
         get :about
@@ -313,6 +323,12 @@ Kassi::Application.routes.draw do
             put :close
             put :move_to_top
             put :show_in_updates_email
+          end
+        end
+        resources :person_images do
+          collection do
+            post :add_from_file
+            put :add_from_url
           end
         end
         resources :person_messages

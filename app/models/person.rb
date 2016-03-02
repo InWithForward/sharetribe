@@ -128,6 +128,8 @@ class Person < ActiveRecord::Base
 
   accepts_nested_attributes_for :experiences, :reject_if => :all_blank, :allow_destroy => true
 
+  has_many :person_images, :dependent => :destroy
+
   def to_param
     username
   end

@@ -1,6 +1,6 @@
-class ListingImageS3OptionsJSAdapter < JSAdapter
+class PersonImageS3OptionsJSAdapter < JSAdapter
 
-  def initialize(listing)
+  def initialize(person)
     s3uploader = S3Uploader.new
 
     if ApplicationHelper.use_upload_s3?
@@ -8,12 +8,12 @@ class ListingImageS3OptionsJSAdapter < JSAdapter
       @s3_fields = s3uploader.fields
     end
 
-    @save_from_file = listing.new_record? ? add_from_file_listing_images_path : add_from_file_listing_listing_images_path(listing.id)
-    @save_from_url = listing.new_record? ? add_from_url_listing_images_path : add_from_url_listing_listing_images_path(listing.id)
+    @save_from_file = person.new_record? ? add_from_file_person_images_path : add_from_file_person_person_images_path(person.id)
+    @save_from_url = person.new_record? ? add_from_url_person_images_path : add_from_url_person_person_images_path(person.id)
     @max_image_filesize = APP_CONFIG.max_image_filesize
     @original_image_width = APP_CONFIG.original_image_width
     @original_image_height = APP_CONFIG.original_image_height
-    @namespace = 'listing_image'
+    @namespace = 'person_image'
   end
 
   def to_hash

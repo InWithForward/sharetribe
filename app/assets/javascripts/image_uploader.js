@@ -172,7 +172,7 @@ window.ST.imageUploader = function(listings, opts) {
 
   function renderLocalUploader() {
     var localOptions = {
-      paramName: "listing_image[image]",
+      paramName: (opts.namespace + "[image]"),
       url: opts.saveFromFile,
       submit: function(e, data) {
         data.formData = { "Content-Type": ST.utils.contentTypeByFilename(data.files[0].name) };
