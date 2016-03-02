@@ -7,14 +7,7 @@ ThinkingSphinx::Index.define :listing, :with => :active_record do
   set_property :utf8? => true
 
   # limit to open listings
-  where "
-    open = '1'
-    AND deleted = '0'
-    AND (valid_until IS NULL OR valid_until > now())
-    AND availabilities.date IS NOT NULL
-    AND availabilities.date >= CURDATE()
-    AND availabilities.date <= (CURDATE() + INTERVAL 14 DAY)
-  "
+  where "open = '1' AND deleted = '0' AND (valid_until IS NULL OR valid_until > now()) AND availabilities.date IS NOT NULL AND availabilities.date >= CURDATE() AND availabilities.date <= (CURDATE() + INTERVAL 14 DAY)"
 
   # fields
   indexes title
