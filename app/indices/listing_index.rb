@@ -7,7 +7,7 @@ ThinkingSphinx::Index.define :listing, :with => :active_record do
   set_property :utf8? => true
 
   # limit to open listings
-  where "open = '1' AND deleted = '0' AND (valid_until IS NULL OR valid_until > now()) AND availabilities.date IS NOT NULL AND availabilities.date >= CURDATE() AND availabilities.date <= (CURDATE() + INTERVAL 14 DAY)"
+  where "open = '1' AND deleted = '0' AND (valid_until IS NULL OR valid_until > now())"
 
   # fields
   indexes title
@@ -29,7 +29,7 @@ ThinkingSphinx::Index.define :listing, :with => :active_record do
   has custom_dropdown_field_values.selected_options.id, :as => :custom_dropdown_field_options, :type => :integer, :multi => true
   has custom_checkbox_field_values.selected_options.id, :as => :custom_checkbox_field_options, :type => :integer, :multi => true
 
-  join availabilities
+  join upcoming_availabilities
   has "GROUP_CONCAT(DISTINCT (DAYOFWEEK(availabilities.date) - 1) SEPARATOR ',')", as: :availabilities_dow, type: :integer, multi: true
 
   set_property :enable_star => true

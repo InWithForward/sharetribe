@@ -71,6 +71,7 @@ class Listing < ActiveRecord::Base
 
   has_many :transactions
   has_many :availabilities, :dependent => :destroy
+  has_many :upcoming_availabilities, class_name: 'Availability', conditions: ['date IS NOT NULL AND date >= CURDATE() AND date <= (CURDATE() + INTERVAL 14 DAY)']
   has_many :conversations
   has_many :comments, :dependent => :destroy
   has_many :custom_field_values, as: :customizable, dependent: :destroy
