@@ -269,6 +269,7 @@ class Listing < ActiveRecord::Base
       with[:transaction_type_id] = params[:transaction_types][:id] if params[:transaction_types].present?
       with[:listing_id] = params[:listing_id] if params[:listing_id].present?
       with[:price_cents] = params[:price_cents] if params[:price_cents].present?
+      with[:availabilities_dow] = params[:availabilities_dow] if params[:availabilities_dow].present?
 
       params[:custom_dropdown_field_options] ||= [] # use emtpy table rather than nil to avoid confused sphinx
 
@@ -328,7 +329,7 @@ class Listing < ActiveRecord::Base
   end
 
   def self.search_with_sphinx?(params)
-    params[:search].present? || params[:transaction_types].present? || params[:category].present? || params[:custom_dropdown_field_options].present?  || params[:custom_checkbox_field_options].present? || params[:price_cents].present?
+    params[:search].present? || params[:transaction_types].present? || params[:category].present? || params[:custom_dropdown_field_options].present?  || params[:custom_checkbox_field_options].present? || params[:price_cents].present? || params[:availabilities_dow].present?
   end
 
   def self.find_by_category_and_subcategory(category)

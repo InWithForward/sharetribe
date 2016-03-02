@@ -1,0 +1,13 @@
+.row
+  .col-12
+    .custom-filter-title
+      = "Day"
+    .custom-filter-options
+      - field_options = Hash[Date::DAYNAMES.each_with_index.map { |day, i| [i, day] }]
+      - field_options.each do |key, value|
+        .custom-filter-checkbox-container
+          %label.custom-filter-checkbox-label
+            - param_name = "dow_#{key}"
+            = check_box_tag param_name, key, params[param_name]
+            %span.custom-filter-checkbox-label-text
+              = value

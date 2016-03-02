@@ -7,14 +7,6 @@ class HomepageController < ApplicationController
   VIEW_TYPES = ["grid", "list", "map"]
 
   def index
-    ## Support old /?map=true URL START
-    ## This can be removed after March 2014
-    if !params[:view] && params[:map] == "true" then
-      redirect_params = params.except(:map).merge({view: "map"})
-      redirect_to url_for(redirect_params), status: :moved_permanently
-    end
-    ## Support old /?map=true URL END
-
     @homepage = true
 
     @view_type = HomepageController.selected_view_type(params[:view], @current_community.default_browse_view, APP_DEFAULT_VIEW_TYPE, VIEW_TYPES)
@@ -28,7 +20,7 @@ class HomepageController < ApplicationController
     @transaction_type_menu_enabled = @transaction_types.size > 1
     @show_categories = @current_community.categories.size > 1
     filters_enabled = @current_community.custom_fields.size > 0 || @current_community.show_price_filter
-    @show_custom_fields = @current_community.custom_fields.select { |field| field.can_filter? }.present?
+    @show_custom_fields = false # @current_community.custom_fields.select { |field| field.can_filter? }.present?
     @category_menu_enabled = @show_categories || @show_custom_fields || filters_enabled
 
     @app_store_badge_filename = "/assets/Available_on_the_App_Store_Badge_en_135x40.svg"
@@ -92,6 +84,9 @@ class HomepageController < ApplicationController
     filter_params[:include] = [:listing_images, :author, :category, :transaction_type]
     filter_params[:custom_dropdown_field_options] = HomepageController.dropdown_field_options_for_search(params)
     filter_params[:custom_checkbox_field_options] = HomepageController.checkbox_field_options_for_search(params)
+
+    selected_dow = HashUtils.select_by_key_regexp(params, /^dow/)
+    filter_params[:availabilities_dow] = selected_dow.values.map(&:to_i) if selected_dow
 
     filter_params[:price_cents] = filter_range(params[:price_min], params[:price_max])
 
