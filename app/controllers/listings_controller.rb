@@ -238,7 +238,8 @@ class ListingsController < ApplicationController
     params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
     params[:listing] = normalize_price_param(params[:listing])
 
-    @listing.availabilities.delete_all
+    @listing.availabilities.delete_all if params[:listing][:availabilities_attributes].any?
+
     if @listing.update_fields(create_listing_params(params[:listing]))
       @listing.location.update_attributes(params[:location]) if @listing.location
       flash[:notice] = t("layouts.notifications.listing_updated_successfully")
