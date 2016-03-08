@@ -9,7 +9,7 @@ class Admin::CommunityPeopleController < ApplicationController
 
   def update
     if params[:custom_fields]
-      @person.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+      FieldValueCreator.call(params[:custom_fields], @person)
     end
 
     if @person.update_attributes(params[:person])

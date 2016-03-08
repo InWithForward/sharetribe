@@ -132,6 +132,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-nav'
   gem 'pry-stack_explorer'
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 gem 'strong_parameters'

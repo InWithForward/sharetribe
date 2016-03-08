@@ -176,7 +176,7 @@ class PeopleController < Devise::RegistrationsController
   def update
     if params[:custom_fields]
       old_about_me_value = about_me_value @person
-      @person.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+      FieldValueCreator.call(params[:custom_fields], @person)
       new_about_me_value = about_me_value @person
     end
 

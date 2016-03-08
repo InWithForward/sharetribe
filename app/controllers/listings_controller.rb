@@ -180,7 +180,7 @@ class ListingsController < ApplicationController
     @listing = Listing.new(create_listing_params(params[:listing]))
 
     @listing.author = @current_user
-    @listing.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+    FieldValueCreator.call(params[:custom_fields], @listing)
 
     if @listing.save
       Delayed::Job.enqueue(
@@ -233,7 +233,7 @@ class ListingsController < ApplicationController
 
     params[:listing][:sub_listings_attributes] ||= {}
 
-    @listing.custom_field_values = FieldValueCreator.call(params[:custom_fields])
+    FieldValueCreator.call(params[:custom_fields], @listing)
 
     params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
     params[:listing] = normalize_price_param(params[:listing])

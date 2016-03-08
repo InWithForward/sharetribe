@@ -18,12 +18,14 @@
 class CustomFieldValue < ActiveRecord::Base
 
   has_paper_trail(
-    meta: { customizable_id: :customizable_id, customizable_type: :customizable_type },
-    on: [:destroy],
+    meta: {
+      customizable_id: :customizable_id,
+      customizable_type: :customizable_type
+    },
     if: Proc.new { |t| t.customizable_type == 'Person' }
   )
 
-  attr_accessible :type
+  attr_accessible :type, :customizable_type, :customizable_id, :customizable
 
   belongs_to :customizable, polymorphic: true 
   belongs_to :question, :class_name => "CustomField", :foreign_key => "custom_field_id"
