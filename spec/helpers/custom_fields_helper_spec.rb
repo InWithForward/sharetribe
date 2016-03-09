@@ -27,6 +27,16 @@ describe CustomFieldsHelper do
       it 'has the custom field' do
         expect(subject).to eql({key.to_sym => value})
       end
+
+      context 'when no options' do
+        before do
+          custom_field_value.selected_options = []
+        end
+
+        it 'does not have the custom field' do
+          expect(subject).to eql({key.to_sym => nil})
+        end
+      end
     end
 
     context 'when DateField' do

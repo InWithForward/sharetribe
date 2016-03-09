@@ -1,4 +1,5 @@
 module CustomFieldsHelper
+  module_function
 
   def custom_fields_hash(listing)
     custom_fields = listing.category.custom_fields.map do |field|
@@ -6,7 +7,7 @@ module CustomFieldsHelper
 
       text = case value.try(:type)
       when "DropdownFieldValue"
-        value.selected_options.first.title(I18n.locale)
+        value.selected_option_title(I18n.locale)
       when "DateFieldValue"
         I18n.l(value.date_value, format: :short_date)
       when "CheckboxFieldValue", "DropdownFieldValue"

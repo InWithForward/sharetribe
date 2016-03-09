@@ -17,4 +17,8 @@
 
 class DropdownFieldValue < OptionFieldValue
   validates_length_of :custom_field_option_selections, :is => 1
+
+  def selected_option_title(locale)
+    selected_options.try(:first).try(:title, locale)
+  end
 end
