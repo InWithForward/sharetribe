@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SmsController, type: :controller do
-  describe "#accept" do
+  describe "#accept_free_booking" do
     let(:community) { FactoryGirl.create(:community) }
 
     let!(:person) do
@@ -40,20 +40,32 @@ describe SmsController, type: :controller do
     end
 
     it "books the passed in time" do
-      post :accept, { 'Body' => "#{transaction.id}-#{bookings[0].id}", 'From' => '+15555555555' }
+      post :accept_free_booking, { 'Body' => "#{transaction.id}-#{bookings[0].id}", 'From' => '+15555555555' }
       expect(response.status).to eql(200)
       expect(bookings[0].reload).to be_confirmed
     end
 
     it "books rebooks if 0" do
-      post :accept, { 'Body' => "#{transaction.id}-0", 'From' => '+15555555555' }
+      post :accept_free_booking, { 'Body' => "#{transaction.id}-0", 'From' => '+15555555555' }
       expect(response.status).to eql(200)
       expect(transaction.reload.status).to eql("canceled")
     end
 
     it 'ignores request from different number' do
-      post :accept, { 'Body' => "#{transaction.id}-0", 'From' => '6042890319' }
+      post :accept_free_booking, { 'Body' => "#{transaction.id}-0", 'From' => '6042890319' }
       expect(response.status).to eql(404)
+    end
+
+    it 'handles unknown responses' do
+      expect(SmsJob).to receive(:new).with(
+        to: '+15555555555',
+        body: I18n.t('sms.unparsable_response')
+      ).and_return(
+        double(perform: nil)
+      )
+
+      post :accept_free_booking, { 'Body' => "Great, I'll go with Sunday at 10:00AM", 'From' => '+15555555555' }
+      expect(response.status).to eql(200)
     end
   end
 end
