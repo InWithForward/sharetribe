@@ -14,9 +14,9 @@ class ConfirmConversationsController < ApplicationController
       return redirect_to person_transaction_path(person_id: @current_user.id, message_id: @listing_transaction.id)
     end
 
-    conversation =      MarketplaceService::Conversation::Query.conversation_for_person(@listing_transaction.conversation.id, @current_user.id, @current_community.id)
-    can_be_confirmed =  MarketplaceService::Transaction::Query.can_transition_to?(@listing_transaction, :confirmed)
-    other_person =      query_person_entity(@listing_transaction.other_party(@current_user).id)
+    conversation = MarketplaceService::Conversation::Query.conversation_for_person(@listing_transaction.conversation.id, @current_user.id, @current_community.id)
+    can_be_confirmed = MarketplaceService::Transaction::Query.can_transition_to?(@listing_transaction, :confirmed)
+    other_person = query_person_entity(@listing_transaction.other_party(@current_user).id)
 
     render(locals: {
       action_type: "confirm",
@@ -34,9 +34,9 @@ class ConfirmConversationsController < ApplicationController
       return redirect_to person_transaction_path(person_id: @current_user.id, message_id: @listing_transaction.id)
     end
 
-    conversation =      MarketplaceService::Conversation::Query.conversation_for_person(@listing_transaction.conversation.id, @current_user.id, @current_community.id)
-    can_be_confirmed =  MarketplaceService::Transaction::Query.can_transition_to?(@listing_transaction.id, :confirmed)
-    other_person =      query_person_entity(@listing_transaction.other_party(@current_user).id)
+    conversation = MarketplaceService::Conversation::Query.conversation_for_person(@listing_transaction.conversation.id, @current_user.id, @current_community.id)
+    can_be_confirmed = MarketplaceService::Transaction::Query.can_transition_to?(@listing_transaction.id, :confirmed)
+    other_person = query_person_entity(@listing_transaction.other_party(@current_user).id)
 
     render(:confirm, locals: {
       action_type: "cancel",
@@ -60,7 +60,7 @@ class ConfirmConversationsController < ApplicationController
 
 
     msg, sender_id = parse_message_param()
-    transaction = complete_or_cancel_tx(@current_community.id, @listing_transaction.id, status, msg, sender_id)
+    transaction = complete_or_cancel_tx(@current_community.id, @listing_transaction, status, msg, sender_id)
 
     give_feedback = Maybe(params)[:give_feedback].select { |v| v == "true" }.or_else { false }
 
@@ -82,17 +82,21 @@ class ConfirmConversationsController < ApplicationController
   private
 
 
-  def complete_or_cancel_tx(community_id, tx_id, status, msg, sender_id)
+  def complete_or_cancel_tx(community_id, transaction, status, msg, sender_id)
     if status == :confirmed
-      TransactionService::Transaction.complete(community_id: community_id, transaction_id: tx_id, message: msg, sender_id: sender_id)
+      TransactionService::Transaction.complete(community_id: community_id, transaction_id: transaction.id, message: msg, sender_id: sender_id)
     else
-      TransactionService::Transaction.cancel(community_id: community_id, transaction_id: tx_id, message: msg, sender_id: sender_id)
+      TransactionMailer.delay.canceled_booking_to_admin(@current_user, @current_community, transaction)
+      TransactionService::Transaction.cancel(community_id: community_id, transaction_id: transaction.id, message: msg, sender_id: sender_id)
     end
   end
 
   def parse_message_param
     if(params[:message])
-      message = MessageForm.new(params[:message].merge({ sender_id: @current_user.id, conversation_id: @listing_transaction.conversation.id }))
+      message = MessageForm.new(params[:message].merge( {
+        sender_id: @current_user.id, conversation_id: @listing_transaction.conversation.id
+      }))
+
       if(message.valid?)
         [message.content, message.sender_id]
       end

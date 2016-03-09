@@ -2,7 +2,7 @@ module FieldValueCreator
   module_function
 
   def call(custom_field_params, customizable = nil)
-    custom_field_params ||= {}
+    custom_field_params ||= { }
 
     mapped_values = custom_field_params.map do |custom_field_id, answer_value|
       custom_field_value_factory(custom_field_id, answer_value, customizable)
@@ -19,6 +19,7 @@ module FieldValueCreator
       customizable_id: customizable.id,
       custom_field_id: custom_field_id
     }
+
     answer = question.with_type do |question_type|
       case question_type
       when :dropdown
@@ -26,9 +27,7 @@ module FieldValueCreator
         answer = first_or_initialize(DropdownFieldValue, args)
 
         answer.custom_field_option_selections = [
-          CustomFieldOptionSelection.new(
-            :custom_field_option_id => answer_value
-          )
+          CustomFieldOptionSelection.new(:custom_field_option_id => answer_value)
         ]
 
         answer
@@ -65,7 +64,7 @@ module FieldValueCreator
             :custom_field_option_id => value
           )
         end
-        
+
         answer
       when :date_field
         answer = first_or_initialize(DateFieldValue, args)
@@ -81,12 +80,16 @@ module FieldValueCreator
     answer.question = question
     answer.save
     Rails.logger.info "Errors: #{answer.errors.full_messages.inspect}"
+
     return answer
   end
 
   def is_answer_value_blank(value)
     if value.kind_of?(Hash)
-      value.map { |k, v| v.blank? }.include?(true)
+      value.map { |k, v|
+        v.blank?
+      }.include?(true)
+
     else
       value.blank?
     end

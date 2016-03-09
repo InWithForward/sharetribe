@@ -43,7 +43,7 @@ class TransactionMailer < ActionMailer::Base
             transaction: transaction
           }
         }
-    end
+      end
   end
 
   def transaction_preauthorized(transaction)
@@ -60,12 +60,12 @@ class TransactionMailer < ActionMailer::Base
         @recipient,
         @community,
         t("emails.transaction_preauthorized.subject", requester: @transaction.starter.name, listing_title: @transaction.listing.title))) do |format|
-      format.html {
-        render locals: {
-          payment_expires_in_days: gateway_expires
-        }
-      }
-    end
+          format.html {
+            render locals: {
+              payment_expires_in_days: gateway_expires
+            }
+          }
+        end
   end
 
   def transaction_preauthorized_reminder(transaction)
@@ -88,44 +88,50 @@ class TransactionMailer < ActionMailer::Base
     you_get = payment.seller_gets
 
     premailer_mail(:to => payment.recipient.confirmed_notification_emails_to,
-         :from => community_specific_sender(community),
-         :subject => t("emails.new_payment.new_payment")) { |format|
-      format.html {
-        render "braintree_payment_receipt_to_seller", locals: {
-          conversation_url: person_transaction_url(payment.recipient, @url_params.merge({:id => payment.transaction.id.to_s})),
-          listing_title: payment.transaction.listing.title,
-          payment_total: humanized_money_with_symbol(payment.total_sum),
-          payment_service_fee: humanized_money_with_symbol(-service_fee),
-          payment_seller_gets: humanized_money_with_symbol(you_get),
-          payer_full_name: payment.payer.name(community),
-          payer_given_name: payment.payer.given_name_or_username,
-          automatic_confirmation_days: payment.transaction.automatic_confirmation_after_days,
-          show_money_will_be_transferred_note: true
-        }
-      }
-    }
+                   :from => community_specific_sender(community),
+                   :subject => t("emails.new_payment.new_payment")) { |format|
+                     format.html {
+                       render "braintree_payment_receipt_to_seller", locals: {
+                         conversation_url: person_transaction_url(payment.recipient, @url_params.merge( {
+                           :id => payment.transaction.id.to_s
+                         })),
+
+                         listing_title: payment.transaction.listing.title,
+                         payment_total: humanized_money_with_symbol(payment.total_sum),
+                         payment_service_fee: humanized_money_with_symbol(-service_fee),
+                         payment_seller_gets: humanized_money_with_symbol(you_get),
+                         payer_full_name: payment.payer.name(community),
+                         payer_given_name: payment.payer.given_name_or_username,
+                         automatic_confirmation_days: payment.transaction.automatic_confirmation_after_days,
+                         show_money_will_be_transferred_note: true
+                       }
+                     }
+                   }
   end
 
   def braintree_receipt_to_payer(payment, community)
     prepare_template(community, payment.payer, "email_about_new_payments")
 
     premailer_mail(:to => payment.payer.confirmed_notification_emails_to,
-         :from => community_specific_sender(community),
-         :subject => t("emails.receipt_to_payer.receipt_of_payment")) { |format|
-      format.html {
-        render "payment_receipt_to_buyer", locals: {
-          conversation_url: person_transaction_url(payment.payer, @url_params.merge({:id => payment.transaction.id.to_s})),
-          listing_title: payment.transaction.listing.title,
-          payment_total: humanized_money_with_symbol(payment.total_sum),
-          subtotal: humanized_money_with_symbol(payment.total_sum),
-          shipping_total: nil,
-          recipient_full_name: payment.recipient.name(community),
-          recipient_given_name: payment.recipient.given_name_or_username,
-          automatic_confirmation_days: payment.transaction.automatic_confirmation_after_days,
-          show_money_will_be_transferred_note: true
-        }
-      }
-    }
+                   :from => community_specific_sender(community),
+                   :subject => t("emails.receipt_to_payer.receipt_of_payment")) { |format|
+                     format.html {
+                       render "payment_receipt_to_buyer", locals: {
+                         conversation_url: person_transaction_url(payment.payer, @url_params.merge( {
+                           :id => payment.transaction.id.to_s
+                         })),
+
+                         listing_title: payment.transaction.listing.title,
+                         payment_total: humanized_money_with_symbol(payment.total_sum),
+                         subtotal: humanized_money_with_symbol(payment.total_sum),
+                         shipping_total: nil,
+                         recipient_full_name: payment.recipient.name(community),
+                         recipient_given_name: payment.recipient.given_name_or_username,
+                         automatic_confirmation_days: payment.transaction.automatic_confirmation_after_days,
+                         show_money_will_be_transferred_note: true
+                       }
+                     }
+                   }
   end
 
   # seller_model, buyer_model and community can be passed as params for testing purposes
@@ -143,23 +149,23 @@ class TransactionMailer < ActionMailer::Base
     you_get = payment_total - service_fee - gateway_fee
 
     premailer_mail(:to => seller_model.confirmed_notification_emails_to,
-         :from => community_specific_sender(community),
-         :subject => t("emails.new_payment.new_payment")) do |format|
-      format.html {
-        render "paypal_payment_receipt_to_seller", locals: {
-          conversation_url: person_transaction_url(seller_model, @url_params.merge(id: transaction[:id])),
-          listing_title: transaction[:listing_title],
-          subtotal: humanized_money_with_symbol(transaction[:item_total]),
-          payment_total: humanized_money_with_symbol(payment_total),
-          shipping_total: humanized_money_with_symbol(transaction[:shipping_price]),
-          payment_service_fee: humanized_money_with_symbol(-service_fee),
-          paypal_gateway_fee: humanized_money_with_symbol(-gateway_fee),
-          payment_seller_gets: humanized_money_with_symbol(you_get),
-          payer_full_name: buyer_model.name(community),
-          payer_given_name: buyer_model.given_name_or_username,
-        }
-      }
-    end
+                   :from => community_specific_sender(community),
+                   :subject => t("emails.new_payment.new_payment")) do |format|
+                     format.html {
+                       render "paypal_payment_receipt_to_seller", locals: {
+                         conversation_url: person_transaction_url(seller_model, @url_params.merge(id: transaction[:id])),
+                         listing_title: transaction[:listing_title],
+                         subtotal: humanized_money_with_symbol(transaction[:item_total]),
+                         payment_total: humanized_money_with_symbol(payment_total),
+                         shipping_total: humanized_money_with_symbol(transaction[:shipping_price]),
+                         payment_service_fee: humanized_money_with_symbol(-service_fee),
+                         paypal_gateway_fee: humanized_money_with_symbol(-gateway_fee),
+                         payment_seller_gets: humanized_money_with_symbol(you_get),
+                         payer_full_name: buyer_model.name(community),
+                         payer_given_name: buyer_model.given_name_or_username,
+                       }
+                     }
+                   end
   end
 
   # seller_model, buyer_model and community can be passed as params for testing purposes
@@ -171,36 +177,53 @@ class TransactionMailer < ActionMailer::Base
     prepare_template(community, buyer_model, "email_about_new_payments")
 
     premailer_mail(:to => buyer_model.confirmed_notification_emails_to,
-         :from => community_specific_sender(community),
-         :subject => t("emails.receipt_to_payer.receipt_of_payment")) { |format|
-      format.html {
-        render "payment_receipt_to_buyer", locals: {
-          conversation_url: person_transaction_url(buyer_model, @url_params.merge({:id => transaction[:id]})),
-          listing_title: transaction[:listing_title],
-          subtotal: humanized_money_with_symbol(transaction[:item_total]),
-          shipping_total: humanized_money_with_symbol(transaction[:shipping_price]),
-          payment_total: humanized_money_with_symbol(transaction[:payment_total]),
-          recipient_full_name: seller_model.name(community),
-          recipient_given_name: seller_model.given_name_or_username,
-          automatic_confirmation_days: nil,
-          show_money_will_be_transferred_note: false
-        }
-      }
-    }
+                   :from => community_specific_sender(community),
+                   :subject => t("emails.receipt_to_payer.receipt_of_payment")) { |format|
+                     format.html {
+                       render "payment_receipt_to_buyer", locals: {
+                         conversation_url: person_transaction_url(buyer_model, @url_params.merge( {
+                           :id => transaction[:id]
+                         })),
+
+                         listing_title: transaction[:listing_title],
+                         subtotal: humanized_money_with_symbol(transaction[:item_total]),
+                         shipping_total: humanized_money_with_symbol(transaction[:shipping_price]),
+                         payment_total: humanized_money_with_symbol(transaction[:payment_total]),
+                         recipient_full_name: seller_model.name(community),
+                         recipient_given_name: seller_model.given_name_or_username,
+                         automatic_confirmation_days: nil,
+                         show_money_will_be_transferred_note: false
+                       }
+                     }
+                   }
   end
 
-  def canceled_booking_to_admin(person, community, reason)
+  def rejected_booking_to_admin(person, community, reason)
     premailer_mail(:to => community.admin_emails,
-         :from => community_specific_sender(community),
-         :subject => "Canceled Booking") { |format|
-      format.html {
-        render "canceled_booking_to_admin", locals: {
-          person: person,
-          community: community,
-          reason: reason,
-        }
-      }
-    }
+                   :from => community_specific_sender(community),
+                   :subject => "Rejected Booking") { |format|
+                     format.html {
+                       render "rejected_booking_to_admin", locals: {
+                         person: person,
+                         community: community,
+                         reason: reason,
+                       }
+                     }
+                   }
+  end
+
+  def canceled_booking_to_admin(person, community, transaction)
+    premailer_mail(:to => community.admin_emails,
+                   :from => community_specific_sender(community),
+                   :subject => "Canceled Booking") { |format|
+                     format.html {
+                       render "canceled_booking_to_admin", locals: {
+                         person: person,
+                         community: community,
+                         transaction: transaction
+                       }
+                     }
+                   }
   end
 
   def rebook_to_requester(transaction, community = nil)
@@ -208,16 +231,16 @@ class TransactionMailer < ActionMailer::Base
 
     recipient = transaction.requester
     premailer_mail(:to => recipient.confirmed_notification_emails_to,
-          :from => community_specific_sender(community),
-          :subject => t("emails.rebook_to_requester.subject")) { |format|
-      format.html {
-        render "rebook_to_requester", locals: {
-          transaction: transaction,
-          recipient: recipient,
-          community: community
-        }
-      }
-    }
+                   :from => community_specific_sender(community),
+                   :subject => t("emails.rebook_to_requester.subject")) { |format|
+                     format.html {
+                       render "rebook_to_requester", locals: {
+                         transaction: transaction,
+                         recipient: recipient,
+                         community: community
+                       }
+                     }
+                   }
   end
 
   def accept_booking_to_requester(transaction, community = nil)

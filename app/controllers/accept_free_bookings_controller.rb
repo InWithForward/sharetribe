@@ -21,7 +21,7 @@ class AcceptFreeBookingsController < ApplicationController
 
   def reject
     TransactionService::Process::FreeBooking.new.cancel(tx: @listing_conversation)
-    TransactionMailer.canceled_booking_to_admin(@current_user, @current_community, params[:conversation][:reason]).deliver
+    TransactionMailer.rejected_booking_to_admin(@current_user, @current_community, params[:conversation][:reason]).deliver
     redirect_to person_transaction_path(person_id: @current_user.id, id: @listing_conversation.id)
   end
 
