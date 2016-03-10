@@ -11,7 +11,7 @@ module Serializers
 
       text = case value.try(:type)
       when "DropdownFieldValue"
-        value.selected_options.first.title(I18n.locale)
+        value.selected_option_title(I18n.locale)
       when "DateFieldValue"
         value.date_value
       when "CheckboxFieldValue"
