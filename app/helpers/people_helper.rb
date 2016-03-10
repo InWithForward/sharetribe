@@ -13,10 +13,6 @@ module PeopleHelper
     end
   end
 
-  def persons_badges(person, per_page=6)
-    person.badges
-  end
-
   def grade_image_class(grade)
     "feedback_average_image_#{grade_number(grade).to_s}"
   end

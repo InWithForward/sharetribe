@@ -773,7 +773,7 @@ class Person < ActiveRecord::Base
       completed_listings = Listing.joins(:transactions).
         where(transactions: { starter_id: id, current_state: :confirmed })
 
-      badge_type.listings.preload(:sub_listings).select do |listing|
+      badge_type.listings.currently_open.preload(:sub_listings).select do |listing|
         listing.sub_listings.any? &&
           (listing.sub_listings.map(&:id) - completed_listings.map(&:id)).empty?
       end

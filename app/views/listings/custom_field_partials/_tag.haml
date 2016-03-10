@@ -1,4 +1,4 @@
 - question_name = custom_field_value.question.name(I18n.locale)
-%b= "#{question_name}:"
+%h2.people-header= "#{question_name}"
 - custom_field_value.text_value.split(",").each do |tag|
   %span.tag= tag

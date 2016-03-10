@@ -1,8 +1,9 @@
 @import "mixins/all";
 
 span.tag {
-  padding: 5px;
+  padding: 3px 8px 8px 8px;
   background: yellow;
-  margin: 3px;
+  margin: 0px 4px 4px 4px;
+  line-height: 40px;
 }
 

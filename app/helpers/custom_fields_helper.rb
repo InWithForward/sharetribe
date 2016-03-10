@@ -43,14 +43,22 @@ module CustomFieldsHelper
     options.collect { |option| [field_type_translation(option), option] }.insert(0, [t("admin.custom_fields.index.select_one"), nil])
   end
 
-  def goal_value_to_s(value)
+  def goal_value(value)
     prefix = "listings.form.custom_field_partials.goal"
 
     part_one = t("#{prefix}.part_one")
     part_two = t("#{prefix}.part_two")
     part_three = t("#{prefix}.part_three")
 
-    "#{part_one} #{value.time} #{part_two} #{value.action} #{value.activity} #{part_three} #{value.reason}"
+    [
+      content_tag(:span, part_one),
+      content_tag(:span, value.time, class: "user-entered"),
+      content_tag(:span, part_two),
+      content_tag(:span, value.action, class: "user-entered"),
+      content_tag(:span, value.activity, class: "user-entered"),
+      content_tag(:span, part_three),
+      content_tag(:span, value.reason, class: "user-entered")
+    ].join(" ").html_safe
   end
 
 end

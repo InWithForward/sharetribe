@@ -24,13 +24,28 @@
       .profile-action-buttons-mobile
         = render :partial => "profile_action_buttons"
 
-    - if @person.shape && !@person.shape.blank?
-      .row
-        %h2.people-header
-          = t(".shape")
-        = image_tag @person.shape.url(:original)
 
-    - @person.visible_custom_field_values(@current_user, @current_community).each do |custom_field_value|
+    - CustomFieldValueUtils.with(values: @custom_field_values, keys: ['profile_video']).each do |custom_field_value|
+      .row
+        .col-12
+          - custom_field_value.with_type do |question_type|
+            = render :partial => "listings/custom_field_partials/#{question_type}", :locals => { :custom_field_value => custom_field_value }
+
+    - CustomFieldValueUtils.with(values: @custom_field_values, keys: ['about_me']).each do |custom_field_value|
+      .row
+        .col-12
+          - custom_field_value.with_type do |question_type|
+            = render :partial => "listings/custom_field_partials/#{question_type}", :locals => { :custom_field_value => custom_field_value }
+
+    - if @current_community.testimonials_in_use && (testimonials = received_testimonials_for_person(@person, @current_user, @current_community)).any?
+      #people-testimonials.listing-main
+        .row
+          %h2.people-header
+            = t(".reviews")
+          #profile-testimonials-list
+            = render :partial => "testimonials", :locals => {:received_testimonials => testimonials, :limit => 100}
+
+    - CustomFieldValueUtils.without(values: @custom_field_values, keys: ['profile_video', 'interests', 'about_me']).each do |custom_field_value|
       .row
         .col-12
           - custom_field_value.with_type do |question_type|
@@ -74,54 +89,29 @@
                     .listing-no-image
                       = t("listings.show.processing_uploaded_image")
 
-    .row
-      %h2.people-header= "Badges"
-    #profile-listings-list
-      - limit = 6
-      - badges = persons_badges(@person, limit)
-      - if badges
-        = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: badges}
-
-    .row
-      %h2.people-header
-        - if @listings.count > 0
-          - if current_user?(@person) && params[:show_closed]
-            = pluralize(@listings.count, t(".listing"), t(".listings"))
-          - else
-            = pluralize(@listings.count, t(".open_listing"), t(".open_listings"))
-        - else
-          - if current_user?(@person) && params[:show_closed]
-            = t(".no_listings")
-          - else
-            = t(".no_open_listings")
-        %span.people-show-closed-link
-          - if current_user?(@person) || Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
-            - if params[:show_closed]
-              = link_to t("people.profile_listings.show_only_open"), person_path(@person)
+    - if @listings.any? || current_user?(@person) || Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
+      .row
+        %h2.people-header
+          - if @listings.any?
+            - if current_user?(@person) && params[:show_closed]
+              = pluralize(@listings.count, t(".listing"), t(".listings"))
             - else
-              = link_to t("people.profile_listings.show_also_closed"), person_path(@person, :show_closed => true)
+              = pluralize(@listings.count, t(".open_listing"), t(".open_listings"))
+          - else
+            - if current_user?(@person) && params[:show_closed]
+              = t(".no_listings")
+            - else
+              = t(".no_open_listings")
 
+          %span.people-show-closed-link
+            - if current_user?(@person) || Maybe(@current_user).has_admin_rights_in?(@current_community).or_else(false)
+              - if params[:show_closed]
+                = link_to t("people.profile_listings.show_only_open"), person_path(@person)
+              - else
+                = link_to t("people.profile_listings.show_also_closed"), person_path(@person, :show_closed => true)
     #profile-listings-list
       - limit = 6
       = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => limit, listings: persons_listings(@person, limit)}
-
-    - if @current_community.follow_in_use?
-      = render :partial => "followed_people", :locals => { :person => @person, :limit => 6 }
-      
-    - if @current_community.testimonials_in_use
-      - testimonials = received_testimonials_for_person(@person, @current_user, @current_community)
-
-      #people-testimonials.listing-main
-        .row
-          %h2.people-header
-            - if testimonials.any?
-              = t(".reviews")
-            - else
-              = t(".no_reviews")
-
-          - if testimonials.any?
-            #profile-testimonials-list
-              = render :partial => "testimonials", :locals => {:received_testimonials => testimonials, :limit => 100}
 
   .col-4
     .row
@@ -131,6 +121,29 @@
     .row
       .profile-action-buttons-desktop
         = render :partial => "profile_action_buttons"
+
+    .row
+      - CustomFieldValueUtils.with(values: @custom_field_values, keys: ['interests']).each do |custom_field_value|
+        - custom_field_value.with_type do |question_type|
+          = render :partial => "listings/custom_field_partials/#{question_type}", :locals => { :custom_field_value => custom_field_value }
+
+
+    - if !@person.shape.blank?
+      .row
+        %h2.people-header
+          = t(".shape")
+        = image_tag @person.shape.url(:original)
+
+    - if @person.badges.any?
+      .row
+        %h2.people-header= "Badges"
+      #profile-listings-list
+        = render :partial => 'listings/profile_listings', :locals => {:person => @person, :limit => 6, listings: @person.badges}
+
+    - if @current_community.follow_in_use?
+      = render :partial => "followed_people", :locals => { :person => @person, :limit => 6 }
+
+
 
 - content_for :extra_javascript do
   :javascript
