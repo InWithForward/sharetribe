@@ -27,7 +27,11 @@ class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id, :ty
           date: date,
           time: time,
           address: Maybe(listing.location).address.or_else { "" },
-          author_name: PersonViewUtils.person_display_name(transaction.author, community)
+          author_name: PersonViewUtils.person_display_name(transaction.author, community),
+          location_details: "",
+          bring_money: "",
+          what_else: "",
+          nearest_skytrain_station: ""
         }.merge(custom_fields)
       )
 
