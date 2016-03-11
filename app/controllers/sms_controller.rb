@@ -8,7 +8,7 @@ class SmsController < ActionController::Base
     transaction = Transaction.where(id: transaction_id).first
 
     unless transaction
-      Delayed::Job.enqueue(SmsJob.new(to: from, body: I18n.t("sms.unparsable_response")))
+      Delayed::Job.enqueue(SmsJob.new(from, nil, I18n.t("sms.unparsable_response")))
       render status: 200, nothing: true
       return
     end

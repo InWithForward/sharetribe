@@ -35,7 +35,7 @@ class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id, :ty
         }.merge(custom_fields)
       )
 
-      sms_job = SmsJob.new(to: number, body: body)
+      sms_job = SmsJob.new(number, nil, body)
       Delayed::Job.enqueue(sms_job)
     end
 
