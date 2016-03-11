@@ -169,7 +169,9 @@ class PersonMailer < ActionMailer::Base
       requester_name: @requester.name,
       profile_image_url: @requester.image.url(:thumb),
       profile_url: person_url(@requester, @url_params),
-      conversation_url: person_message_url(@recipient, @url_params.merge({:id => @transaction.id.to_s}))
+      conversation_url: person_message_url(@recipient, @url_params.merge({:id => @transaction.id.to_s})),
+      location_details: ""
+
     }.merge(custom_fields)
 
     subject = if type == :reminder
@@ -219,7 +221,11 @@ class PersonMailer < ActionMailer::Base
       author_name: @author.name,
       profile_image_url: @author.image.url(:thumb),
       latitude_longitude: latitude_longitude,
-      profile_url: person_url(@author, @url_params)
+      profile_url: person_url(@author, @url_params),
+      location_details: "",
+      bring_money: "",
+      what_else: "",
+      nearest_skytrain_station: ""
     }.merge(custom_fields)
 
     subject = if type == :reminder
