@@ -22,20 +22,28 @@ class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id, :ty
 
       custom_fields = CustomFieldsHelper.custom_fields_hash(listing)
 
-      body = I18n.t('sms.booking_reminder_to_requester', {
-          title: listing.title,
-          date: date,
-          time: time,
-          address: Maybe(listing.location).address.or_else { "" },
-          author_name: PersonViewUtils.person_display_name(transaction.author, community),
-          location_details: "",
-          bring_money: "",
-          what_else: "",
-          nearest_skytrain_station: ""
-        }.merge(custom_fields)
-      )
+      author_name = PersonViewUtils.person_display_name(transaction.author, community)
 
-      sms_job = SmsJob.new(number, nil, body)
+      message = "You’re going on the #{listing.title} experience on #{date} at #{time} with #{author_name}. "
+
+      if address = Maybe(listing.location).address.or_else { nil }
+        message << "The address: #{address}. "
+      end
+
+      if location_details = custom_fields[:location_details]
+        message << "The location details: #{location_details}. "
+      end
+
+      if nearest_skytrain_station = custom_fields[:nearest_skytrain_station]
+        message << "Nearest skytrain station: #{nearest_skytrain_station}. "
+      end
+
+      message << "Please bring: Your smart phone or iPod"
+      if what_else = custom_fields[:what_else]
+        message << ", #{what_else}."
+      end
+
+      sms_job = SmsJob.new(number, nil, message)
       Delayed::Job.enqueue(sms_job)
     end
 
