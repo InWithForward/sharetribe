@@ -8,14 +8,14 @@ class SmsController < ActionController::Base
     transaction = Transaction.where(id: transaction_id).first
 
     unless transaction
-      Delayed::Job.enqueue(SmsJob.new(from, nil, I18n.t("sms.unparsable_response")))
+      PersonMailer.delay.invalid_sms_response(from, body)
       render status: 200, nothing: true
       return
     end
 
     community = transaction.community
 
-    unless PhoneNumberMatcher.match?(transaction.author.phone_number, from)
+    unless PhoneNumberUtils.match?(transaction.author.phone_number, from)
       render status: 404, nothing: true
       return
     end

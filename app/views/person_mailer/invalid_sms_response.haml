@@ -1,0 +1,14 @@
+%tr
+  %td{:align => "left", :style => "padding-top: 15px;"}
+    %font{body_font}
+      = "The following message was recieved from #{number}:"
+= render :partial => "quote", :locals => { :quote => response }
+
+%tr
+  %td{:align => "left", :style => "padding-top: 15px;"}
+    %font{body_font}
+      - if person
+        = "This number belongs to #{person.username}"
+      - else
+        = "We couldn't find this number in the system"
+

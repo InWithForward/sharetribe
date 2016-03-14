@@ -1,4 +1,4 @@
-module PhoneNumberMatcher
+module PhoneNumberUtils
 
   module_function
 

@@ -202,6 +202,12 @@ class Person < ActiveRecord::Base
     set_default_preferences unless self.preferences
   end
 
+  before_validation do
+    if self.phone_number
+      self.phone_number = PhoneNumberUtils.clean(self.phone_number)
+    end
+  end
+
   # Creates a new email
   def email_attributes=(attributes)
     emails.build(attributes)

@@ -424,6 +424,26 @@ class PersonMailer < ActionMailer::Base
     end
   end
 
+  def invalid_sms_response(number, response)
+    community = Community.first
+    person = Person.where(
+      phone_number: PhoneNumberUtils.clean(number)
+    ).first
+
+    premailer_mail(
+      :to => community.admin_emails,
+      :from => community_specific_sender(community),
+      :subject => "SMS Response") { |format|
+        format.html {
+          render "invalid_sms_response", locals: {
+            response: response,
+            number: number,
+            person: person
+          }
+        }
+      }
+  end
+
   # Old layout
 
   def new_member_notification(person, community, email)
