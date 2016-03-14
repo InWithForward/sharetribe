@@ -3,7 +3,23 @@
 %tr
   %td{:align => "left"}
     %font{body_font}
-      =t("emails.booking_reminder_to_author.body", @body_variables).html_safe
+      %h3= "Just a friendly reminder that you’re hosting #{title}"
+      %ul
+        %li= "on #{date}"
+        %li
+          ="at #{time}"
+          %small Experiences usually only last an hour but we’ve booked you for 1.5 hrs in case the kudoer arrives late or the experience goes a bit over
+
+      - if location_details
+        %p
+          %b= "Location details & meeting up:"
+          = location_details
+
+      %h3= "Get to know the Kudoer you’ll be meeting:"
+      %p
+        %img{src: profile_image_url}
+        = link_to requester_name, profile_url
+
 %tr
   %td{:align => "left"}
     %font{body_font}
@@ -13,4 +29,9 @@
 %tr
   %td{:align => "left"}
     %font{body_font}
-      =t("emails.booking_reminder_to_author.end", @body_variables).html_safe
+      %p= "#{link_to("Send #{requester_name} a note", conversation_url)} if you have any questions or special instructions for them.".html_safe
+      %p= "If you need some help preparing your learning experience, please get in touch. We would love to help."
+      %p
+        Thanks,
+        %br
+        Team Kudoz

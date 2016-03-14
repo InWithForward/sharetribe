@@ -3,7 +3,41 @@
 %tr
   %td{:align => "left"}
     %font{body_font}
-      = t("emails.booking_reminder_to_requester.body", @body_variables).html_safe
+      %p= "So exciting! You’re going on the #{title} experience"
+      %ul
+        %li= "on #{date}"
+        %li= "at #{time}"
+      %p
+        %b= "What to bring:"
+      %ul
+        %li= "Your smart phone or iPod"
+
+        - if bring_money
+          %li= "Money? #{bring_money}"
+
+        - if what_else
+          %li= what_else
+
+      - if address
+        %p
+          - url = "http://maps.google.com/?q=#{latitude_longitude}"
+          %b= "Location: #{link_to(address, url)}".html_safe
+
+      - if location_details
+        %p
+          %b= "Location details & meeting up:"
+          = location_details
+
+      - if nearest_skytrain_station
+        %p
+          %b= "Closest skytrain station:"
+          = nearest_skytrain_station
+
+      %p
+        %b= "You'll meet..."
+        %img{src: profile_image_url}
+        = link_to author_name, profile_url
+
 %tr
   %td{:align => "left"}
     %font{body_font}
@@ -13,4 +47,4 @@
 %tr
   %td{:align => "left"}
     %font{body_font}
-      =t("emails.booking_reminder_to_requester.end", @body_variables).html_safe
+      =t("emails.booking_reminder_to_requester.end").html_safe

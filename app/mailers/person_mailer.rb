@@ -162,7 +162,7 @@ class PersonMailer < ActionMailer::Base
     date = @booking.start_at.to_date.to_formatted_s(:long)
     time = @booking.start_at.strftime("%I:%M %p")
 
-    @body_variables = {
+    fields = {
       title: @listing.title,
       date: date,
       time: time,
@@ -170,8 +170,6 @@ class PersonMailer < ActionMailer::Base
       profile_image_url: @requester.image.url(:thumb),
       profile_url: person_url(@requester, @url_params),
       conversation_url: person_message_url(@recipient, @url_params.merge({:id => @transaction.id.to_s})),
-      location_details: ""
-
     }.merge(custom_fields)
 
     subject = if type == :reminder
@@ -189,7 +187,9 @@ class PersonMailer < ActionMailer::Base
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
       :subject => subject
-    )
+    ) do |format|
+      format.html { render locals: fields }
+    end
   end
 
   def booking_reminder_to_requester(booking, community, type=:reminder)
@@ -212,7 +212,7 @@ class PersonMailer < ActionMailer::Base
     date =  @booking.start_at.to_date.to_formatted_s(:long)
     time =  @booking.start_at.strftime("%I:%M %p")
 
-    @body_variables = {
+    fields = {
       title: @listing.title,
       date: date,
       time: time,
@@ -221,11 +221,7 @@ class PersonMailer < ActionMailer::Base
       author_name: @author.name,
       profile_image_url: @author.image.url(:thumb),
       latitude_longitude: latitude_longitude,
-      profile_url: person_url(@author, @url_params),
-      location_details: "",
-      bring_money: "",
-      what_else: "",
-      nearest_skytrain_station: ""
+      profile_url: person_url(@author, @url_params)
     }.merge(custom_fields)
 
     subject = if type == :reminder
@@ -243,7 +239,9 @@ class PersonMailer < ActionMailer::Base
       :to => @recipient.confirmed_notification_emails_to,
       :from => community_specific_sender(community),
       :subject => subject 
-    )
+    ) do |format|
+      format.html { render locals: fields }
+    end
   end
 
   # Remind user to fill in payment details

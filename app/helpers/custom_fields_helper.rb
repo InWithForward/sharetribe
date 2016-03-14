@@ -20,7 +20,10 @@ module CustomFieldsHelper
 
       [field.key, text]
     end
-    Hash[custom_fields].symbolize_keys
+
+    Hash[custom_fields]
+      .symbolize_keys
+      .reject { |key, value| key.blank? }
   end
 
   def field_type_translation(type)
