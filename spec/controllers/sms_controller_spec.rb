@@ -57,11 +57,8 @@ describe SmsController, type: :controller do
     end
 
     it 'handles unknown responses' do
-      expect(SmsJob).to receive(:new).with(
-        to: '+15555555555',
-        body: I18n.t('sms.unparsable_response')
-      ).and_return(
-        double(perform: nil)
+      expect(PersonMailer).to receive(:delay).and_return(
+        double(invalid_sms_response: nil)
       )
 
       post :accept_free_booking, { 'Body' => "Great, I'll go with Sunday at 10:00AM", 'From' => '+15555555555' }
