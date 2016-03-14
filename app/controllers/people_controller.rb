@@ -233,12 +233,12 @@ class PeopleController < Devise::RegistrationsController
         Delayed::Job.enqueue(MixpanelIdentifierJob.new(@person.id, request.remote_ip))
         redirect_to action: :show
       else
-        flash[:error] = t("layouts.notifications.#{@person.errors.first}")
-        redirect :back
+        flash[:error] = @person.errors.full_messages.join(", ")
+        redirect_to :back
       end
     rescue RestClient::RequestFailed => e
       flash[:error] = t("layouts.notifications.update_error")
-      redirect :back
+      redirect_to :back
     end
   end
 

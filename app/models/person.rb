@@ -170,7 +170,7 @@ class Person < ActiveRecord::Base
 
 #  validates_uniqueness_of :username
   validates_length_of :username, :within => 3..20
-  validates_length_of :phone_number, :maximum => 25, :allow_nil => true, :allow_blank => true
+  validates_length_of :phone_number, minimum: 10, maximum: 25, allow_nil: true, allow_blank: true
   validates_length_of :given_name, :within => 1..255, :allow_nil => true, :allow_blank => true
   validates_length_of :family_name, :within => 1..255, :allow_nil => true, :allow_blank => true
 
@@ -203,9 +203,7 @@ class Person < ActiveRecord::Base
   end
 
   before_validation do
-    if self.phone_number
-      self.phone_number = PhoneNumberUtils.clean(self.phone_number)
-    end
+    self.phone_number.gsub!(/\D/, '') if self.phone_number
   end
 
   # Creates a new email
