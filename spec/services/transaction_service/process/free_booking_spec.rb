@@ -31,6 +31,8 @@ describe TransactionService::Process::FreeBooking do
     ]
   end
 
+  let(:booking) { bookings.first }
+
   before do
     {
       location_details: 'location',
@@ -48,8 +50,12 @@ describe TransactionService::Process::FreeBooking do
 
   describe '#confirm' do
 
+    before do
+      allow(SmsJob).to receive(:new).and_return(double(perform: true))
+    end
+
     it 'sends out reminders' do
-      described_class.new.confirm(booking: bookings.first)
+      described_class.new.confirm(booking: booking)
       Timecop.freeze(48.hours.from_now)
       expect{ 
         successes, failures = Delayed::Worker.new(quiet: false).work_off
@@ -58,7 +64,36 @@ describe TransactionService::Process::FreeBooking do
 
     it 'creates a Trello card' do
       expect(CreateTrelloCardJob).to receive(:new).and_return(double(perform: true))
-      described_class.new.confirm(booking: bookings.first)
+      described_class.new.confirm(booking: booking)
+    end
+
+    it 'sends out an sms reminder' do
+      address = ", at #{location.address}"
+      body = I18n.t('sms.booking_reminder', title: listing.title, time: booking.start_at.strftime('%a, %b %d %l:%M'), address: address)
+
+      expect(SmsJob).to receive(:new)
+        .with(person.phone_number, nil, body)
+        .and_return(double(perform: true))
+
+      described_class.new.confirm(booking: booking)
+    end
+
+    context 'when there is no location' do
+      before do
+        listing.location = nil
+        listing.save
+      end
+
+      it 'sends out an sms reminder' do
+        body = I18n.t('sms.booking_reminder', title: listing.title, time: booking.start_at.strftime('%a, %b %d %l:%M'), address: '')
+
+        expect(SmsJob).to receive(:new)
+          .with(person.phone_number, nil, body)
+          .and_return(double(perform: true))
+
+        described_class.new.confirm(booking: booking)
+      end
+
     end
 
   end

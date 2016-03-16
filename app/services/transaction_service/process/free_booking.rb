@@ -60,6 +60,20 @@ module TransactionService::Process
           run_at: booking.start_at - 48.hours
         )
       end
+
+      if starter_number = tx.starter.phone_number
+        title = tx.listing.title
+        time = booking.start_at.strftime('%a, %b %d %l:%M')
+        address = tx.listing.location ? ", at #{tx.listing.location.address}" : ""
+
+        reminder_body = I18n.t('sms.booking_reminder', title: title, time: time, address: address)
+
+        Delayed::Job.enqueue(
+          SmsJob.new(starter_number, nil, reminder_body),
+          run_at: booking.start_at - 24.hours
+        )
+      end
+
       Result::Success.new({result: true})
     end
 
