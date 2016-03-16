@@ -1,0 +1,22 @@
+- content_for :title_header do
+  %h1= t("layouts.no_tribe.inbox")
+
+= render partial: 'left_hand_navigation', locals: { selected_name: :transactions }
+
+.left-navi-section
+  - if inbox_rows.present?
+    %h2 Booked
+    .conversation-list-container
+      = render :partial => "transaction_row", :collection => inbox_rows['booked'], :as => :conversation
+
+    %h2 Requested
+    .conversation-list-container
+      = render :partial => "transaction_row", :collection => inbox_rows['requested'], :as => :conversation
+
+    %h2 Completed
+    .conversation-list-container
+      = render :partial => "transaction_row", :collection => inbox_rows['confirmed'], :as => :conversation
+
+  - else
+    #no_conversations
+      = t("conversations.index.no_received_messages")

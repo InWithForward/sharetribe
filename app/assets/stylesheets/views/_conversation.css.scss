@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.conversation-list-container {
+  margin-bottom: 40px;
+}
+
 .conversation-row {
   padding: lines(0.5);
   position: relative;
@@ -43,6 +47,14 @@
 .conversation-list-status-container {
   position: relative;
   @include vertical-centering-table-container;
+  float: right;
+
+  .status-link {
+    margin: 0px 0px 0px 5px;
+    padding: 0px 5px;
+    height: 26px;
+    font-size: 0.9em;
+  }
 }
 
 .conversation-list-status-icon {

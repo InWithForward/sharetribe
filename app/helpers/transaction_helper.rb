@@ -27,6 +27,69 @@ module TransactionHelper
     icon_class(icon)
   end
 
+  def transaction_links(transaction_id, status, is_author, bookings, waiting_feedback)
+    status_hash = {
+      requested: ->() { {
+        author: [
+          booking_links(transaction_id, bookings),
+          rebooking_link(transaction_id),
+          reject_link(transaction_id)
+        ].flatten,
+        starter: []
+      } },
+      booked: ->() { {
+        author: waiting_for_current_user_to_confirm(transaction_id),
+        starter: waiting_for_current_user_to_confirm(transaction_id)
+      } },
+      confirmed: ->() { {
+        both: (waiting_feedback ? [feedback_link(transaction_id)] : [])
+      } },
+    }
+
+    Maybe(status_hash)[status.to_sym]
+      .map { |s| s.call }
+      .map { |s| Maybe(is_author ? s[:author] : s[:starter]).or_else { s[:both] } }
+      .or_else { [] }
+  end
+
+  def feedback_link(transaction_id)
+    {
+      link_href: new_person_message_feedback_path(@current_user, :message_id => transaction_id),
+      link_classes: "confirm",
+      link_icon_with_tag: icon_tag("testimonial", ["icon-with-text"]),
+      link_text_with_icon: t("conversations.status.give_feedback")
+    }
+  end
+
+  def booking_links(transaction_id, bookings)
+    (bookings || []).map do |booking|
+      {
+        link_href: accept_free_booking_person_message_path(@current_user, :id => transaction_id, booking_id: booking[:id]),
+        link_classes: "confirm",
+        link_icon_with_text_classes: icon_for("confirmed"),
+        link_text_with_icon: booking[:start_at].strftime('%a, %b %d %l:%M')
+      }
+    end
+  end
+
+  def rebooking_link(transaction_id)
+    {
+      link_href: rebook_free_booking_person_message_path(@current_user, :id => transaction_id),
+      link_classes: "cancel",
+      link_icon_with_text_classes: icon_for("canceled"),
+      link_text_with_icon: t("conversations.status_link.busy")
+    }
+  end
+
+  def reject_link(transaction_id)
+    {
+      link_href: reject_free_booking_person_message_path(@current_user, :id => transaction_id),
+      link_classes: "cancel",
+      link_icon_with_text_classes: icon_for("canceled"),
+      link_text_with_icon: t("conversations.status_link.different_reason")
+    }
+  end
+
   # Give `status`, `is_author` and `other_party` and get back icon and text for current status
   # rubocop:disable all
   def conversation_icon_and_status(status, is_author, other_party_name, waiting_feedback, status_meta)
@@ -41,10 +104,10 @@ module TransactionHelper
     end if status == "confirmed"
 
     status_hash = {
-      pending: ->() { {
+      requested: ->() { {
         author: {
           icon: icon_waiting_you,
-          text: t("conversations.status.waiting_for_you_to_accept_request")
+          text: t("conversations.status.waiting_for_you_to_accept_request", requester_name: other_party_name)
         },
         starter: {
           icon: icon_waiting_other,
@@ -350,7 +413,9 @@ module TransactionHelper
     return nil unless show_testimonial_status
 
     [
-      waiting_for_current_user_to_confirm(conversation),
+      status_links(
+        waiting_for_current_user_to_confirm(conversation.id)
+      ),
       experience_details_status_infos(conversation),
       custom_fields_status_infos(conversation)
     ]
@@ -437,21 +502,21 @@ module TransactionHelper
     ])
   end
 
-  def waiting_for_current_user_to_confirm(conversation)
-    status_links([
+  def waiting_for_current_user_to_confirm(conversation_id)
+    [
       {
-        link_href: confirm_person_message_path(@current_user, :id => conversation.id),
+        link_href: confirm_person_message_path(@current_user, :id => conversation_id),
         link_classes: "confirm",
         link_icon_with_text_classes: icon_for("confirmed"),
-        link_text_with_icon: link_text_with_icon(conversation, "confirm")
+        link_text_with_icon: t("conversations.status_link.confirm")
       },
       {
-        link_href: cancel_person_message_path(@current_user, :id => conversation.id),
+        link_href: cancel_person_message_path(@current_user, :id => conversation_id),
         link_classes: "cancel",
         link_icon_with_text_classes: icon_for("canceled"),
-        link_text_with_icon: link_text_with_icon(conversation, "cancel")
+        link_text_with_icon: t("conversations.status_link.cancel")
       }
-    ])
+    ]
   end
 
   def waiting_for_current_user_to_confirm_request(conversation)

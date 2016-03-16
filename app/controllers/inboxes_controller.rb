@@ -54,6 +54,37 @@ class InboxesController < ApplicationController
     end
   end
 
+  def transactions
+    inbox_rows = MarketplaceService::Inbox::Query.inbox_data(
+      @current_user.id,
+      @current_community.id,
+      1000,
+      0,
+      [:booked, :requested, :confirmed, :accepted, :pending]
+    )
+
+    sorted_rows = inbox_rows.sort_by{ |r| (r[:start_at] || Time.new(0)) }.reverse
+
+    inbox_rows = sorted_rows.map { |inbox_row|
+      extended_inbox = inbox_row.merge(
+        path: path_to_conversation_or_transaction(inbox_row),
+        other: person_entity_with_url(inbox_row[:other]),
+        last_activity_ago: time_ago(inbox_row[:last_activity_at]),
+        title: inbox_title(inbox_row, inbox_payment(inbox_row))
+      )
+
+      if inbox_row[:type] == :transaction
+        extended_inbox.merge(
+          listing_url: listing_path(id: inbox_row[:listing_id])
+        )
+      else
+        extended_inbox
+      end
+    }.group_by { |h| h[:last_transition_to_state] } 
+
+    render locals: { inbox_rows: inbox_rows }
+  end
+
   private
 
   def inbox_title(inbox_item, payment_sum)

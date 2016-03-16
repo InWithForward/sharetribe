@@ -1,0 +1,34 @@
+.row-with-divider.without-margin.conversation-row{:class => conversation[:should_notify] ? "unread" : ""}
+
+  .col-5
+    .conversation-details-container
+      = link_to conversation[:other][:url] do
+        = image_tag conversation[:other][:avatar], :class => "conversation-avatar"
+      .conversation-details
+
+        .conversation-last-message-at.conversation-title-link
+          - status = conversation[:last_transition_to_state]
+          - booking_time = Maybe(conversation[:start_at]).strftime('%a, %b %d %l:%M').or_else { status.humanize }
+          = link_to booking_time, conversation[:path]
+
+        .conversation-other-party-name
+          = link_to_unless conversation[:other][:is_deleted], conversation[:other][:display_name], conversation[:other][:url]
+          = " | "
+          - if conversation[:listing_url].present?
+            = link_to_unless(conversation[:listing_deleted], conversation[:listing_title], conversation[:listing_url])
+          - else
+            = t("conversations.conversation.free_message")
+
+  .col-7
+
+    - if status.present? && status != "free"
+      - is_author = !conversation[:current_is_starter]
+      - waiting_feedback = conversation[:waiting_feedback]
+      - transaction_id = conversation[:transaction_id]
+      - bookings = conversation[:bookings]
+
+
+      .conversation-list-status-container.conversation-status
+        - links = transaction_links(transaction_id, status, is_author, bookings, waiting_feedback)
+        - links.each do |status_link|
+          = render :partial => "transactions/status/status_link", :locals => { :status_link => status_link }

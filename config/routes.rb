@@ -66,6 +66,8 @@ Kassi::Application.routes.draw do
   # Adds locale to every url right after the root path
   scope "(/:locale)", :constraints => { :locale => locale_matcher } do
 
+    match "/:person_id/transactions" => 'inboxes#transactions', as: :person_transactions
+
     match '/mercury_update' => "mercury_update#update", :as => :mercury_update, :method => :put
 
     match "/transactions/op_status/:process_token" => "transactions#op_status", :as => :transaction_op_status

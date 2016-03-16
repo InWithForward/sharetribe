@@ -1,9 +1,10 @@
 - content_for :title_header do
   %h1= t("layouts.no_tribe.inbox")
 
-.undo-mobile-wrapper-margin#conversations
-  - if inbox_rows.present?
+= render partial: 'left_hand_navigation', locals: { selected_name: :conversations }
 
+.left-navi-section
+  - if inbox_rows.present?
     = render :partial => "inbox_row", :collection => inbox_rows, :as => :conversation, locals: { payments_in_use: payments_in_use }
 
     = will_paginate(inbox_rows)

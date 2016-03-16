@@ -41,8 +41,8 @@ module MarketplaceService
         QueryHelper.query_inbox_data_count(person_id, community_id)
       end
 
-      def inbox_data(person_id, community_id, limit, offset)
-        QueryHelper.query_inbox_data(person_id, community_id, limit, offset)
+      def inbox_data(person_id, community_id, limit, offset, states = nil)
+        QueryHelper.query_inbox_data(person_id, community_id, limit, offset, states)
       end
 
       def notification_count(person_id, community_id)
@@ -95,6 +95,9 @@ module MarketplaceService
 
         [:payment_total, :money, :optional],
 
+        [:start_at, :time, :optional],
+        [:bookings, :optional],
+
         [:author, :hash, :mandatory],
         [:waiting_feedback, :mandatory, transform_with: @tiny_int_to_bool],
         [:transitions, :mandatory] # Could add Array validation
@@ -119,18 +122,22 @@ module MarketplaceService
         connection.select_value(sql)
       end
 
-      def query_inbox_data(person_id, community_id, limit, offset)
+      def query_inbox_data(person_id, community_id, limit, offset, states)
         conversation_ids = Participation.where(person_id: person_id).pluck(:conversation_id)
         return [] if conversation_ids.empty?
 
-        connection = ActiveRecord::Base.connection
-        sql = SQLUtils.ar_quote(connection, @construct_sql,
+        params = {
           person_id: person_id,
           community_id: community_id,
           limit: limit,
           offset: offset,
           conversation_ids: conversation_ids
-        )
+        }
+
+        params[:states] = states if states
+
+        connection = ActiveRecord::Base.connection
+        sql = SQLUtils.ar_quote(connection, @construct_sql, params)
 
         result_set = connection.execute(sql).each(as: :hash).map { |row| HashUtils.symbolize_keys(row) }
 
@@ -213,6 +220,14 @@ module MarketplaceService
           MarketplaceService::Transaction::Entity.transition(transition_model)
         end
 
+        if transaction[:last_transition_to_state] == 'requested'
+          bookings = Booking.where(transaction_id: transaction[:transaction_id]).map do |booking_model|
+            MarketplaceService::Transaction::Entity::Booking[
+              EntityUtils.model_to_hash(booking_model)
+            ]
+          end
+        end
+
         payment_gateway = transaction[:payment_gateway]
 
         payment_total =
@@ -233,6 +248,7 @@ module MarketplaceService
         transaction.merge(
           author: transaction[:other],
           transitions: transitions,
+          bookings: bookings,
           should_notify: should_notify,
           last_transition_at: transaction[:last_transition_at],
           payment_total: payment_total
@@ -284,6 +300,10 @@ module MarketplaceService
       # - sorted by last acticity
       # - with pagination
       @construct_sql = ->(params) {
+        states_condition = if params[:states]
+          "AND transactions.current_state IN (#{params[:states].join(',')})"
+        end
+
         "
           SELECT
             transactions.id AS transaction_id,
@@ -302,6 +322,8 @@ module MarketplaceService
             listings.deleted                                  AS listing_deleted,
 
             payments.id                                       AS payment_id,
+
+            bookings.start_at                                 AS start_at,
 
             listings.author_id                                AS author_id,
             current_participation.person_id                   AS current_id,
@@ -330,6 +352,7 @@ module MarketplaceService
           LEFT JOIN transactions      ON transactions.conversation_id = conversations.id
           LEFT JOIN listings          ON transactions.listing_id = listings.id
           LEFT JOIN transaction_types ON listings.transaction_type_id = transaction_types.id
+          LEFT JOIN bookings          ON (bookings.transaction_id = transactions.id AND bookings.confirmed = TRUE)
           LEFT JOIN payments          ON payments.transaction_id = transactions.id
           LEFT JOIN testimonials      ON (testimonials.transaction_id = transactions.id AND testimonials.author_id = #{params[:person_id]})
           LEFT JOIN participations    AS current_participation ON (current_participation.conversation_id = conversations.id AND current_participation.person_id = #{params[:person_id]})
@@ -338,6 +361,7 @@ module MarketplaceService
           # Where person and community
           WHERE conversations.community_id = #{params[:community_id]}
           AND conversations.id IN (#{params[:conversation_ids].join(',')})
+          #{states_condition || ""}
 
           # Ignore initiated
           AND (

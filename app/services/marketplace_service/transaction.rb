@@ -40,6 +40,13 @@ module MarketplaceService
         :grade
       )
 
+      Booking = EntityUtils.define_entity(
+        :id,
+        :start_at,
+        :end_at,
+        :confirmed
+      )
+
       ConversationEntity = MarketplaceService::Conversation::Entity
       Conversation = ConversationEntity::Conversation
       ListingEntity = MarketplaceService::Listing::Entity
@@ -143,6 +150,10 @@ module MarketplaceService
         transition = Entity::Transition[EntityUtils.model_to_hash(transition_model)]
         transition[:metadata] = HashUtils.symbolize_keys(transition[:metadata]) if transition[:metadata].present?
         transition
+      end
+
+      def booking(booking_model)
+        Entity::Booking[EntityUtils.model_to_hash(booking_model)]
       end
     end
 
