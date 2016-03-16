@@ -5,17 +5,21 @@
 
 .left-navi-section
   - if inbox_rows.present?
-    %h2 Booked
-    .conversation-list-container
-      = render :partial => "transaction_row", :collection => inbox_rows['booked'], :as => :conversation
 
-    %h2 Requested
-    .conversation-list-container
-      = render :partial => "transaction_row", :collection => inbox_rows['requested'], :as => :conversation
+    - if (booked = inbox_rows['booked']).present?
+      %h2 Booked
+      .conversation-list-container
+        = render :partial => "transaction_row", :collection => booked, :as => :conversation
 
-    %h2 Completed
-    .conversation-list-container
-      = render :partial => "transaction_row", :collection => inbox_rows['confirmed'], :as => :conversation
+    - if (requested = inbox_rows['requested']).present?
+      %h2 Requested
+      .conversation-list-container
+        = render :partial => "transaction_row", :collection => requested, :as => :conversation
+
+    - if (confirmed = inbox_rows['confirmed']).present?
+      %h2 Completed
+      .conversation-list-container
+        = render :partial => "transaction_row", :collection => confirmed, :as => :conversation
 
   - else
     #no_conversations
