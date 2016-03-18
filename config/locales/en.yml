@@ -1012,7 +1012,7 @@ en:
     booking_confirmed: "Thanks - you're a star! We'll send you a reminder 48 hrs before you host with more info. Text back anytime for coaching or visit http://kudoz.ca/hostips"
     booking_canceled: "Howdy, Kudoz again. Please go to kudoz.ca to upate your host calendar today. Then, we'll ask the Kudoer to try again."
     share_phone_number: "Fellow Kudoz member, %{username}, has shared their phone # with you: %{phone_number}. Don’t forget to add to your contacts!"
-    booking_reminder: "Getting ready for your experience %{title} tomorrow at %{time}%{address}? Any questions: call us at (604) 862-5836. Don't forget to use Nest Forms to check-in before you start your experience, take pictures during your experience, and check-out when you're done."
+    booking_reminder: "Hi, getting ready for your experience %{title} tomorrow at %{time}%{address}? Any questions: call us at (604) 862-5836. Don't forget to check-in before you start, take pictures during your experience, and check-out after."
   error_pages:
     back_to_kassi_front_page: "Back to the front page"
     error_404:
