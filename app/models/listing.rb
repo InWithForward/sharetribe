@@ -440,7 +440,14 @@ class Listing < ActiveRecord::Base
   end
 
   def availabilities_json
-    availabilities.to_json
+    availabilities.as_json(only: [
+      :date,
+      :end_at_hour,
+      :end_at_minute,
+      :start_at_hour,
+      :start_at_minute,
+      :recurring
+    ]).to_json
   end
 
   def visible_custom_field_values(user, community)

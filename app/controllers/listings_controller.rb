@@ -232,16 +232,11 @@ class ListingsController < ApplicationController
     end
 
     params[:listing][:sub_listings_attributes] ||= {}
-
-    FieldValueCreator.call(params[:custom_fields], @listing)
-
     params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
     params[:listing] = normalize_price_param(params[:listing])
+    params[:listing] = create_listing_params(params[:listing])
 
-    @listing.availabilities.delete_all if params[:listing][:availabilities_attributes].any?
-
-    if @listing.update_fields(create_listing_params(params[:listing]))
-      @listing.location.update_attributes(params[:location]) if @listing.location
+    if ListingUpdater.call(@listing, params)
       flash[:notice] = t("layouts.notifications.listing_updated_successfully")
       Delayed::Job.enqueue(ListingUpdatedJob.new(@listing.id, @current_community.id))
       redirect_to @listing

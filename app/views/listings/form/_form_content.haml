@@ -1,9 +1,11 @@
 = render :partial => "listings/form/javascripts", :locals => { :listing_id => "false", :minimum_price_cents => minimum_price_cents, :run_js_immediately => true }
 
 :javascript
-  initCalendar();
-  initialize_admin_listing_field_form_view("#{I18n.locale}", "#edit_custom_field", 0, 0);
-  ST.customFieldOptionOrder = ST.createCustomFieldOptionOrder(".custom-field-option-container");
+  $(document).ready(function() {
+    initCalendar();
+    initialize_admin_listing_field_form_view("#{I18n.locale}", "#edit_custom_field", 0, 0);
+    ST.customFieldOptionOrder = ST.createCustomFieldOptionOrder(".custom-field-option-container");
+  });
 
 = form_for @listing, :html => {:multipart => true} do |form|
   = render :partial => "listings/form/title", :locals => { :form => form }
