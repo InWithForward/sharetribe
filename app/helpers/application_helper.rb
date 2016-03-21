@@ -389,8 +389,8 @@ module ApplicationHelper
   end
 
   def self.send_error_notification(message, error_class="Special Error", parameters={})
-    if APP_CONFIG.use_airbrake
-      Airbrake.notify(
+    if APP_CONFIG.use_exception_notifier
+      ExceptionNotifier.notify(
         :error_class      => error_class,
         :error_message    => message,
         :backtrace        => $@,

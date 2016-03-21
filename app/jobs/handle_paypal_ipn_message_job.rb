@@ -1,6 +1,6 @@
 class HandlePaypalIpnMessageJob < Struct.new(:msg_id)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
   include PaypalService::IPNInjector
 
   #omit before-method as this job doesn't require current community, as paypal ipns are handled outside communities

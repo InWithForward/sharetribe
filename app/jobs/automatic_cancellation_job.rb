@@ -1,5 +1,5 @@
 class AutomaticCancellationJob < Struct.new(:transaction_id)
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   def perform
     #transaction = Transaction.find(transaction_id)

@@ -1,7 +1,7 @@
 class AutomaticBookingConfirmationJob < Struct.new(:conversation_id, :current_user_id, :community_id)
   # :conversation_id should be :transaction_id, but can not be easily migrated due to existing job descriptions in DB
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   # This before hook should be included in all Jobs to make sure that the service_name is
   # correct as it's stored in the thread and the same thread handles many different communities

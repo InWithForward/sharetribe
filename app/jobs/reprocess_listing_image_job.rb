@@ -1,6 +1,6 @@
 class ReprocessListingImageJob < Struct.new(:listing_image_id, :style)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   def perform
     listing_image = ListingImage.find_by_id(listing_image_id)

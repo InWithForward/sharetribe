@@ -1,6 +1,6 @@
 class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id, :type)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   # This before hook should be included in all Jobs to make sure that the service_name is
   # correct as it's stored in the thread and the same thread handles many different communities

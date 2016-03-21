@@ -5,9 +5,7 @@ class ErrorsController < ActionController::Base
   before_filter :set_locale
 
   def server_error
-    error_id = airbrake_error_id
-    # error_id = 12341234153 # uncomment this to test the last text paragraph
-    render "status_500", status: 500, locals: { status: 500, title: title(500), error_id: error_id }
+    render "status_500", status: 500, locals: { status: 500, title: title(500) }
   end
 
   def not_found
@@ -46,24 +44,5 @@ class ErrorsController < ActionController::Base
 
   def exception
     env["action_dispatch.exception"]
-  end
-
-  def airbrake_error_id
-    env['airbrake.error_id'] if error_id_present?(env['airbrake.error_id'])
-  end
-
-  def can_notify_airbrake
-    Airbrake && Airbrake.respond_to?(:notify)
-  end
-
-  def use_airbrake
-    APP_CONFIG && APP_CONFIG.use_airbrake
-  end
-
-  # For some weird reason, Airbrake gem returns true, if error is not sent
-  # (e.g. due to missing api key). So, make sure the error_id is present
-  # (i.e. not empty), but return false if the id is true
-  def error_id_present?(error_id)
-    error_id.present? && error_id != true
   end
 end

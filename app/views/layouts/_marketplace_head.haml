@@ -61,6 +61,9 @@
 / Modernizr, in the head tag, right after stylesheets, for best performance:
 = javascript_include_tag "modernizr.min"
 
+- if APP_CONFIG.use_exception_notifier
+  = javascript_include_tag "//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js", "data-apikey" => APP_CONFIG.exception_notifier_api_key
+
 / Android pre Jellybean has an ugly bug, which prevents font-size 0 technique from
 / removing the spaces between inline-blocks. Remove this piece of code when pre Jellybean becomes unsupported
 :javascript

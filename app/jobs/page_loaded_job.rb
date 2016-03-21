@@ -1,6 +1,6 @@
 class PageLoadedJob < Struct.new(:community_membership_id, :host)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   def perform
     membership = CommunityMembership.find(community_membership_id)

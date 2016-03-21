@@ -1,6 +1,6 @@
 class SendPaymentReceipts < Struct.new(:transaction_id)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   def perform
     transaction = TransactionService::Transaction.query(transaction_id)

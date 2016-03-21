@@ -1,6 +1,6 @@
 class MixpanelIdentifierJob < Struct.new(:person_id, :ip)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   def perform
     person = Person.find(person_id)

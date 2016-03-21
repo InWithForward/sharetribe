@@ -1,7 +1,7 @@
 #reminder is sent to both parties, no need for recipient id anymore
 class TestimonialReminderJob < Struct.new(:conversation_id, :recipient_id, :community_id)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   # This before hook should be included in all Jobs to make sure that the service_name is
   # correct as it's stored in the thread and the same thread handles many different communities

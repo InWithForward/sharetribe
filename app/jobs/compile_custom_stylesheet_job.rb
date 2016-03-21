@@ -1,6 +1,6 @@
 class CompileCustomStylesheetJob < Struct.new(:community_id, :attempts)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   MAX_ATTEMPTS = 5
 

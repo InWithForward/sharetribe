@@ -80,7 +80,7 @@ gem 'paypal-sdk-permissions',
   :branch => 'master',
   :ref    => 'c0240bee9f94fe6338d67b4f754e1a11ce81619a'
 gem 'paypal-sdk-merchant', '~> 1.116.0'
-gem 'airbrake', '~>4.1.0'
+gem 'bugsnag'
 gem 'youtube_addy', '~> 1.0.4'
 gem 'cocoon', '~> 1.2.6'
 gem 'twilio-ruby', '~> 4.2.0'

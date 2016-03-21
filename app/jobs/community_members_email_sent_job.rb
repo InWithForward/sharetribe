@@ -1,6 +1,6 @@
 class CommunityMembersEmailSentJob < Struct.new(:sender_id, :community_id, :subject, :content, :locale)
 
-  include DelayedAirbrakeNotification
+  include DelayedExceptionNotification
 
   # This before hook should be included in all Jobs to make sure that the service_name is
   # correct as it's stored in the thread and the same thread handles many different communities
