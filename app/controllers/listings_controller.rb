@@ -180,9 +180,10 @@ class ListingsController < ApplicationController
     @listing = Listing.new(create_listing_params(params[:listing]))
 
     @listing.author = @current_user
-    FieldValueCreator.call(params[:custom_fields], @listing)
 
     if @listing.save
+      FieldValueCreator.call(params[:custom_fields], @listing)
+
       Delayed::Job.enqueue(
         MixpanelTrackerJob.new(@current_user.id, @current_community.id, 'Listing Created', {
           title: @listing.title,
