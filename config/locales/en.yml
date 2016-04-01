@@ -784,7 +784,7 @@ en:
       here_is_a_message_from: "Here's a message from %{other_party_given_name}:"
       request_marked_as_confirmed: "Request completed - remember to give feedback"
       request_marked_as_canceled: "Request canceled"
-      has_marked_request_as_confirmed: "%{other_party_full_name} has marked the request about '%{request}' completed. You can now give feedback to %{other_party_given_name}."
+      has_marked_request_as_confirmed: "Your experience, '%{request}' has been marked as complete. Next, give %{other_party_given_name} some feedback about how it went."
       has_marked_request_as_canceled: "%{other_party_full_name} has canceled the request about '%{request}'. You can still give feedback to %{other_party_given_name}."
       giving_feedback_is_good_idea: "Giving feedback is always a good idea. If everything went well, you should let others know how it went with %{other_party_given_name}. If anything could have gone better it's good to mention that too."
       give_feedback_to: "Give feedback to %{other_party_given_name}"
