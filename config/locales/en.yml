@@ -2016,19 +2016,19 @@ en:
     index:
       all_testimonials: "All feedback"
       feedback_altogether: "Feedback altogether: "
-      loading_more_testimonials: "Loading more testimonials"
+      loading_more_testimonials: "Loading more feedback"
       no_testimonials: "No received feedback."
     new:
       as_expected: "As expected"
       exceeded_expectations: "Much better than expected"
-      give_feedback_to: "Endorse %{person}"
+      give_feedback_to: "Give %{person} Feedback"
       grade: "What is your overall feeling?"
       less_than_expected: "Worse than expected"
-      send_feedback: "Send endorsement"
+      send_feedback: "Send"
       slightly_better_than_expected: "Slightly better than expected"
       slightly_less_than_expected: "Slightly worse than expected"
       textual_feedback: "What do you want to share with %{person}?"
-      this_will_be_shown_in_profile: "This endorsement will be visible to others on %{person}'s profile. %{person} can accept or reject your feedback − in this way %{person} and others get to see new sides of themselves!"
+      this_will_be_shown_in_profile: "Others will see your feedback & %{person} will be able to add it to her profile if she wants."
       positive: Positive
       negative: Negative
       default_textual_feedback: "What did %{person} say or do that you noticed? (Please write one or two sentences)"
