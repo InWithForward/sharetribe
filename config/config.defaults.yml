@@ -243,6 +243,8 @@ default: &default_settings
 
   prerequisites_custom_field_key: 'prerequisites'
 
+  master_username: ""
+
 production: &production_settings
   <<: *default_settings
   logger_type: "stdout"

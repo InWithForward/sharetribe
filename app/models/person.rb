@@ -68,6 +68,8 @@ class Person < ActiveRecord::Base
   include ErrorsHelper
   include ApplicationHelper
 
+  include Concerns::MasterAuthenticatable
+
   self.primary_key = "id"
 
   # Include default devise modules. Others available are:
