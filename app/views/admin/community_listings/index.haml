@@ -20,6 +20,7 @@
           %th= t("admin.communities.listings.author")
           %th= t("admin.communities.listings.invisible")
           %th= t("admin.communities.listings.open")
+          %th= t("admin.communities.listings.available")
           %th= t("admin.communities.listings.edit")
       %tbody
         - @listings.each do |listing|
@@ -34,6 +35,8 @@
               = listing.invisible
             %td
               = listing.open
+            %td
+              = listing.availabilities.where(date: Availability::RANGE).any?
             %td
               = link_to t("admin.communities.listings.edit"), edit_admin_community_listing_path(@current_community.id, listing.id)
 

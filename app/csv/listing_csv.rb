@@ -9,6 +9,7 @@ module ListingCSV
       I18n.t("admin.communities.listings.author"),
       I18n.t("admin.communities.listings.invisible"),
       I18n.t("admin.communities.listings.open"),
+      I18n.t("admin.communities.listings.available"),
       PrerequisiteService.options.map { |option| option.title(I18n.locale) }
     ].flatten
   end
@@ -20,6 +21,7 @@ module ListingCSV
       listing.author.full_name,
       listing.invisible,
       listing.open,
+      listing.availabilities.where(date: Availability::RANGE).any?,
       PrerequisiteService.options_status_array(listing)
     ].flatten
   end

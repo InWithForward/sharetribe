@@ -257,6 +257,8 @@ en:
         sort_date: "Sort Date"
         edit: 'Edit'
         whats_missing: "What's missing"
+        open: "Open"
+        available: "Available"
       transactions:
         transactions: "View experiences"
         headers:
