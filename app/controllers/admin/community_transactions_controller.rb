@@ -83,9 +83,13 @@ class Admin::CommunityTransactionsController < ApplicationController
   end
 
   def new
+    listing = Listing.find(params[:listing_id])
+
     @memberships = CommunityMembership.
       where(community_id: @current_community.id, status: "accepted").
-      includes(:person)
+      where('person_id != ?',listing.author_id).
+      includes(:person).
+      order('people.given_name')
   end
 
   def create

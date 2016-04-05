@@ -22,4 +22,6 @@
 class Participation < ActiveRecord::Base
   belongs_to :conversation, :dependent => :destroy, inverse_of: :participations, touch: true
   belongs_to :person
+
+  validates :person_id, uniqueness: { scope: :conversation_id }
 end
