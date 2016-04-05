@@ -1,5 +1,6 @@
+%span.hint= (hint || "").html_safe
 - value = custom_field_value ? custom_field_value.text_value : ""
-= text_field_tag "custom_fields[#{custom_field.id}]", value, :class => (custom_field.required? ? "required" : ""), :placeholder => hint
+= text_field_tag "custom_fields[#{custom_field.id}]", value, :class => (custom_field.required? ? "required" : "")
 
 - content_for :tag_js do
   :javascript
