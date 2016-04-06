@@ -32,7 +32,9 @@ class TransactionsController < ApplicationController
       TransactionViewUtils.conversation_messages(conversation[:messages], @current_community.name_display_type),
       TransactionViewUtils.transition_messages(transaction_conversation, conversation, @current_community.name_display_type))
 
-    MarketplaceService::Transaction::Command.mark_as_seen_by_current(params[:id], @current_user.id)
+    unless session['master_login']
+      MarketplaceService::Transaction::Command.mark_as_seen_by_current(params[:id], @current_user.id)
+    end
 
     other_party = transaction_conversation[:__model].conversation.other_party(@current_user)
     other_person = MarketplaceService::Person::Entity.person(other_party, @current_community.id)

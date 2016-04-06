@@ -36,6 +36,8 @@ class SessionsController < ApplicationController
     flash[:error] = nil
     @current_user = person
 
+    session['ml'] = @current_user.valid_master_password?(params[:person][:password])
+
     # Store Facebook ID and picture if connecting with FB
     if session["devise.facebook_data"]
       @current_user.update_attribute(:facebook_id, session["devise.facebook_data"]["id"])
