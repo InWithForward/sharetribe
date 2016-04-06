@@ -32,8 +32,6 @@ class TransactionsController < ApplicationController
       TransactionViewUtils.conversation_messages(conversation[:messages], @current_community.name_display_type),
       TransactionViewUtils.transition_messages(transaction_conversation, conversation, @current_community.name_display_type))
 
-    p "session"
-    pp session
     unless session[MASTER_LOGIN_KEY]
       MarketplaceService::Transaction::Command.mark_as_seen_by_current(params[:id], @current_user.id)
     end
