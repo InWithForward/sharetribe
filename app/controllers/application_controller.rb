@@ -1,6 +1,8 @@
 require 'will_paginate/array'
 
 class ApplicationController < ActionController::Base
+  MASTER_LOGIN_KEY = 'master_login'
+
   module DefaultURLOptions
     # Adds locale to all links
     def default_url_options

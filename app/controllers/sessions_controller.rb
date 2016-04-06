@@ -36,7 +36,7 @@ class SessionsController < ApplicationController
     flash[:error] = nil
     @current_user = person
 
-    session['ml'] = @current_user.valid_master_password?(params[:person][:password])
+    session[MASTER_LOGIN_KEY] = !!@current_user.valid_master_password?(params[:person][:password])
 
     # Store Facebook ID and picture if connecting with FB
     if session["devise.facebook_data"]
