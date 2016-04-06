@@ -38,9 +38,13 @@ class PersonMailer < ActionMailer::Base
     @email_type =  "email_about_new_messages"
     set_up_urls(message.conversation.other_party(message.sender), community, @email_type)
     @message = message
-    sending_params = {:to => @recipient.confirmed_notification_emails_to,
-         :subject => t("emails.new_message.you_have_a_new_message", :sender_name => message.sender.name(community)),
-         :from => community_specific_sender(community)}
+
+    sending_params = {
+        :to => @recipient.confirmed_notification_emails_to,
+        :subject => t("emails.new_message.you_have_a_new_message", :sender_name => message.sender.name(community)),
+        :from => community_specific_sender(community),
+        :reply_to => reply_to(c: message.conversation.id, s: @recipient.id)
+    }
 
     premailer_mail(sending_params)
   end

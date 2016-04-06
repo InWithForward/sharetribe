@@ -244,6 +244,7 @@ default: &default_settings
   prerequisites_custom_field_key: 'prerequisites'
 
   master_username: ""
+  POSTMARK_INBOUND_ADDRESS: 'somerandomhash@inbound.postmarkapp.com'
 
 production: &production_settings
   <<: *default_settings

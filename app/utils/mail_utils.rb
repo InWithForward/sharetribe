@@ -34,4 +34,17 @@ module MailUtils
       APP_CONFIG.sharetribe_mail_from_address
     end
   end
+
+  def reply_to(mailbox_hash = nil)
+    return unless address = APP_CONFIG.POSTMARK_INBOUND_ADDRESS
+    return address unless mailbox_hash
+
+    address.sub('@', "+#{encode(mailbox_hash)}@")
+  end
+
+  def encode(hash)
+    Base64
+      .encode64(hash.to_json)
+      .sub("\n", '')
+  end
 end
