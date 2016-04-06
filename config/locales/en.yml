@@ -2030,7 +2030,7 @@ en:
       slightly_better_than_expected: "Slightly better than expected"
       slightly_less_than_expected: "Slightly worse than expected"
       textual_feedback: "What do you want to share with %{person}?"
-      this_will_be_shown_in_profile: "Others will see your feedback & %{person} will be able to add it to her profile if she wants."
+      this_will_be_shown_in_profile: "Others will see your feedback & %{person} will be able to add it to their profile, if they want."
       positive: Positive
       negative: Negative
       default_textual_feedback: "What did %{person} say or do that you noticed? (Please write one or two sentences)"
