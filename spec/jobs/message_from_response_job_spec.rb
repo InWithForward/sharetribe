@@ -14,7 +14,7 @@ describe MessageFromResponseJob do
   let(:params) do
     {
       "MailboxHash" => MailUtils.encode(mailbox_hash),
-      "TextBody" => "Person's response"
+      "StrippedTextReply" => "Person's response"
     }
   end
 

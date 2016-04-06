@@ -10,7 +10,7 @@ class MessageFromResponseJob < Struct.new(:params)
     sender = Person.find(decoded['s'])
 
     message = Message.new(
-      content: params["TextBody"],
+      content: params["StrippedTextReply"],
       conversation: conversation,
       sender: sender
     )

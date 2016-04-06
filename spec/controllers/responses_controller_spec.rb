@@ -6,7 +6,7 @@ describe ResponsesController, type: :controller do
     let(:params) do
       {
         "MailboxHash" => "SampleHash",
-        "TextBody" => "This is a test text body."
+        "StrippedTextReply" => "This is a test text body."
       }
     end
 
