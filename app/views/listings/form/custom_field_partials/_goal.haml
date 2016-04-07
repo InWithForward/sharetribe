@@ -17,4 +17,3 @@
 %div.inline-block-container
   = t('.part_three')
   = text_field_tag "custom_fields[#{custom_field.id}][reason]", values[:reason], class: text_field_class, placeholder: t('.reason_placeholder')
-%span.hint= (hint || "").html_safe
