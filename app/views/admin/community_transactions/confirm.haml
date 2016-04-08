@@ -12,9 +12,17 @@
         %label= "Kudoer"
         %span= PersonViewUtils.person_display_name @starter, @current_community
 
+        %label= "Skip Confirmation"
+        %span= params[:transaction][:skip_confirmation_email] == "1"
+
+        %label= "Skip Reminder"
+        %span= params[:transaction][:skip_reminder_email] == "1"
+
     .row.hidden
       = hidden_datetime(form, :start_at)
-      = form.hidden_field :starter_id, value: params[:transaction][:starter_id]
+      = form.hidden_field :starter_id,              value: params[:transaction][:starter_id]
+      = form.hidden_field :skip_confirmation_email, value: params[:transaction][:skip_confirmation_email]
+      = form.hidden_field :skip_reminder_email,     value: params[:transaction][:skip_reminder_email]
     .row
       .col-12
         = form.button t('conversations.new.submit'), :class => "send_button"

@@ -21,6 +21,8 @@ class Booking < ActiveRecord::Base
 
   validates_date :end_on, on_or_after: :start_on, allow_blank: true
 
+  DURATION_IN_MINUTES = 90
+
   ## TODO REMOVE THIS
   def duration
     (end_on - start_on).to_i + 1

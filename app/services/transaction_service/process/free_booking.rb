@@ -35,7 +35,7 @@ module TransactionService::Process
       Result::Success.new({result: true})
     end
 
-    def confirm(booking:)
+    def confirm(booking:, send_confirmation: true, send_reminder: true)
       tx = booking.transaction
 
       Delayed::Job.enqueue(CreateTrelloCardJob.new(booking.id, tx[:community_id]))
@@ -51,17 +51,22 @@ module TransactionService::Process
       end
 
       [BookingReminderToAuthorJob, BookingReminderToRequesterJob].each do |klass|
-        Delayed::Job.enqueue(
-          klass.new(booking.id, tx[:community_id], :confirmation),
-          run_at: Time.now + 10.seconds
-        )
-        Delayed::Job.enqueue(
-          klass.new(booking.id, tx[:community_id], :reminder),
-          run_at: booking.start_at - 48.hours
-        )
+        if send_confirmation
+          Delayed::Job.enqueue(
+            klass.new(booking.id, tx[:community_id], :confirmation),
+            run_at: Time.now + 10.seconds
+          )
+        end
+
+        if send_reminder
+          Delayed::Job.enqueue(
+            klass.new(booking.id, tx[:community_id], :reminder),
+            run_at: booking.start_at - 48.hours
+          )
+        end
       end
 
-      if starter_number = tx.starter.phone_number
+      if send_reminder && starter_number = tx.starter.phone_number
         title = tx.listing.title
         time = booking.start_at.strftime('%a, %b %d %l:%M')
         address = tx.listing.location ? ", at #{tx.listing.location.address}" : ""

@@ -10,4 +10,12 @@
         = form.datetime_select :start_at, ampm: true, minute_step: 15
     .row
       .col-12
+        = form.label :skip_confirmation_email, 'Skip Confirmation Email'
+        = form.check_box :skip_confirmation_email
+    .row
+      .col-12
+        = form.label :skip_reminder_email, 'Skip Reminder Email'
+        = form.check_box :skip_reminder_email
+    .row
+      .col-12
         = form.button t('conversations.new.submit'), :class => "send_button"
