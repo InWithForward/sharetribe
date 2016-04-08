@@ -11,4 +11,9 @@ module TimeUtils
   def utc_str_to_time(str)
     ActiveSupport::TimeZone["UTC"].parse(str)
   end
+
+  def from_datetime_select(hash, name)
+    date_arr = [1, 2, 3, 4, 5].map { |i| hash["#{name.to_s}(#{i}i)"].to_i }
+    DateTime.new *date_arr
+  end
 end

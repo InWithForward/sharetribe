@@ -145,7 +145,12 @@ Kassi::Application.routes.draw do
           put :menu_links, to: 'communities#update_menu_links'
           put :update_settings
         end
-        resources :transactions, controller: :community_transactions, only: [:index, :update, :new, :create]
+        resources :transactions, controller: :community_transactions, only: [:index, :update, :new, :create] do
+          collection do
+            post :confirm
+          end
+        end
+
         resources :listings, controller: :community_listings, only: [:index, :edit, :update]
         resources :emails
         resources :people, controller: :community_people, only: [:edit, :update] do

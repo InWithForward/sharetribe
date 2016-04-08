@@ -1,0 +1,20 @@
+.centered-section
+  %h1= "Please Confirm"
+  = form_for(:transaction, url:admin_community_transactions_path(community_id: params[:community_id], listing_id: params[:listing_id])) do |form|
+    .row
+      .col-12
+        %label= "Listing"
+        %span= @listing.title
+
+        %label= "Time"
+        %span= formatted_range @start_at, @end_at
+
+        %label= "Kudoer"
+        %span= PersonViewUtils.person_display_name @starter, @current_community
+
+    .row.hidden
+      = hidden_datetime(form, :start_at)
+      = form.hidden_field :starter_id, value: params[:transaction][:starter_id]
+    .row
+      .col-12
+        = form.button t('conversations.new.submit'), :class => "send_button"

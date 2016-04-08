@@ -1,5 +1,5 @@
 .centered-section
-  = form_for(:transaction, url:admin_community_transactions_path(community_id: params[:community_id], listing_id: params[:listing_id])) do |form|
+  = form_for(:transaction, url: confirm_admin_community_transactions_path(community_id: params[:community_id], listing_id: params[:listing_id])) do |form|
     .row
       .col-12
         = form.label :starter_id, 'Kudoer'

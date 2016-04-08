@@ -95,11 +95,7 @@ class Admin::CommunityTransactionsController < ApplicationController
   def create
     listing = Listing.find(params[:listing_id])
     transaction_params = params[:transaction]
-    start_at = DateTime.new(transaction_params["start_at(1i)"].to_i,
-                            transaction_params["start_at(2i)"].to_i,
-                            transaction_params["start_at(3i)"].to_i,
-                            transaction_params["start_at(4i)"].to_i,
-                            transaction_params["start_at(5i)"].to_i)
+    start_at = TimeUtils.from_datetime_select(transaction_params, :start_at)
     end_at = start_at + 90.minutes
 
     transaction_response = TransactionService::Transaction.create(
@@ -120,6 +116,14 @@ class Admin::CommunityTransactionsController < ApplicationController
     TransactionService::Process::FreeBooking.new.confirm(booking: booking)
 
     redirect_to admin_community_transactions_path(community_id: @current_community.id)
+  end
+
+  def confirm
+    @listing = Listing.find(params[:listing_id])
+    transaction_params = params[:transaction]
+    @start_at = TimeUtils.from_datetime_select(transaction_params, :start_at)
+    @end_at = @start_at + 90.minutes
+    @starter = Person.find(params[:transaction][:starter_id])
   end
 
   private
