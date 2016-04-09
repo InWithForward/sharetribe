@@ -38,7 +38,7 @@ class ConfirmConversationsController < ApplicationController
     can_be_confirmed = MarketplaceService::Transaction::Query.can_transition_to?(@listing_transaction.id, :confirmed)
     other_person = query_person_entity(@listing_transaction.other_party(@current_user).id)
 
-    render(:confirm, locals: {
+    render(:cancel, locals: {
       action_type: "cancel",
       message_form: MessageForm.new,
       listing_transaction: @listing_transaction,

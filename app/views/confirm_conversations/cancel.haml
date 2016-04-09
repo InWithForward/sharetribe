@@ -1,3 +1,4 @@
+
 - content_for :javascript do
   initialize_confirm_transaction_form();
 
@@ -10,7 +11,7 @@
       %h2= t("conversations.confirm.title")
 
       .conversation-action
-        - action = 'confirm'
+        - action = 'cancel'
         %label{:for => "action-#{action}", :class => "radio hidden"}
           = radio_button_tag "status", action, action_type.eql?(action), :id => "action-#{action}"
         %a.conversation-action.hidden{:id => "#{action}", :name => "#{action}-link", :class => (action_type.eql?(action) ? action : "")}
@@ -21,7 +22,7 @@
         %div{:class => "#{action}-description #{action_type.eql?(action) ? '' : 'hidden'}"}
           = t("conversations.confirm.#{action}_description", other_person_name: other_person[:display_name])
 
-      = hidden_field_tag :give_feedback, 'true'
+      = hidden_field_tag :give_feedback,'false'
       = form.hidden_field :status, :value => "#{action_type}ed"
 
     - else
