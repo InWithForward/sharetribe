@@ -17,7 +17,7 @@
         %th= render partial: "layouts/sort_link", locals: { column: "listing", direction: sort_link_direction("listing"), title: t("admin.communities.transactions.headers.listing") }
         %th=t("admin.communities.transactions.headers.whats_missing")
         %th=t("admin.communities.transactions.headers.status")
-        %th= "Complete"
+        %th= "Actions"
         - if show_status_and_sum
           %th=t("admin.communities.transactions.headers.sum")
         %th= render partial: "layouts/sort_link", locals: { column: "started", direction: sort_link_direction("started"), title: t("admin.communities.transactions.headers.started") }
@@ -34,8 +34,11 @@
           %td=t("admin.communities.transactions.status.#{conversation[:status]}")
           %td
             - if conversation[:status] == "booked"
-              - complete_action = admin_community_transaction_path(community_id: @current_community.id, id: conversation[:id], action: 'completed')
+              - complete_action = admin_community_transaction_path(community_id: @current_community.id, id: conversation[:id])
               = button_to "Complete", complete_action, method: :put, data: {confirm: 'Are you sure?'}
+
+              = button_to "Cancel", cancel_admin_community_transaction_path(community_id: @current_community.id, id: conversation[:id]), method: :put, data: {confirm: 'Are you sure?'}
+
           - if show_status_and_sum
             %td=conversation[:payment_total] ? humanized_money_with_symbol(conversation[:payment_total]) : ""
           %td=l(conversation[:created_at], format: :short_date)

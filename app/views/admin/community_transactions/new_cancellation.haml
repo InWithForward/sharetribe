@@ -1,0 +1,12 @@
+.centered-section
+  %h2
+    Cancel Experience
+
+  = form_for(form, url: { action: :cancel }) do |form|
+    .row
+      .col-12
+        = form.label :skip_emails, 'Skip Emails'
+        = form.check_box :skip_emails
+    .row
+      .col-12
+        = form.button t('conversations.new.submit'), :class => "send_button"

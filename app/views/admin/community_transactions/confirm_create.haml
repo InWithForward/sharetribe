@@ -20,6 +20,7 @@
 
     .row.hidden
       = hidden_datetime(form, :start_at)
+      = form.hidden_field :listing_id,              value: params[:transaction][:listing_id]
       = form.hidden_field :starter_id,              value: params[:transaction][:starter_id]
       = form.hidden_field :skip_confirmation_email, value: params[:transaction][:skip_confirmation_email]
       = form.hidden_field :skip_reminder_email,     value: params[:transaction][:skip_reminder_email]

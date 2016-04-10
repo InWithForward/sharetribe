@@ -93,8 +93,8 @@ class Admin::CommunityTransactionsController < ApplicationController
   end
 
   def create
-    listing = Listing.find(params[:listing_id])
     transaction_params = params[:transaction]
+    listing = Listing.find(transaction_params[:listing_id])
     start_at = TimeUtils.from_datetime_select(transaction_params, :start_at)
     end_at = start_at + Booking::DURATION_IN_MINUTES.minutes
 
@@ -122,12 +122,17 @@ class Admin::CommunityTransactionsController < ApplicationController
     redirect_to admin_community_transactions_path(community_id: @current_community.id)
   end
 
-  def confirm
-    @listing = Listing.find(params[:listing_id])
+  def confirm_create
     transaction_params = params[:transaction]
+    @listing = Listing.find(transaction_params[:listing_id])
     @starter = Person.find(transaction_params[:starter_id])
     @start_at = TimeUtils.from_datetime_select(transaction_params, :start_at)
     @end_at = @start_at + Booking::DURATION_IN_MINUTES.minutes
+  end
+
+  def cancel
+    TransactionService::Transaction.cancel(community_id: params[:community_id], transaction_id: params[:id])
+    redirect_to admin_community_transactions_path(community_id: @current_community.id)
   end
 
   private

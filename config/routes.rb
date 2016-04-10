@@ -147,7 +147,11 @@ Kassi::Application.routes.draw do
         end
         resources :transactions, controller: :community_transactions, only: [:index, :update, :new, :create] do
           collection do
-            post :confirm
+            get :confirm_create
+          end
+
+          member do
+            put :cancel, to: 'community_transactions#cancel'
           end
         end
 
