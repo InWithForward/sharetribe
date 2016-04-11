@@ -80,7 +80,7 @@ class Admin::CommunityTransactionsController < ApplicationController
 
     count = TransactionQuery.transactions_count_for_community(@current_community.id)
     batch_size = 50
-    batch_count = count / batch_size
+    batch_count = (count / batch_size) + 1
 
     self.response_body = Enumerator.new do |csv|
       csv << CSV.generate_line(TransactionCSV.header)
