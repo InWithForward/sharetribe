@@ -8,6 +8,17 @@ class Admin::CommunityMembershipsController < ApplicationController
                                        .includes(:person => :emails)
                                        .paginate(:page => params[:page], :per_page => 500)
                                        .order("#{sort_column} #{sort_direction}")
+    respond_to do |format|
+      format.html do
+        render :index
+      end
+      format.csv do
+        render(
+          csv: ArrayToCSV.generate(MembershipCSV, @memberships, { community: @current_community }),
+          filename: "#{Time.now.to_formatted_s(:number)}_memberships"
+        )
+      end
+    end
   end
 
   def ban

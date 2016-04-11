@@ -14,7 +14,7 @@ module ListingCSV
     ].flatten
   end
 
-  def row(listing)
+  def row(listing, args = {})
     [
       listing.id,
       listing.title,

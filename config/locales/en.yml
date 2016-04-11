@@ -185,6 +185,7 @@ en:
         admin: Admin
         posting_allowed: "Posting allowed"
         requesting_allowed: "Requesting allowed"
+        role: Role
         ban_user: "Ban user"
         saving_user_status: Saving...
         save_user_status_successful: Saved

@@ -15,7 +15,7 @@ class Admin::CommunityListingsController < ApplicationController
       end
       format.csv do
         render(
-          csv: ArrayToCSV.to_s(ListingCSV, @listings),
+          csv: ArrayToCSV.generate(ListingCSV, @listings),
           filename: "#{Time.now.to_formatted_s(:number)}_listings" 
         )
       end

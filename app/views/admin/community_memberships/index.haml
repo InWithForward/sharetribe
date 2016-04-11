@@ -24,6 +24,9 @@
   %h2= t("admin.communities.manage_members.manage_members", :community_name => @community.name(I18n.locale))
 
   %span#admin_members_count= page_entries_info(@memberships, :model => "Person")
+  %p
+    Download
+    = link_to('CSV', admin_community_community_memberships_path(@current_community, per_page: 1000, format: 'csv'))
 
   %form
     %table#admin_members_list

@@ -16,7 +16,7 @@ module TransactionCSV
     ]
   end
 
-  def row(transaction)
+  def row(transaction, args = {})
     [
       transaction[:id],
       transaction[:listing][:title],

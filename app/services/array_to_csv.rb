@@ -3,12 +3,12 @@ require 'csv'
 module ArrayToCSV
   module_function
 
-  def to_s(klass, items)
+  def generate(klass, items, args = {})
     CSV.generate do |csv|
       csv << klass.header
 
       items.each do |item|
-        csv << klass.row(item)
+        csv << klass.row(item, args)
       end
     end
   end
