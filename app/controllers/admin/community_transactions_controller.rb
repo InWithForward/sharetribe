@@ -1,8 +1,9 @@
+require 'csv'
 class Admin::CommunityTransactionsController < ApplicationController
   TransactionQuery = MarketplaceService::Transaction::Query
   before_filter :ensure_is_admin
 
-  def index
+  def html_index_handler
     @selected_left_navi_link = "transactions"
     pagination_opts = PaginationViewUtils.parse_pagination_opts(params)
 
@@ -58,22 +59,78 @@ class Admin::CommunityTransactionsController < ApplicationController
       pager.replace(conversations)
     end
 
-    respond_to do |format|
-      format.html do
-        render("index",
-          locals: {
-            show_status_and_sum: @current_community.payments_in_use?,
-            community: @current_community,
-            conversations: conversations
+    render("index",
+      locals: {
+        show_status_and_sum: @current_community.payments_in_use?,
+        community: @current_community,
+        conversations: conversations
+      }
+    )
+  end
+
+  def csv_index_handler
+    headers['X-Accel-Buffering'] = 'no'
+    headers['Cache-Control'] = 'no-cache'
+
+    filename = "#{Time.now.to_formatted_s(:number)}_transactions"
+    headers['Content-Disposition'] = 'attachment; filename="' + filename + '.csv"'
+
+    count = TransactionQuery.transactions_count_for_community(@current_community.id)
+    batch_size = 50
+    batch_count = count / batch_size
+
+    self.response_body = Enumerator.new do |csv|
+      csv << CSV.generate_line(TransactionCSV.header)
+
+      batch_count.times do |i|
+        conversations = TransactionQuery.transactions_for_community_sorted_by_activity(
+          @current_community.id,
+          sort_direction,
+          batch_size,
+          (i * batch_size)
+        )
+
+        # TODO THIS IS COPY-PASTE
+        conversations = conversations.map do |transaction|
+          conversation = transaction[:conversation]
+          # TODO Embed author and starter to the transaction entity
+          author = Maybe(conversation[:other_person]).or_else({is_deleted: true})
+          starter = Maybe(conversation[:starter_person]).or_else({is_deleted: true})
+
+          [author, starter].each { |p|
+            p[:url] = person_path(p[:username]) unless p[:username].nil?
+            p[:display_name] = PersonViewUtils.person_entity_display_name(p, "fullname")
           }
-        )
+
+          if transaction[:status] == 'requested' && (transaction[:last_transition_at] + 48.hours) < Time.now
+            transaction[:status] = "expiring"
+          end
+
+          if transaction[:listing].present?
+            # This if was added to tolerate cases where listing has been deleted
+            # due the author deleting his/her account completely
+            # UPDATE: December 2014, we did an update which keeps the listing row even if user is deleted.
+            # So, we do not need to tolerate this anymore. However, there are transactions with deleted
+            # listings in DB, so those have to be handled.
+            transaction[:listing_url] = listing_path(id: transaction[:listing][:id])
+          end
+
+          transaction.merge({author: author, starter: starter})
+        end
+
+        conversations = conversations.reject { |c| c[:discussion_type] == :not_available }
+
+        conversations.each do |item|
+          csv << CSV.generate_line(TransactionCSV.row(item))
+        end
       end
-      format.csv do
-        render(
-          csv: ArrayToCSV.to_s(TransactionCSV, conversations),
-          filename: "#{Time.now.to_formatted_s(:number)}_transactions" 
-        )
-      end
+    end
+  end
+
+  def index
+    respond_to do |format|
+      format.html { html_index_handler }
+      format.csv { csv_index_handler }
     end
   end
 
