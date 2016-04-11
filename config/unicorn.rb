@@ -1,6 +1,7 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 2)
-timeout 25 # seconds, keep this lower than 30 if deployed to heroku
+timeout 60 # seconds, keep this lower than 30 if deployed to heroku
 preload_app true
+listen ENV["PORT"].to_i, tcp_nopush: false
 
 before_fork do |server, worker|
 

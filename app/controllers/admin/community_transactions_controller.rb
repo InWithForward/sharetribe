@@ -69,6 +69,9 @@ class Admin::CommunityTransactionsController < ApplicationController
   end
 
   def csv_index_handler
+    headers["Content-Type"] ||= 'text/csv'
+    headers["Content-Transfer-Encoding"] = "binary"
+    headers["Last-Modified"] = Time.now.ctime.to_s
     headers['X-Accel-Buffering'] = 'no'
     headers['Cache-Control'] = 'no-cache'
 
