@@ -137,13 +137,27 @@ module MarketplaceService
 
       def transaction_with_conversation(transaction_model, community_id)
         transaction = Entity.transaction(transaction_model)
-        if transaction_model.conversation
-          transaction[:conversation] = ConversationEntity.conversation(transaction_model.conversation, community_id)
+
+        conversation = if transaction_model.conversation
+          ConversationEntity.conversation(transaction_model.conversation, community_id)
         else
           # placeholder for deleted conversation to keep transaction list working
-          transaction[:conversation] = ConversationEntity.deleted_conversation_placeholder
+          ConversationEntity.deleted_conversation_placeholder
         end
-        transaction
+
+        author = Maybe(conversation[:other_person]).or_else({is_deleted: true})
+        starter = Maybe(conversation[:starter_person]).or_else({is_deleted: true})
+
+        [author, starter].each { |p|
+          p[:url] = Rails.application.routes.url_helpers.person_path(I18n.locale, p[:username]) unless p[:username].nil?
+          p[:display_name] = PersonViewUtils.person_entity_display_name(p, "fullname")
+        }
+
+        transaction.merge({
+          author: author,
+          starter: starter,
+          conversation: conversation
+        })
       end
 
       def transition(transition_model)
