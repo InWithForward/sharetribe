@@ -14,6 +14,8 @@ class BookingReminderToRequesterJob < Struct.new(:booking_id, :community_id, :ty
     booking = Booking.find(booking_id)
     transaction = booking.transaction
 
+    return if transaction.current_state == 'canceled'
+
     if type == :confirmation && number = transaction.starter.phone_number 
       listing = transaction.listing
 

@@ -40,6 +40,16 @@ describe BookingReminderToRequesterJob do
     sends_the_correct_message(message)
   end
 
+  context 'when transaction is canceled' do
+    it "doesn't send the sms " do
+      transaction.current_state = :canceled
+      transaction.save!
+      expect(SmsJob).not_to receive(:new)
+
+      described_class.new(booking.id, community.id, :confirmation).perform
+    end
+  end
+
   context 'when a location is provided' do
     let!(:location) { FactoryGirl.create(:location) }
     let!(:listing) { FactoryGirl.create(:listing, author: person, location: location) }

@@ -13,6 +13,8 @@ class BookingReminderToAuthorJob < Struct.new(:booking_id, :community_id, :type)
     community = Community.find(community_id)
     booking = Booking.find(booking_id)
 
+    return if booking.transaction.current_state == 'canceled'
+
     PersonMailer.send("booking_reminder_to_author", booking, community, type).deliver
   end
 
