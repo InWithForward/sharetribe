@@ -65,7 +65,8 @@ class CustomField < ActiveRecord::Base
 
   def self.for_roles(roles)
     includes(:role_custom_fields).
-      where(role_custom_fields: { role_id: roles.map(&:id) })
+      where(role_custom_fields: { role_id: roles.map(&:id) }).
+      order('sort_priority')
   end
 
   def name_attributes=(attributes)
