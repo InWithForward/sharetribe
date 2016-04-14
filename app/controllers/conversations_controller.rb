@@ -35,7 +35,9 @@ class ConversationsController < ApplicationController
 
     messages = TransactionViewUtils.conversation_messages(conversation[:messages], @current_community.name_display_type)
 
-    MarketplaceService::Conversation::Command.mark_as_read(conversation[:id], @current_user.id)
+    unless session[MASTER_LOGIN_KEY]
+      MarketplaceService::Conversation::Command.mark_as_read(conversation[:id], @current_user.id)
+    end
 
     render locals: {
       messages: messages.reverse,
