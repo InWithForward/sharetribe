@@ -1412,6 +1412,7 @@ en:
       subscribe_to_comments: "Notify me of new comments and updates"
     edit:
       edit_listing: "Edit listing"
+      save_listing: "Save Listing"
     edit_links:
       close_listing: "Close listing"
       edit_listing: "Edit listing"
@@ -1453,6 +1454,7 @@ en:
         rideshare: "a ride"
         i_want_to_offer: "I want to offer..."
         i_want_to_request: "I need..."
+        create_listing: "Continue"
       googlemap:
         googlemap_copy: "End Points From Map"
         googlemap_description: Mapview
@@ -1491,8 +1493,6 @@ en:
       origin:
         location: Location
         origin: Origin
-      send_button:
-        save_listing: "Save listing"
       share_type:
         select: Select
         borrow: Borrowing

@@ -10,6 +10,14 @@
     initialize_admin_listing_field_form_view("#{I18n.locale}", "#edit_custom_field", #{@listing.sub_listings.count}, 0);
     ST.customFieldOptionOrder = ST.createCustomFieldOptionOrder(".custom-field-option-container");
 
+    var formClass = '.edit_listing';
+    $(formClass + " :input").change(function() {
+      $(formClass).ajaxSubmit({
+        method: 'POST',
+        url: '#{post_update_listing_url(@listing)}'
+      });
+    });
+
 - @community_category = @current_community.categories
 
 #new_listing_form.edit-listing-form.centered-section-wide
@@ -31,7 +39,9 @@
     = render :partial => "listings/form/visibility", :locals => { :form => form }
     = render :partial => "listings/form/privacy", :locals => { :form => form }
     = form.hidden_field :current_community_id, :value => @current_community.id
-    = render :partial => "listings/form/send_button", :locals => { :form => form }
+    = form.hidden_field(:category_id, :value => @listing.category.id)
+    = form.hidden_field(:transaction_type_id, :value => @listing.transaction_type.id)
+    = form.button t(".save_listing"), :class => "send_button"
 
 - ["help_valid_until"].each do |field|
   = render :partial => "listings/help_texts", :locals => { :field => field }

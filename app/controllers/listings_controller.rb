@@ -170,20 +170,10 @@ class ListingsController < ApplicationController
   end
 
   def create
-    if params[:listing][:origin_loc_attributes] && (params[:listing][:origin_loc_attributes][:address].empty? || params[:listing][:origin_loc_attributes][:address].blank?)
-      params[:listing].delete("origin_loc_attributes")
-    end
-
-    params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
-    params[:listing] = normalize_price_param(params[:listing]);
-
-    @listing = Listing.new(create_listing_params(params[:listing]))
-
+    @listing = Listing.new(params[:listing])
     @listing.author = @current_user
 
     if @listing.save
-      FieldValueCreator.call(params[:custom_fields], @listing)
-
       Delayed::Job.enqueue(
         MixpanelTrackerJob.new(@current_user.id, @current_community.id, 'Listing Created', {
           title: @listing.title,
@@ -191,10 +181,6 @@ class ListingsController < ApplicationController
         })
       )
 
-      listing_image_ids = params[:listing_images].collect { |h| h[:id] }.select { |id| id.present? }
-      ListingImage.where(id: listing_image_ids, author_id: @current_user.id).update_all(listing_id: @listing.id)
-
-      Delayed::Job.enqueue(ListingCreatedJob.new(@listing.id, @current_community.id))
       if @current_community.follow_in_use?
         Delayed::Job.enqueue(NotifyFollowersJob.new(@listing.id, @current_community.id), :run_at => NotifyFollowersJob::DELAY.from_now)
       end
@@ -202,15 +188,15 @@ class ListingsController < ApplicationController
       flash[:notice] = t(
         "layouts.notifications.listing_created_successfully",
         :new_listing_link => view_context.link_to(t("layouts.notifications.create_new_listing"),new_listing_path)
-        ).html_safe
-      redirect_to @listing, status: 303 and return
+      ).html_safe
+      redirect_to edit_listing_path(@listing), status: 303
     else
       Rails.logger.error "Errors in creating listing: #{@listing.errors.full_messages.inspect}"
       flash[:error] = t(
         "layouts.notifications.listing_could_not_be_saved",
         :contact_admin_link => view_context.link_to(t("layouts.notifications.contact_admin_link_text"), new_user_feedback_path, :class => "flash-error-link")
         ).html_safe
-      redirect_to new_listing_path and return
+      redirect_to new_listing_path
     end
   end
 
@@ -238,9 +224,13 @@ class ListingsController < ApplicationController
     params[:listing] = create_listing_params(params[:listing])
 
     if ListingUpdater.call(@listing, params)
-      flash[:notice] = t("layouts.notifications.listing_updated_successfully")
-      Delayed::Job.enqueue(ListingUpdatedJob.new(@listing.id, @current_community.id))
-      redirect_to @listing
+      if request.xhr?
+        render nothing: true, status: 200 
+      else
+        flash[:notice] = t("layouts.notifications.listing_updated_successfully")
+        Delayed::Job.enqueue(ListingUpdatedJob.new(@listing.id, @current_community.id))
+        redirect_to @listing
+      end
     else
       Rails.logger.error "Errors in editing listing: #{@listing.errors.full_messages.inspect}"
       flash[:error] = t("layouts.notifications.listing_could_not_be_saved", :contact_admin_link => view_context.link_to(t("layouts.notifications.contact_admin_link_text"), new_user_feedback_path, :class => "flash-error-link")).html_safe

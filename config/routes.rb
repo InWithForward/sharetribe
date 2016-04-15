@@ -226,6 +226,8 @@ Kassi::Application.routes.draw do
       member do
         post :follow
         delete :unfollow
+        # Unfortunately, ajaxSubmit doesn't work with PUT, so we lets use POST :(
+        post :update, as: :post_update
       end
       collection do
         get :more_listings

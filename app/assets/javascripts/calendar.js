@@ -38,8 +38,6 @@ function initCalendar() {
     slotEventOverlap: false,
     eventDurationEditable: false,
     events: (events || []),
-    eventRender: writeJSON,
-    eventDrop: writeJSON,
     eventClick: function(calEvent, jsEvent, view) {
       if(view.type == "month") return false;
 
@@ -96,12 +94,14 @@ function initCalendar() {
 
       $('#add-recurring').click(function() {
         addRecurringEvent(startDate);
+        writeJSON();
         dialog.trigger('close');
         return false;
       });
 
       $('#add-once').click(function() {
         addSingleEvent(startDate);
+        writeJSON();
         dialog.trigger('close');
 
         var warningDialog = $('#add_once_warning_dialog').lightbox_me({ centered: true, zIndex: 1000000 });
@@ -130,7 +130,7 @@ function initCalendar() {
       };
     });
 
-    $('#listing_availabilities_json').val(JSON.stringify(events));
+    $('#listing_availabilities_json').val(JSON.stringify(events)).change();
   };
 
   function addSingleEvent(start) {
