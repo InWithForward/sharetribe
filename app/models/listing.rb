@@ -82,7 +82,7 @@ class Listing < ActiveRecord::Base
   has_one :location, :dependent => :destroy
   has_one :origin_loc, :class_name => "Location", :conditions => ['location_type = ?', 'origin_loc'], :dependent => :destroy
   has_one :destination_loc, :class_name => "Location", :conditions => ['location_type = ?', 'destination_loc'], :dependent => :destroy
-  accepts_nested_attributes_for :origin_loc, :destination_loc, :availabilities, :sub_listings
+  accepts_nested_attributes_for :origin_loc, :destination_loc, :sub_listings
 
   has_and_belongs_to_many :communities
   has_and_belongs_to_many :followers, :class_name => "Person", :join_table => "listing_followers"

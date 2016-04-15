@@ -219,7 +219,6 @@ class ListingsController < ApplicationController
     end
 
     params[:listing][:sub_listings_attributes] ||= {}
-    params[:listing][:availabilities_attributes] = JSON.parse(params[:listing].delete(:availabilities_json))
     params[:listing] = normalize_price_param(params[:listing])
     params[:listing] = create_listing_params(params[:listing])
 
