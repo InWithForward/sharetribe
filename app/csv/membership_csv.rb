@@ -4,7 +4,6 @@ module MembershipCSV
 
   def header
     [
-      "ID",
       I18n.t("admin.communities.manage_members.name"),
       I18n.t("admin.communities.manage_members.email"),
       I18n.t("admin.communities.manage_members.join_date"),
@@ -22,6 +21,7 @@ module MembershipCSV
     [
       member.full_name,
       member.confirmed_notification_email_addresses.first,
+      I18n.l(membership.created_at, format: :short_date),
       membership.can_post_listings,
       membership.can_request_listings,
       member.is_admin_of?(community),
