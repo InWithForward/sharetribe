@@ -16,6 +16,10 @@ class TestimonialGivenJob < Struct.new(:testimonial_id, :community_id)
     receiver = testimonial.receiver
     author = testimonial.author
 
+    if receiver.should_receive?("email_about_new_received_testimonials")
+      PersonMailer.new_testimonial(testimonial, community).deliver
+    end
+
     Delayed::Job.enqueue(
       MixpanelTrackerJob.new(receiver.id, community_id, 'Feedback Received', {
         title: testimonial.transaction.listing.title,
@@ -33,10 +37,6 @@ class TestimonialGivenJob < Struct.new(:testimonial_id, :community_id)
         receiver: receiver.username
       })
     )
-
-    if receiver.should_receive?("email_about_new_received_testimonials")
-      PersonMailer.new_testimonial(testimonial, community).deliver
-    end
   end
 
 end

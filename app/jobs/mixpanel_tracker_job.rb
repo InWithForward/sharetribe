@@ -12,6 +12,6 @@ class MixpanelTrackerJob < Struct.new(:person_id, :community_id, :name, :propert
 
   def perform
     tracker = Mixpanel::Tracker.new(APP_CONFIG.mixpanel_id)
-    tracker.track(person_id, name, properties);
+    tracker.track(person_id, name, properties.merge(time: Time.now.to_i));
   end
 end
