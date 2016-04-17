@@ -16,4 +16,11 @@
 #
 
 class CheckboxFieldValue < OptionFieldValue
+  def selected_options_titles(locale)
+    selected_options.map { |field| field.try(:title, locale) }.compact.join(', ')
+  end
+
+  def text_value
+    selected_options_titles(I18n.locale)
+  end
 end

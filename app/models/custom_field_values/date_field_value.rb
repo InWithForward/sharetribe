@@ -21,4 +21,5 @@ class DateFieldValue < CustomFieldValue
 
   validates_presence_of :date_value
 
+  alias_method :text_value, :date_value
 end

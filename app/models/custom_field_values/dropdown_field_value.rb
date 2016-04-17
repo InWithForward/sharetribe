@@ -21,4 +21,8 @@ class DropdownFieldValue < OptionFieldValue
   def selected_option_title(locale)
     selected_options.try(:first).try(:title, locale)
   end
+
+  def text_value
+    selected_option_title(I18n.locale)
+  end
 end

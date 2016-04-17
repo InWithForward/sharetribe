@@ -23,6 +23,10 @@ class NumericFieldValue < CustomFieldValue
     question.allow_decimals ? numeric_value : numeric_value.to_i
   end
 
+  def text_value
+    display_value
+  end
+
   # See self._search_many
   # This is just dummy wrapper to log the execution time
   def self.search_many(with_many, ids=[])
