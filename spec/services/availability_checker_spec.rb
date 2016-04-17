@@ -62,8 +62,8 @@ describe AvailabilityChecker do
   context 'when the listing has availabilities' do
     # Since this is recurring, it will be more than enough availabilities
     let!(:availabilities) do
-      4.times do |i|
-        FactoryGirl.create(:availability, listing: listing, date: (time.to_date + (i + 1).weeks))
+     4.times do |i|
+        FactoryGirl.create(:availability, listing: listing, date: (time.to_date + (i + 3).days))
       end
     end
 

@@ -67,6 +67,8 @@ prefork = lambda {
     config.mock_with :rspec
     config.include Devise::TestHelpers, :type => :controller
     config.include SpecUtils
+
+    config.before(:each) { ActionMailer::Base.deliveries.clear }
   end
 
   def uploaded_file(filename, content_type)

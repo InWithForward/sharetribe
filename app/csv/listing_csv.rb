@@ -21,7 +21,7 @@ module ListingCSV
       listing.author.full_name,
       listing.invisible,
       listing.open,
-      listing.availabilities.where(date: Availability::RANGE).any?,
+      listing.availabilities.where(date: Availability.range).any?,
       PrerequisiteService.options_status_array(listing)
     ].flatten
   end

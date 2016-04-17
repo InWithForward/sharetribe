@@ -33,7 +33,7 @@ describe Availability do
                          date: start_at.to_date)
     end
 
-    let(:start_at) { Time.now + 1.hour }
+    let(:start_at) { Time.now + 2.days }
     let(:end_at) { start_at + 1.hour }
 
     subject { described_class.unbooked(listing) }

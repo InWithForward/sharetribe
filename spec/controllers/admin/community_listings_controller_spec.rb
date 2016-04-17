@@ -18,7 +18,7 @@ describe Admin::CommunityListingsController, type: :controller do
 
     it 'exports as csv' do
       get :index, id: community.id, format: :csv
-      csv_string = ArrayToCSV.to_s(ListingCSV, [listing])
+      csv_string = ArrayToCSV.generate(ListingCSV, [listing])
       expect(response.body).to eql(csv_string)
     end
   end

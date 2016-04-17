@@ -38,8 +38,6 @@ describe Testimonial do
   end
 
   it "is not valid without valid grade" do
-    @testimonial.grade = nil
-    @testimonial.should_not be_valid
     @testimonial.grade = -1
     @testimonial.should_not be_valid
     @testimonial.grade = 2

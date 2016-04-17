@@ -494,7 +494,7 @@ GEM
     xpath (2.0.0)
       nokogiri (~> 1.3)
     youtube_addy (1.0.4)
-    zeus (0.15.1)
+    zeus (0.15.4)
       method_source (>= 0.6.7)
 
 PLATFORMS
@@ -595,4 +595,4 @@ DEPENDENCIES
   will_paginate
   xpath
   youtube_addy (~> 1.0.4)
-  zeus (= 0.15.1)
+  zeus

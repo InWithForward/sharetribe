@@ -17,7 +17,9 @@ module ListingUpdater
   end
 
   def availabilities_update(listing, params)
-    return unless params[:listing] && availabilities = JSON.parse(params[:listing].delete(:availabilities_json))
+    return unless params[:listing] &&
+      params[:listing][:availabilities_json] &&
+      availabilities = JSON.parse(params[:listing].delete(:availabilities_json))
 
     Availability.where(listing_id: listing.id).delete_all
 

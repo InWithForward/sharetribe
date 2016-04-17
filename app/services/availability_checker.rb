@@ -5,9 +5,7 @@ class AvailabilityChecker
 
     Community.all.each do |community|
       community.listings.non_badge.currently_open.each do |listing|
-        availabilities = Availability.
-          unbooked(listing).
-          select { |a| a[:start_at] > Time.now + 48.hours }
+        availabilities = Availability.unbooked(listing)
 
         next if availabilities.size > 3
 

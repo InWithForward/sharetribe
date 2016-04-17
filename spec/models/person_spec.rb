@@ -110,7 +110,7 @@ describe Person do
           'family_name' => "Tester",
           'phone_number' => "050-55555555"})
         @test_person.family_name.should == "Tester"
-        @test_person.phone_number.should == "050-55555555"
+        @test_person.phone_number.should == "05055555555"
       end
     end
 

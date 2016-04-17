@@ -25,6 +25,21 @@ require 'spec_helper'
 
 describe Location do
   describe "#search_and_fill_latlng" do
+    let(:lat) { "60.1870405" }
+    let(:lng) { "24.8163511" }
+
+    before do
+       stub_request(:get, "http://maps.googleapis.com/maps/api/geocode/json?address=Otaniementie%2019,%20Espoo,%20Finland&sensor=false").
+         to_return(status: 200, body: {
+         status: 'OK',
+         results: [
+           geometry: {
+             location: { lat: lat, lng: lng }
+           }
+         ]
+       }.to_json)
+    end
+
     it "should store correct lat long coordinates" do
       l = Location.new(:address => "Otaniementie 19, Espoo, Finland")
       l.should be_valid

@@ -22,7 +22,6 @@
 
 class Availability < ActiveRecord::Base
   WEEKS = 4*4
-  RANGE = (Date.today + 1.day)..(Date.today + WEEKS.weeks)
 
   belongs_to :listing
 
@@ -50,7 +49,7 @@ class Availability < ActiveRecord::Base
         end_at: booking.end_at.to_time
       } }
 
-    availabilities = listing.availabilities.where(date: RANGE).map do |availability|
+    availabilities = listing.availabilities.where(date: range).map do |availability|
       d = availability.date
       {
         start_at: Time.new(d.year, d.month, d.day, availability.start_at_hour, availability.start_at_minute, 0),
@@ -59,5 +58,9 @@ class Availability < ActiveRecord::Base
     end
 
     availabilities - bookings
+  end
+
+  def self.range
+    (Date.today + 1.day)..(Date.today + WEEKS.weeks)
   end
 end

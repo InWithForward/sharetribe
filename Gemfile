@@ -102,7 +102,7 @@ group :development do
   gem 'rack-livereload'
   gem 'rb-fsevent',       require: false
   gem 'annotate'
-  gem 'zeus', '0.15.1'
+  gem 'zeus'
   gem 'i18n-tasks', '~> 0.6.2'
   gem "letter_opener"
 end

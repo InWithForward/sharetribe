@@ -36,7 +36,7 @@
             %td
               = listing.open
             %td
-              = listing.availabilities.where(date: Availability::RANGE).any?
+              = listing.availabilities.where(date: Availability.range).any?
             %td
               = link_to t("admin.communities.listings.edit"), edit_admin_community_listing_path(@current_community.id, listing.id)
 

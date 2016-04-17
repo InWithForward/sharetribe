@@ -32,14 +32,14 @@ describe ListingUpdater do
   it 'updates availabilities' do
     params = {
       listing: {
-        availabilities_attributes: [{
+        availabilities_json: [{
           start_at_hour: 9,
           start_at_minute: 30,
           end_at_hour: 11,
           end_at_minute: 0,
           date: Date.today,
           recurring: true
-        }]
+        }].to_json
       }
     }
 
@@ -52,43 +52,19 @@ describe ListingUpdater do
     }
   end
 
-  it 'rolls back on error' do
-    availability = FactoryGirl.create(:availability, listing: listing)
-
-    params = {
-      listing: {
-        availabilities_attributes: [{
-          id: availability.id,
-          start_at_hour: 9,
-          start_at_minute: 30,
-          end_at_hour: 11,
-          end_at_minute: 0,
-          date: Date.today,
-          recurring: true
-        }]
-      }
-    }
-
-    expect {
-      described_class.call(listing, params)
-    }.to raise_error(Exception)
-
-    expect(listing.availabilities.reload).not_to be_empty
-  end
-
   it 'rolls back on listing error' do
     availability = FactoryGirl.create(:availability, listing: listing)
     params = {
       listing: {
         title: "",
-        availabilities_attributes: [{
+        availabilities_json: [{
           start_at_hour: 9,
           start_at_minute: 30,
           end_at_hour: 11,
           end_at_minute: 0,
           date: Date.today,
           recurring: true
-        }]
+        }].to_json
       }
     }
 
