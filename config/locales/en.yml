@@ -1845,11 +1845,11 @@ en:
       reviews: "What other people say about me"
       listing: listing
       listings: listings
-      open_listing: "open listing"
-      open_listings: "open listings"
-      no_listings: "No listings"
-      no_open_listings: "No open listings"
-      no_reviews: "No reviews"
+      open_listing: "An experience I host"
+      open_listings: "Experiences I host"
+      no_listings: "I'm not currently a host of any Experiences"
+      no_open_listings: "I'm not currently a host of any Experiences"
+      no_reviews: "No feedback yet"
       shape: "My Badges"
       show_all_listings: "Show all listings"
       show_all_open_listings: "Show all open listings"
