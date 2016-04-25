@@ -1795,9 +1795,9 @@ en:
       sign_up: "Create a new %{service_name} account"
       terms: "terms of use"
       privacy: "privacy policy"
-      username_is_in_use: "This username is already in use."
-      username_is_invalid: "Username is invalid. Allowed characters are letters, numbers and underscore."
-      visible_only_to_you: "visible only to you and the marketplace admin"
+      username_is_in_use: "Please try again. This username is already being used."
+      username_is_invalid: "Sorry. This username won't work. Please only use letters, numbers and/or underscore."
+      visible_only_to_you: "visible only to you and Kudoz admin"
       visible_to_everybody: "visible to everybody"
       create_account_with_facebook: "Sign up with Facebook"
       OR: OR
